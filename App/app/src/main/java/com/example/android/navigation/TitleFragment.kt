@@ -45,6 +45,10 @@ class TitleFragment : Fragment() {
         binding.LoginButton.setOnClickListener { view : View ->
             view.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToLoginFragment())
         }
+
+        binding.SignUpButton.setOnClickListener { view : View ->
+            view.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToSignUpFragment())
+        }
         setHasOptionsMenu(true)
         return binding.root
     }
