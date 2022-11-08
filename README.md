@@ -10,7 +10,7 @@
 
 
   <a href="https://developer.android.com/studio?hl=es&gclid=Cj0KCQiAmaibBhCAARIsAKUlaKR9fSb3QQY99dgLSUWhhx0_mESQe5-lVD2uOPZeWnZojD5_nuDeLaQaAuSsEALw_wcB&gclsrc=aw.ds">
-    <img style="width:15%;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Android_Studio_Trademark.svg/2560px-Android_Studio_Trademark.svg.png"
+    <img style="width:15%;" src="https://1.bp.blogspot.com/-LgTa-xDiknI/X4EflN56boI/AAAAAAAAPuk/24YyKnqiGkwRS9-_9suPKkfsAwO4wHYEgCLcBGAsYHQ/s0/image9.png"
          alt=Android">
        
 
