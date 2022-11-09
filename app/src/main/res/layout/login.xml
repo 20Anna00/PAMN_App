@@ -7,6 +7,13 @@
     tools:context="com.example.pillee.AuthActivity"
     >
 
+    <data>
+
+        <variable
+            name="start"
+            type="com.example.pillee.AuthActivity" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,8 +55,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Insert your mail"
+            android:minHeight="48dp"
             app:layout_constraintTop_toBottomOf="@id/email"
-            ></EditText>
+            tools:layout_editor_absoluteX="20dp" />
 
         <TextView
             android:id="@+id/password"
@@ -70,8 +78,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Insert your password"
+            android:minHeight="48dp"
             app:layout_constraintTop_toBottomOf="@id/password"
-            ></EditText>
+            tools:layout_editor_absoluteX="20dp"></EditText>
 
         <Button
             android:id="@+id/loginbutton"
