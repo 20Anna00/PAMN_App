@@ -34,6 +34,7 @@ package com.example.android.navigation
 
 import android.content.Intent
 import android.os.Bundle
+import android.renderscript.ScriptGroup.Binding
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -41,6 +42,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.example.android.navigation.databinding.FragmentLoginBinding
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -48,14 +51,30 @@ class LoginFragment : Fragment() {
         val binding = DataBindingUtil.inflate<FragmentLoginBinding>(inflater,
             R.layout.fragment_login,container,false)
 
-        binding.startButton.setOnClickListener { view : View ->
-            view.findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToStartPageFragment())
-        }
+        setup(binding)
 
         setHasOptionsMenu(true)
         return binding.root
+
+
     }
 
+
+    private fun setup(binding: FragmentLoginBinding) {
+
+        binding.loginButton.setOnClickListener{
+            if(emailField.text.isNotEmpty() && passwordField.text.isNotEmpty()){
+                Toast.makeText(context, "Logged successfully", Toast.LENGTH_SHORT).show()
+                
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(emailField.text.toString(), passwordField.text.toString())
+
+            }
+        }
+    }
+
+    private fun showHome(email: String){
+        view?.findNavController()?.navigate(LoginFragmentDirections.actionLoginFragmentToStartPageFragment())
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)

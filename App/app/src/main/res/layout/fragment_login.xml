@@ -35,21 +35,49 @@
 
 
         <TextView
-            android:id="@+id/rulesText"
-            android:layout_width="0dp"
+            android:id="@+id/emailTxt"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginEnd="@dimen/horizontal_margin"
-            android:fontFamily="@font/roboto_italic"
-            android:text="Login"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="Email"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center_horizontal"
+            />
+        <EditText
+            android:id="@+id/emailField"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/emailTxt"
+            app:layout_constraintEnd_toEndOf="@id/emailTxt"
+            app:layout_constraintTop_toBottomOf="@id/emailTxt"/>
+
+
+        <TextView
+            android:id="@+id/passwordTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            app:layout_constraintStart_toStartOf="@id/emailTxt"
+            app:layout_constraintEnd_toEndOf="@id/emailTxt"
+            app:layout_constraintTop_toBottomOf="@id/emailField"
+            android:gravity="center_horizontal"
+            />
+        <EditText
+            android:id="@+id/passwordField"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/passwordTxt"
+            app:layout_constraintEnd_toEndOf="@id/passwordTxt"
+            app:layout_constraintTop_toBottomOf="@id/passwordTxt"/>
 
         <Button
-            android:id="@+id/startButton"
+            android:id="@+id/loginButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start" />
+            app:layout_constraintTop_toBottomOf="@id/passwordField"
+            app:layout_constraintStart_toStartOf="@id/emailTxt"
+            app:layout_constraintEnd_toEndOf="@id/emailTxt"
+            android:text="Login" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

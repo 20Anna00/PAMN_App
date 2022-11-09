@@ -34,6 +34,7 @@ class StartPageFragment : Fragment() {
             R.layout.fragment_startpage,container,false)
 
 
+
         binding.refillButton.setOnClickListener { view : View ->
             view.findNavController().navigate(StartPageFragmentDirections.actionStartPageFragmentToRefillFragment())
         }
@@ -42,6 +43,7 @@ class StartPageFragment : Fragment() {
             view.findNavController().navigate(StartPageFragmentDirections.actionStartPageFragmentToScheduleFragment())
         }
         setHasOptionsMenu(true)
+
         return binding.root
     }
 
