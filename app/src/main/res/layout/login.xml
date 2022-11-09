@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:fillViewport="true"
-
-    tools:context="com.example.pillee.AuthActivity"
+    tools:context=".AuthActivity"
     >
 
     <data>
@@ -26,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
             android:layout_marginEnd="@dimen/horizontal_margin"
-            android:text="Login"
+            android:text="@string/login"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
             android:layout_marginEnd="@dimen/horizontal_margin"
-            android:text="Email"
+            android:text="@string/email"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,10 +53,12 @@
             android:id="@+id/mailfield"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Insert your mail"
-            android:minHeight="48dp"
+
+            android:hint="@string/insert_your_mail"
             app:layout_constraintTop_toBottomOf="@id/email"
-            tools:layout_editor_absoluteX="20dp" />
+            android:autofillHints="bla"
+            android:inputType="text" />
+
 
         <TextView
             android:id="@+id/password"
@@ -65,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
             android:layout_marginEnd="@dimen/horizontal_margin"
-            android:text="Password"
+            android:text="@string/password"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,16 +78,18 @@
             android:id="@+id/passwordfield"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Insert your password"
-            android:minHeight="48dp"
+
+            android:hint="@string/insert_your_password"
             app:layout_constraintTop_toBottomOf="@id/password"
-            tools:layout_editor_absoluteX="20dp"></EditText>
+            android:autofillHints="Blabla"
+            android:inputType="textPassword" />
+
 
         <Button
             android:id="@+id/loginbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="@string/Login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordfield"
