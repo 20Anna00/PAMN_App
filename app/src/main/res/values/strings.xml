@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Pillee</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="insert_your_mail">Insert your mail</string>
+    <string name="insert_your_password">Insert your password</string>
+    <string name="Login">Login</string>
+    <string name="email">Email</string>
 </resources>
