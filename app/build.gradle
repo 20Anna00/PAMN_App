@@ -39,6 +39,8 @@ android {
     }
     buildFeatures {
         compose true
+        dataBinding true
+        viewBinding true
     }
     task wrapper(type: Wrapper){
         gradleVersion = '7.2'

@@ -10,29 +10,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : ComponentActivity() {
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.pillee.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var navController: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            Texts()
-        }
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-
-
-    }
-
-    @Composable
-    fun Texts(){
-        Text(text = "Hola Jetpack Compose!")
-    }
-
-    @Preview
-    @Composable
-    fun PreviewTexts(){
-        Texts()
-    }
-
-    fun buttons() {
+        /*
         login_button.setOnClickListener {
             val intent = Intent(this@MainActivity, Login::class.java)
             startActivity(intent)
@@ -40,6 +32,18 @@ class MainActivity : ComponentActivity() {
         register_button.setOnClickListener {
             val intent = Intent(this@MainActivity, Register::class.java)
             startActivity(intent)
-        }
+
+
+         */
+        val navHostFragment= supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+
+        navController = navHostFragment.navController
+
+        setupActionBarWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }
