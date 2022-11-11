@@ -6,18 +6,23 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-
-
+import com.example.pillee.jetpackcompnavigation.navigation.AppNavigation
+import com.example.pillee.themes.PilleeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
+            PilleeTheme{
+                Surface(color = MaterialTheme.colors.background){
+                    AppNavigation()
+                }
 
         }
 
@@ -53,8 +58,10 @@ fun MyImage (){
         painterResource(R.drawable.arrow_up_float),"Mi imagen"
     )
 }
-@Preview
+}
+
+@Preview(showBackground = true)
 @Composable
 fun PreviewComponent(){
-    MyComponent()
+    AppNavigation()
 }
