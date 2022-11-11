@@ -1,9 +1,7 @@
 package com.example.pillee
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.pillee.databinding.FragmentLoginBinding
@@ -12,10 +10,7 @@ import kotlinx.android.synthetic.main.fragment_title.*
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
-
-
     private val binding get() = _binding!!
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +28,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LoginButton.setOnClickListener {
+        loginbutton.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_startpageFragment)
         }
     }
