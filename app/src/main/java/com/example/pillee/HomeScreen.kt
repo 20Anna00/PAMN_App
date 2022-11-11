@@ -18,6 +18,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.pillee.jetpackcompnavigation.navigation.AppNavigation
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.themes.AquaBlue
 
@@ -43,6 +45,12 @@ fun BodyContent(navController: NavController){
             Text("Log In")
         }
     }
+}
+
+@Preview
+@Composable
+fun HomePreview(){
+    BodyContent(rememberNavController())
 }
 
 
