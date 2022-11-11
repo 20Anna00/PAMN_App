@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.pillee.databinding.ActivityMainBinding
+import com.example.pillee.jetpackcompnavigation.navigation.AppNavigation
 import com.example.pillee.themes.PilleeTheme
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,32 +26,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent{
             PilleeTheme{
-
+                Surface(color = MaterialTheme.colors.background){
+                    AppNavigation()
+                }
             }
         }
 
     }
-        /*
-        login_button.setOnClickListener {
-            val intent = Intent(this@MainActivity, Login::class.java)
-            startActivity(intent)
-        }
-        register_button.setOnClickListener {
-            val intent = Intent(this@MainActivity, Register::class.java)
-            startActivity(intent)
+}
 
-
-
-        val navHostFragment= supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-
-        navController = navHostFragment.navController
-
-        setupActionBarWithNavController(navController)
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-         */
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview(){
+    AppNavigation()
 }

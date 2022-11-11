@@ -1,12 +1,8 @@
 package com.example.pillee
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.TextButton
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -14,23 +10,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
-import com.example.pillee.themes.AquaBlue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(navController: NavController) {
-    Scaffold() {
-        BodyContent(navController)
+fun LoginScreen(navController: NavController) {
+    Scaffold {
+        LoginBodyContent(navController)
     }
 }
 
 @Composable
-fun BodyContent(navController: NavController){
+fun LoginBodyContent(navController: NavController){
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -38,11 +31,9 @@ fun BodyContent(navController: NavController){
     ) {
         Text(text = "Hola que tal")
         Button(onClick = {
-            navController.navigate(route = AppScreens.LoginScreen.route)
+            navController.navigate(route = AppScreens.HomeScreen.route)
         }) {
-            Text("Log In")
+            Text("Volver")
         }
     }
 }
-
-
