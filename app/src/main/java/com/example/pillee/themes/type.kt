@@ -19,6 +19,17 @@ val nunito = FontFamily(
     )
 )
 
+val lato = FontFamily(
+    listOf(
+        Font(R.font.lato_regular, FontWeight.Normal),
+        Font(R.font.lato_black, FontWeight.Black),
+        Font(R.font.lato_bold, FontWeight.Bold),
+        Font(R.font.lato_thin, FontWeight.Thin)
+    )
+)
+
+
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     body1 = TextStyle(

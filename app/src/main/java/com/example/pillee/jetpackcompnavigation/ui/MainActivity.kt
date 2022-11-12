@@ -1,4 +1,4 @@
-package com.example.pillee
+package com.example.pillee.jetpackcompnavigation.ui
 import android.R
 import android.os.Bundle
 import androidx.activity.ComponentActivity
