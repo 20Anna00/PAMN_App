@@ -1,8 +1,11 @@
 package com.example.pillee
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -10,9 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.pillee.jetpackcompnavigation.navigation.AppNavigation
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -26,21 +31,35 @@ fun HomeScreen(navController: NavController) {
 @Composable
 fun BodyContent(navController: NavController){
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(157, 193, 193)),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(text = "Hola que tal")
-        Button(onClick = {
+        Button(
+            onClick = {
             navController.navigate(route = AppScreens.LoginScreen.route)
-        }) {
-            Text("Log In")
+        }, colors = ButtonDefaults.buttonColors( Color.White)
+        )
+
+        {
+            Text(
+                "Log In",
+                color = Color.Black
+
+
+            )
         }
     }
 }
+
 @Preview
 @Composable
 fun PreviewHome(){
     BodyContent(rememberNavController())
 }
+
+
 
