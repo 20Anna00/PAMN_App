@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.pillee.HomeScreen
-import com.example.pillee.LoginScreen
+import com.example.pillee.jetpackcompnavigation.screens.HomeScreen
+import com.example.pillee.jetpackcompnavigation.screens.LoginScreen
 
 @Composable
 fun AppNavigation (){

@@ -1,4 +1,4 @@
-package com.example.pillee
+package com.example.pillee.jetpackcompnavigation.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,14 +17,14 @@ import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController) {
-    Scaffold {
-        LoginBodyContent(navController)
+fun HomeScreen(navController: NavController) {
+    Scaffold() {
+        BodyContent(navController)
     }
 }
 
 @Composable
-fun LoginBodyContent(navController: NavController){
+fun BodyContent(navController: NavController){
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -32,16 +32,17 @@ fun LoginBodyContent(navController: NavController){
     ) {
         Text(text = "Hola que tal")
         Button(onClick = {
-            navController.navigate(route = AppScreens.HomeScreen.route)
+            navController.navigate(route = AppScreens.LoginScreen.route)
         }) {
-            Text("Volver")
+            Text("Log In")
         }
     }
 }
 
-
 @Preview
 @Composable
-fun loginPreview(){
-    LoginBodyContent(rememberNavController())
+fun HomePreview(){
+    BodyContent(rememberNavController())
 }
+
+
