@@ -55,6 +55,7 @@ fun LoginTextField(name: String) {
 
     OutlinedTextField(
         value = text,
+        singleLine = true,
         onValueChange = { text = it },
         label = { Text(text = name) }
     )
