@@ -1,19 +1,22 @@
 package com.example.pillee.jetpackcompnavigation.screens
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextField
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
@@ -29,12 +32,17 @@ fun LoginScreen(navController: NavController) {
 @Composable
 fun LoginBodyContent(navController: NavController){
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(157, 193, 193)),
+        verticalArrangement = Arrangement.spacedBy(
+            space = 20.dp,
+            alignment = Alignment.CenterVertically,
+        ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LoginTextField(name = "Email")
-        LoginTextField(name = "Password")
+        LoginPasswordField(name = "Password")
         loginButton(navController)
 
     }
@@ -44,23 +52,49 @@ fun LoginBodyContent(navController: NavController){
 fun loginButton(navController: NavController) {
     Button(onClick = {
         navController.navigate(route = AppScreens.StartPageScreen.route)
-    }) {
-        Text("Log In")
-    }
+    }, colors = ButtonDefaults.buttonColors( Color(46, 104, 117)),
+        modifier = Modifier
+            .width(280.dp)
+            .height(50.dp)
+    ) { Text("Log In", color = Color.White) }
 }
 
 @Composable
 fun LoginTextField(name: String) {
-    var text by remember { mutableStateOf(TextFieldValue("")) }
+    var text by remember { mutableStateOf("") }
 
     OutlinedTextField(
         value = text,
         singleLine = true,
         onValueChange = { text = it },
-        label = { Text(text = name) }
+        label = { Text(text = name) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color(46, 104, 117),
+            unfocusedBorderColor = Color.White,
+            unfocusedLabelColor = Color.White,
+            focusedLabelColor = Color(46, 104, 117)
+        )
     )
 }
+@Composable
+fun LoginPasswordField(name : String){
+    var text by remember { mutableStateOf("") }
 
+    OutlinedTextField(
+        value = text,
+        singleLine = true,
+        onValueChange = { text = it },
+        label = { Text(text = name) },
+        visualTransformation = PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color(46, 104, 117),
+            unfocusedBorderColor = Color.White,
+            unfocusedLabelColor = Color.White,
+            focusedLabelColor = Color(46, 104, 117)
+        )
+    )
+}
 
 
 @Preview

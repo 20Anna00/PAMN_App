@@ -61,12 +61,7 @@ fun LoginButton(navController: NavController){
             .height(50.dp)
             .border(1.dp, shape = RoundedCornerShape(20.dp), color = Color(46, 104, 117))
 
-    ) {
-        Text(
-            "Log In",
-            color = Color.White
-        )
-    }
+    ) { Text("Log In", color = Color.White) }
 }
 
 @Composable
@@ -79,11 +74,7 @@ fun RegisterButton(navController: NavController){
             .width(250.dp)
             .height(50.dp)
 
-   ) { Text(
-            "Register",
-            color = Color.Black
-        )
-    }
+   ) { Text("Register", color = Color.Black) }
 }
 @Composable
 fun WelcomeText (){

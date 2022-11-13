@@ -7,7 +7,7 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ScheduleScreen(navController: NavController){
+fun AppointmentScreen(navController: NavController){
     Scaffold() {
 
     }

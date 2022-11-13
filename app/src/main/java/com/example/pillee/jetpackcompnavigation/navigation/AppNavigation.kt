@@ -9,6 +9,9 @@ import com.example.pillee.jetpackcompnavigation.screens.HomeScreen
 import com.example.pillee.jetpackcompnavigation.screens.LoginScreen
 import com.example.pillee.jetpackcompnavigation.screens.RegisterScreen
 import com.example.pillee.jetpackcompnavigation.screens.StartPageScreen
+import com.example.pillee.jetpackcompnavigation.screens.ScheduleScreen
+import com.example.pillee.jetpackcompnavigation.screens.ConfigurationScreen
+import com.example.pillee.jetpackcompnavigation.screens.AppointmentScreen
 
 @Composable
 fun AppNavigation (){
@@ -25,6 +28,15 @@ fun AppNavigation (){
         }
         composable(route = AppScreens.StartPageScreen.route){
             StartPageScreen(navController)
+        }
+        composable(route = AppScreens.ScheduleScreen.route){
+            ScheduleScreen(navController)
+        }
+        composable(route = AppScreens.ConfigurationScreen.route){
+            ConfigurationScreen(navController)
+        }
+        composable(route = AppScreens.AppointmentScreen.route){
+            AppointmentScreen(navController)
         }
     }
 }
