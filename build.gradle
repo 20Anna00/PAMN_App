@@ -12,9 +12,12 @@ buildscript {
     }
     ext {
         compose_version = '1.1.1'
+<<<<<<< HEAD
         nav_version = "2.5.3"
 
 
+=======
+>>>>>>> parent of cdfb32e ( cleaning main branch)
     }
 }
 
