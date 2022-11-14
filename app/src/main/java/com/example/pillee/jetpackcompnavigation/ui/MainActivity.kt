@@ -14,14 +14,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.pillee.jetpackcompnavigation.navigation.AppNavigation
 import com.example.pillee.themes.PilleeTheme
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
+
+    private val auth = Firebase.auth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
             PilleeTheme{
                 Surface(color = MaterialTheme.colors.background){
-                    AppNavigation()
+                    AppNavigation(auth)
                 }
 
         }
@@ -63,5 +68,5 @@ fun MyImage (){
 @Preview(showBackground = true)
 @Composable
 fun PreviewComponent(){
-    AppNavigation()
+    AppNavigation(Firebase.auth)
 }

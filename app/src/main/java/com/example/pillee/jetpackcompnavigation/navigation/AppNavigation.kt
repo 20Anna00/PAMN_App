@@ -12,16 +12,17 @@ import com.example.pillee.jetpackcompnavigation.screens.StartPageScreen
 import com.example.pillee.jetpackcompnavigation.screens.ScheduleScreen
 import com.example.pillee.jetpackcompnavigation.screens.ConfigurationScreen
 import com.example.pillee.jetpackcompnavigation.screens.AppointmentScreen
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun AppNavigation (){
+fun AppNavigation (auth: FirebaseAuth){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route){
             HomeScreen(navController)
         }
         composable(route = AppScreens.LoginScreen.route){
-            LoginScreen(navController)
+            LoginScreen(navController, auth)
         }
         composable(route = AppScreens.RegisterScreen.route) {
             RegisterScreen(navController)
