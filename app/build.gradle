@@ -4,6 +4,9 @@ plugins {
     id 'kotlin-android'
     id 'com.google.firebase.crashlytics'
     id 'com.google.gms.google-services'
+    id 'kotlin-android-extensions'
+    id 'com.google.firebase.crashlytics'
+    id 'com.google.gms.google-services'
 
 }
 
@@ -71,5 +74,6 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+
 }
 
