@@ -75,8 +75,7 @@ fun LoginBodyContent(
 @Composable
 fun loginButton(navController: NavController, loginViewModel: LoginViewModel?, loginUiState: LoginUiState?, context: Context) {
     Button(onClick = {
-        loginViewModel?.loginUser(context)
-        navController.navigate(route = AppScreens.StartPageScreen.route)
+        loginViewModel?.loginUser(context, navController)
     }, colors = ButtonDefaults.buttonColors( Color(46, 104, 117)),
         modifier = Modifier
             .width(280.dp)

@@ -7,6 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.NavController
+import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import kotlinx.coroutines.launch
 import java.net.PasswordAuthentication
 
@@ -31,18 +33,18 @@ class LoginViewModel(
     private fun validateForm() =
         loginUiState.email.isNotBlank() && loginUiState.password.isNotBlank()
 
-    fun loginUser(context: Context) = viewModelScope.launch {
+    fun loginUser(context: Context, navController: NavController) = viewModelScope.launch {
         try {
             if(!validateForm()){
                 Toast.makeText(context, "Invalid email or password", Toast.LENGTH_SHORT).show()
             }
             repository.login(loginUiState.email, loginUiState.password){
                 isSuccessful -> if(isSuccessful){
+                    navController.navigate(route = AppScreens.StartPageScreen.route)
                     Toast.makeText(context, "Success Login", Toast.LENGTH_SHORT).show()
-                    loginUiState = loginUiState.copy(isSuccessLogin = true)
                 }else{
+
                     Toast.makeText(context, "Failed Login", Toast.LENGTH_SHORT).show()
-                    loginUiState = loginUiState.copy(isSuccessLogin = false)
                 }
             }
         }catch (e:Exception){
@@ -55,6 +57,4 @@ class LoginViewModel(
 data class LoginUiState(
     val email: String = "",
     val password: String = "",
-    val isSuccessLogin: Boolean = false
-
 )
