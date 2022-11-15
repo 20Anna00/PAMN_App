@@ -9,8 +9,8 @@ import com.example.pillee.themes.CentralAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppointmentScreen(navController: NavController){
-    Scaffold(topBar = { CentralAppBar(navController, "Add Appointment",  AppScreens.ConfigurationScreen.route) }) {
+fun AddMedicineScreen(navController: NavController){
+    Scaffold(topBar = { CentralAppBar(navController, "Add Medicine",  AppScreens.ConfigurationScreen.route) }) {
 
     }
 }

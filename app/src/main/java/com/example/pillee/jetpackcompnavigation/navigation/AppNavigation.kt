@@ -37,5 +37,8 @@ fun AppNavigation (auth: FirebaseAuth){
         composable(route = AppScreens.RefillScreen.route){
             RefillScreen(navController)
         }
+        composable(route = AppScreens.AddMedicineScreen.route){
+            AddMedicineScreen(navController)
+        }
     }
 }
