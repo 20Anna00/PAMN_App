@@ -1,4 +1,4 @@
-package com.example.pillee.jetpackcompnavigation.screens
+package com.example.pillee.jetpackcompnavigation.model.repository
 
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference

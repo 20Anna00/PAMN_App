@@ -1,4 +1,4 @@
-package com.example.pillee.jetpackcompnavigation.screens
+package com.example.pillee.jetpackcompnavigation.model
 
 data class Pills(
     val userId:String = "",

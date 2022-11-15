@@ -1,4 +1,4 @@
-package com.example.pillee.jetpackcompnavigation.screens
+package com.example.pillee.jetpackcompnavigation.screens.login
 
 import android.content.Context
 import android.widget.Toast
@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
+import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import kotlinx.coroutines.launch
-import java.net.PasswordAuthentication
 
 class LoginViewModel(
     private val repository: AuthRepository = AuthRepository()

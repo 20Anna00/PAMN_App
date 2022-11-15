@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pillee.jetpackcompnavigation.screens.HomeScreen
-import com.example.pillee.jetpackcompnavigation.screens.LoginScreen
+import com.example.pillee.jetpackcompnavigation.screens.login.LoginScreen
 import com.example.pillee.jetpackcompnavigation.screens.RegisterScreen
 import com.example.pillee.jetpackcompnavigation.screens.StartPageScreen
 import com.example.pillee.jetpackcompnavigation.screens.ScheduleScreen
