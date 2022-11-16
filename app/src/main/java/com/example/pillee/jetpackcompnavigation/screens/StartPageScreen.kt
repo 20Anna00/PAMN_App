@@ -34,10 +34,10 @@ fun StartBodyContent(navController: NavController) {
         ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Start page", color = Color.White, fontSize = 40.sp)
+        //Text("Start page", color = Color.White, fontSize = 40.sp)
         scheduleButton(navController)
         refillButton(navController)
-        appointmentButton(navController)
+        //appointmentButton(navController)
         configurationButton(navController)
     }
 }

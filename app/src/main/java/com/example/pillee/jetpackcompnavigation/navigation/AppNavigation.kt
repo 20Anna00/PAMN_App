@@ -5,13 +5,8 @@ import androidx.compose.runtime.currentRecomposeScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.pillee.jetpackcompnavigation.screens.HomeScreen
+import com.example.pillee.jetpackcompnavigation.screens.*
 import com.example.pillee.jetpackcompnavigation.screens.login.LoginScreen
-import com.example.pillee.jetpackcompnavigation.screens.RegisterScreen
-import com.example.pillee.jetpackcompnavigation.screens.StartPageScreen
-import com.example.pillee.jetpackcompnavigation.screens.ScheduleScreen
-import com.example.pillee.jetpackcompnavigation.screens.ConfigurationScreen
-import com.example.pillee.jetpackcompnavigation.screens.AppointmentScreen
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -38,6 +33,12 @@ fun AppNavigation (auth: FirebaseAuth){
         }
         composable(route = AppScreens.AppointmentScreen.route){
             AppointmentScreen(navController)
+        }
+        composable(route = AppScreens.RefillScreen.route){
+            RefillScreen(navController)
+        }
+        composable(route = AppScreens.AddMedicineScreen.route){
+            AddMedicineScreen(navController)
         }
     }
 }
