@@ -120,14 +120,3 @@ fun PasswordTextField(loginUiState: LoginUiState?, loginViewModel: LoginViewMode
         )
     )
 }
-
-fun logService(email: String, password: String){
-
-}
-
-
-@Preview
-@Composable
-fun loginPreview(){
-
-}
