@@ -12,9 +12,7 @@ import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import kotlinx.coroutines.launch
 
-class LoginViewModel(
-    private val repository: AuthRepository = AuthRepository()
-): ViewModel() {
+class LoginViewModel( private val repository: AuthRepository = AuthRepository()): ViewModel() {
     val currentUser = repository.currentUser
     val hasUser: Boolean
         get() = repository.hasUser()
