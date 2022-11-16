@@ -7,9 +7,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Module
+@dagger.Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     @Provides
     @Singleton
     fun provideFirestoreInstance() = FirebaseFirestore.getInstance()
