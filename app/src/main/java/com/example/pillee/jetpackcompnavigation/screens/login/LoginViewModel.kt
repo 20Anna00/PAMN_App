@@ -38,6 +38,7 @@ class LoginViewModel(
             if(!validateForm()){
                 Toast.makeText(context, "Invalid email or password", Toast.LENGTH_SHORT).show()
             }
+            println("Aqui llega")
             repository.login(loginUiState.email, loginUiState.password){
                 isSuccessful -> if(isSuccessful){
                     navController.navigate(route = AppScreens.StartPageScreen.route)
