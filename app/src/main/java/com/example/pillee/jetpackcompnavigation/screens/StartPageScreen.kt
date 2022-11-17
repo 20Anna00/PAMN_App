@@ -27,7 +27,7 @@ fun StartBodyContent(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(157, 193, 193)),
+            .background(Color(0xFFCFDBE1)),
         verticalArrangement = Arrangement.spacedBy(
             space = 75.dp,
             alignment = Alignment.CenterVertically,
@@ -46,42 +46,42 @@ fun StartBodyContent(navController: NavController) {
 fun scheduleButton(navController: NavController) {
     Button(onClick = {
         navController.navigate(route = AppScreens.ScheduleScreen.route)
-    }, colors = ButtonDefaults.buttonColors( Color(46, 104, 117)),
+    }, colors = ButtonDefaults.buttonColors( Color(0xFF174560)),
         modifier = Modifier
             .width(280.dp)
-            .height(75.dp)
-    ) { Text("Schedule", color = Color.White) }
+            .height(120.dp)
+    ) { Text("Schedule", color = Color.White, fontSize = 18.sp) }
 }
 
 @Composable
 fun refillButton(navController: NavController) {
     Button(onClick = {
         navController.navigate(route = AppScreens.RefillScreen.route)
-    }, colors = ButtonDefaults.buttonColors( Color(46, 104, 117)),
+    }, colors = ButtonDefaults.buttonColors( Color(0xFF174560)),
         modifier = Modifier
             .width(280.dp)
-            .height(75.dp)
-    ) { Text("Refill", color = Color.White) }
+            .height(120.dp)
+    ) { Text("Refill", color = Color.White, fontSize = 18.sp) }
 }
 @Composable
 fun appointmentButton(navController: NavController) {
     Button(onClick = {
         navController.navigate(route = AppScreens.AppointmentScreen.route)
-    }, colors = ButtonDefaults.buttonColors( Color(46, 104, 117)),
+    }, colors = ButtonDefaults.buttonColors( Color(0xFF174560)),
         modifier = Modifier
             .width(280.dp)
-            .height(75.dp)
+            .height(120.dp)
     ) { Text("Appointment", color = Color.White) }
 }
 @Composable
 fun configurationButton(navController: NavController) {
     Button(onClick = {
         navController.navigate(route = AppScreens.ConfigurationScreen.route)
-    }, colors = ButtonDefaults.buttonColors( Color(46, 104, 117)),
+    }, colors = ButtonDefaults.buttonColors( Color(0xFF174560)),
         modifier = Modifier
             .width(280.dp)
-            .height(75.dp)
-    ) { Text("Configuration", color = Color.White) }
+            .height(120.dp)
+    ) { Text("Configuration", color = Color.White, fontSize = 18.sp) }
 }
 
 @Preview
