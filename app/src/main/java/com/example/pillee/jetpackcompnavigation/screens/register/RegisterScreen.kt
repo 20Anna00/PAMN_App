@@ -50,6 +50,7 @@ fun RegisterBodyContent(navController: NavController,
         ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        NameTextField(registerUiState, registerViewModel)
         EmailTextField(registerUiState, registerViewModel)
         PasswordTextField(registerUiState, registerViewModel)
         registerButton(navController, registerUiState, registerViewModel, context)
@@ -76,7 +77,7 @@ fun NameTextField(registerUiState: RegisterUiState?, registerViewModel: Register
         value = registerUiState?.name ?: "",
         singleLine = true,
         onValueChange = { registerViewModel?.onNameChange(it) },
-        label = { Text(text = "Email") },
+        label = { Text(text = "Name") },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color(46, 104, 117),
             unfocusedBorderColor = Color.White,

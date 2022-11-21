@@ -1,6 +1,7 @@
 package com.example.pillee.jetpackcompnavigation.screens.register
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,12 +9,21 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
+import com.example.pillee.jetpackcompnavigation.model.Users
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
+import com.example.pillee.jetpackcompnavigation.model.repository.UserRepository
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.screens.register.RegisterUiState
+import com.google.firebase.firestore.auth.User
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegisterViewModel(private val repository: AuthRepository = AuthRepository()
+
+class RegisterViewModel(private val repository: AuthRepository = AuthRepository(),
+                        private val userRepository: UserRepository = UserRepository(),
 ): ViewModel(){
 
     val currentUser = repository.currentUser
@@ -45,6 +55,7 @@ class RegisterViewModel(private val repository: AuthRepository = AuthRepository(
             }
             repository.createUser(registerUiState.email, registerUiState.password){
                     isSuccessful -> if(isSuccessful){
+                        addUserToFirestore(currentUser!!.uid, registerUiState.name, registerUiState.email)
                 navController.navigate(route = AppScreens.StartPageScreen.route)
                 Toast.makeText(context, "Success Register", Toast.LENGTH_SHORT).show()
             }else{
@@ -57,8 +68,19 @@ class RegisterViewModel(private val repository: AuthRepository = AuthRepository(
         }
     }
 
+    private fun addUserToFirestore(id: String, name: String, email: String){
+        val user = Users(
+            id = id,
+            name = name,
+            email = email
+        )
+
+        userRepository.addNewUser(user)
+    }
 
 }
+
+
 
 data class RegisterUiState(
     val name: String = "",

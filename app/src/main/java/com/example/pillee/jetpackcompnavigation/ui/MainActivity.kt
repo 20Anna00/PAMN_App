@@ -16,6 +16,7 @@ import com.example.pillee.jetpackcompnavigation.navigation.AppNavigation
 import com.example.pillee.themes.PilleeTheme
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
 
 class MainActivity : ComponentActivity() {
 
