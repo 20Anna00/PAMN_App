@@ -10,14 +10,14 @@ import com.example.pillee.jetpackcompnavigation.screens.login.LoginScreen
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun AppNavigation (auth: FirebaseAuth){
+fun AppNavigation (){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = AppScreens.HomeScreen.route) {
         composable(route = AppScreens.HomeScreen.route){
             HomeScreen(navController)
         }
         composable(route = AppScreens.LoginScreen.route){
-            LoginScreen(navController, auth)
+            LoginScreen(navController)
         }
         composable(route = AppScreens.RegisterScreen.route) {
             RegisterScreen(navController)
@@ -39,6 +39,9 @@ fun AppNavigation (auth: FirebaseAuth){
         }
         composable(route = AppScreens.AddMedicineScreen.route){
             AddMedicineScreen(navController)
+        }
+        composable(route = AppScreens.PillDetailScreen.route){
+
         }
     }
 }
