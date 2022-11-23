@@ -1,11 +1,11 @@
 package com.example.pillee.jetpackcompnavigation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentRecomposeScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pillee.jetpackcompnavigation.screens.*
+import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentScreen
 import com.example.pillee.jetpackcompnavigation.screens.login.LoginScreen
 import com.google.firebase.auth.FirebaseAuth
 
