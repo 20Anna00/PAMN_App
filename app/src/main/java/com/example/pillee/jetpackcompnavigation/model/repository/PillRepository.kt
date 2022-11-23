@@ -1,15 +1,13 @@
 package com.example.pillee.jetpackcompnavigation.model.repository
 import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.google.firebase.firestore.CollectionReference
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
-@Singleton
-class PillRepository
-@Inject
-constructor(
-    private val pillList: CollectionReference
-){
+class PillRepository (){
+
+    private val pillList: CollectionReference = Firebase.firestore.collection("pills")
+
     fun addNewPill (pill: Pills){
         try {
             pillList.document(pill.id).set(pill)

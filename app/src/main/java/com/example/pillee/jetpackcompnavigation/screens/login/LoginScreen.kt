@@ -33,7 +33,6 @@ import com.google.firebase.ktx.Firebase
 @Composable
 fun LoginScreen(
     navController: NavController,
-    auth: FirebaseAuth,
     loginViewModel: LoginViewModel? = viewModel()
 ) {
     val loginUiState = loginViewModel?.loginUiState
