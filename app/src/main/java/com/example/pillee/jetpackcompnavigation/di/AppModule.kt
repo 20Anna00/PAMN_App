@@ -12,7 +12,6 @@ import javax.inject.Singleton
 object AppModule {
 
     @Provides
-    @Singleton
     fun provideFirestoreInstance() = FirebaseFirestore.getInstance()
 
     @Provides

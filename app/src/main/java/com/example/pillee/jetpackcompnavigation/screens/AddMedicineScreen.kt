@@ -1,5 +1,6 @@
 package com.example.pillee.jetpackcompnavigation.screens
 
+import android.app.TimePickerDialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -10,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -17,8 +19,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.themes.CentralAppBar
+import java.util.*
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,11 +37,29 @@ fun AddMedicineScreen(navController: NavController){
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MyUI() {
+    var name = "";
+    var day = "";
+    var hour = "";
+    var number = "";
+
+    val mContext = LocalContext.current
+    val mCalendar = Calendar.getInstance()
+    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
+    val mMinute = mCalendar[Calendar.MINUTE]
+    val mTime = remember {mutableStateOf("")}
+    val mTimePickerDialog = TimePickerDialog(
+        mContext,
+        {_, mHour : Int, mMinute: Int ->
+            mTime.value = "$mHour:$mMinute"
+
+        }, mHour, mMinute, false
+    )
+
     var textValue by remember { mutableStateOf(TextFieldValue("")) }
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color(0xFFE5E5E5)),
+        .background(Color(0xFFCFDBE1)),
         verticalArrangement = Arrangement.spacedBy(
             space = 65.dp,
             alignment = Alignment.CenterVertically ),
@@ -47,28 +70,39 @@ fun MyUI() {
         Column ()
         {
             Text("Name", color = Color.Black, fontSize = 20.sp)
-            MyDropDownMenu(list)
+            name = MyDropDownMenu(list)
         }
 
         Column()
         {
 
             Text("Day", color = Color.Black, fontSize = 20.sp)
-            MyDropDownMenu(list = list)
+            day = MyDropDownMenu(list = list)
         }
 
         Column()
         {
 
             Text("Hour", color = Color.Black, fontSize = 20.sp)
-            MyDropDownMenu(list = list)
+            Button(onClick = { mTimePickerDialog.show() },
+                colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
+                modifier = Modifier
+                    .width(280.dp)
+                    .height(60.dp)
+
+            ) {
+                Text(text = mTime.value, fontSize = 20.sp, color = Color.White)
+            }
+
         }
+
 
         Column()
         {
 
             Text("Number of Pills that were refilled", color = Color.Black, fontSize = 20.sp)
             TextField(
+                modifier = Modifier.height(60.dp).width(280.dp),
                 value = textValue, onValueChange = { textValue = it },
                 colors = textFieldColors(
                     textColor = Color.White,
@@ -81,12 +115,15 @@ fun MyUI() {
 
         }
     }
+    hour = mTime.value
+    number = textValue.toString()
+
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MyDropDownMenu(list : Array<String>) {
+fun MyDropDownMenu(list : Array<String>): String {
 
     val listItems = list
 
@@ -150,4 +187,5 @@ fun MyDropDownMenu(list : Array<String>) {
             }
         }
     }
+    return selectedItem;
 }

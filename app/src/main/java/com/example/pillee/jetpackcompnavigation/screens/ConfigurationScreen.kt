@@ -41,7 +41,7 @@ fun ConfigureBodyContent(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFE5E5E5)),
+            .background(Color(0xFFCFDBE1)),
         verticalArrangement = Arrangement.spacedBy(
             space = 75.dp,
             alignment = Alignment.CenterVertically,
@@ -79,10 +79,10 @@ fun addMedicineButton(navController: NavController) {
                 painter = painterResource(id = R.drawable.pills_1),
                 contentDescription = "Add Medicine",
                 modifier = Modifier
-                    .height(45.dp)
-                    .width(45.dp)
+                    .height(55.dp)
+                    .width(55.dp)
             )
-            Text("Add Medicine", color = Color.White)
+            Text("Add Medicine", color = Color.White, fontSize = 18.sp)
         }
     }
 }
@@ -110,10 +110,10 @@ fun addAppointmentButton(navController: NavController) {
             painter = painterResource(id = R.drawable.stethoscope_1),
             contentDescription = "Add Appointment",
             modifier = Modifier
-                .height(45.dp)
-                .width(45.dp)
+                .height(55.dp)
+                .width(55.dp)
         )
-        Text("Add a Doctors Appointment", color = Color.White)
+        Text("Add a Doctors Appointment", color = Color.White, fontSize = 18.sp)
     }
     }
 }
