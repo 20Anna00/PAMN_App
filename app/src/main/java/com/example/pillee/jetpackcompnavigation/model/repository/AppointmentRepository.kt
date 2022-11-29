@@ -19,9 +19,9 @@ class AppointmentRepository () {
         APPOINTMENT_COLLECTION_REF)
 
     @OptIn
-    fun addNewAppointment(appointment: Appointment){
+    fun addAppointmentToFirestore(appointment: Appointment){
         try{
-            userRef.document(user()!!.uid).set(appointment)
+            userRef.add(appointment)
         }catch (e:Exception){
             e.printStackTrace()
         }
