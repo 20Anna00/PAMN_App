@@ -55,8 +55,9 @@ import java.util.*
 fun AppointmentScreen(navController: NavController, appointmentViewModel: AppointmentViewModel = viewModel()){
     val context = LocalContext.current
     val appointmentUiState = appointmentViewModel?.appointmentUiState
+    val calendar = Calendar.getInstance()
     Scaffold() {
-        AppointmentBodyContent(navController, context, appointmentUiState, appointmentViewModel)
+        AppointmentBodyContent(navController, context, appointmentUiState, appointmentViewModel, calendar)
     }
 }
 
@@ -65,7 +66,8 @@ fun AppointmentScreen(navController: NavController, appointmentViewModel: Appoin
 fun AppointmentBodyContent(navController: NavController,
                            context: Context,
                            appointmentUiState: AppointmentUiState?,
-                           appointmentViewModel: AppointmentViewModel){
+                           appointmentViewModel: AppointmentViewModel, calendar: Calendar){
+
 
 
     Column(
@@ -90,7 +92,7 @@ fun AppointmentBodyContent(navController: NavController,
             )
             ) {
             optionsText(text = "Date: ")
-            date(appointmentUiState, appointmentViewModel)
+            date(appointmentUiState, appointmentViewModel, calendar)
         }
         Row(
             modifier = Modifier
@@ -102,7 +104,7 @@ fun AppointmentBodyContent(navController: NavController,
             )
         ) {
             optionsText(text = "Time: ")
-            time(appointmentUiState, appointmentViewModel)
+            time(appointmentUiState, appointmentViewModel, calendar)
         }
         Row(
             modifier = Modifier
@@ -117,6 +119,20 @@ fun AppointmentBodyContent(navController: NavController,
             HospitalTextField(appointmentUiState, appointmentViewModel)
 
         }
+
+        Row(
+            modifier = Modifier
+                .background(Color(157, 193, 193)),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(
+                space = 20.dp,
+                alignment = Alignment.Start
+            )
+        ){
+            optionsText(text = "Name of the doctor: ")
+            DoctorTextField(appointmentUiState, appointmentViewModel )
+        }
+
         optionsText(text = "Concept of the appointment: ")
         ConceptTextField(appointmentUiState, appointmentViewModel )
         AddAppointmentButton(context, appointmentViewModel)
@@ -130,6 +146,23 @@ fun HospitalTextField(appointmentUiState: AppointmentUiState?, appointmentViewMo
         value = appointmentUiState?.hospital ?: "",
         singleLine = true,
         onValueChange = { appointmentViewModel?.onHospitalChange(it) },
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            focusedBorderColor = Color(46, 104, 117),
+            unfocusedBorderColor = Color.White,
+            unfocusedLabelColor = Color.White,
+            focusedLabelColor = Color(46, 104, 117)
+        )
+
+    )
+}
+
+@Composable
+fun DoctorTextField(appointmentUiState: AppointmentUiState?, appointmentViewModel: AppointmentViewModel) {
+
+    OutlinedTextField(
+        value = appointmentUiState?.doctorName ?: "",
+        singleLine = true,
+        onValueChange = { appointmentViewModel?.onDoctorChange(it) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color(46, 104, 117),
             unfocusedBorderColor = Color.White,
@@ -178,16 +211,15 @@ fun optionsText(text: String){
 }
 
 @Composable
-fun date(appointmentUiState: AppointmentUiState?, appointmentViewModel: AppointmentViewModel){
+fun date(appointmentUiState: AppointmentUiState?, appointmentViewModel: AppointmentViewModel, calendar: Calendar){
     val mContext = LocalContext.current
     val sdf = SimpleDateFormat("dd-MM-yyyy")
-    val mCalendar = Calendar.getInstance()
 
     // Fetching current year, month and day
-    val mYear = mCalendar.get(Calendar.YEAR)
-    val mMonth = mCalendar.get(Calendar.MONTH)
-    val mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
-    mCalendar.time = Date()
+    val mYear = calendar.get(Calendar.YEAR)
+    val mMonth = calendar.get(Calendar.MONTH)
+    val mDay = calendar.get(Calendar.DAY_OF_MONTH)
+    calendar.time = Date()
 
     // Declaring a string value to
     // store date in string format
@@ -216,12 +248,11 @@ fun date(appointmentUiState: AppointmentUiState?, appointmentViewModel: Appointm
 }
 
 @Composable
-fun time(appointmentUiState: AppointmentUiState?, appointmentViewModel: AppointmentViewModel){
+fun time(appointmentUiState: AppointmentUiState?, appointmentViewModel: AppointmentViewModel, calendar: Calendar){
     val mContext = LocalContext.current
-    val mCalendar = Calendar.getInstance()
     val sdf = SimpleDateFormat("hh:mm")
-    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
-    val mMinute = mCalendar[Calendar.MINUTE]
+    val mHour = calendar[Calendar.HOUR_OF_DAY]
+    val mMinute = calendar[Calendar.MINUTE]
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
@@ -272,6 +303,6 @@ fun CalendarIcon() {
 @Composable
 fun appointmentScreenPreview(){
     AppointmentBodyContent(rememberNavController(), LocalContext.current,
-        AppointmentViewModel().appointmentUiState, AppointmentViewModel()
+        AppointmentViewModel().appointmentUiState, AppointmentViewModel(), Calendar.getInstance()
     )
 }

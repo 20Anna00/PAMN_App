@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Calendar
+import java.util.*
 import java.util.logging.Level.parse
 
 
@@ -45,6 +45,10 @@ class AppointmentViewModel(
         appointmentUiState = appointmentUiState.copy(hospital = hospital)
     }
 
+    fun onDoctorChange(doctor: String){
+        appointmentUiState = appointmentUiState.copy(doctorName = doctor)
+    }
+
     fun onConceptChange(concept: String){
         appointmentUiState = appointmentUiState.copy(concept = concept)
     }
@@ -58,10 +62,15 @@ class AppointmentViewModel(
             if (!validateAppointment()) {
                 Toast.makeText(context, "All fields should be filled", Toast.LENGTH_SHORT).show()
             } else {
-                val today = Calendar.getInstance()
+                Log.d("TAG", "${ appointmentUiState.date} ${ appointmentUiState.time}")
+                val calendar = Calendar.getInstance()
+                val dateTime = appointmentUiState.date + " " + appointmentUiState.time
+                val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
+                calendar.setTime(sdf.parse(dateTime))
+
                 val appointment = Appointment(
                     currentUser!!.uid,
-                    Timestamp(today.time),
+                    Timestamp(calendar.time),
                     appointmentUiState.hospital,
                     appointmentUiState.doctorName,
                     appointmentUiState.concept
