@@ -28,4 +28,6 @@ val secondaryColor = Color(0xff2e6875)
 val white = Color(0xffffffff)
 val black = Color(0xff201f1e)
 val light_black = Color(0xff353434)
+val schedule_green = Color(0xff149274)
+val schedule_blue = Color(0xff174560)
 
