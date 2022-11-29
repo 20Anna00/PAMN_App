@@ -22,7 +22,7 @@ import com.example.pillee.themes.CentralAppBar
 import java.util.*
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-
+val listPills = arrayOf("Hibuprofeno", "Termagin", "Paracetamol", "Dalzy", "Anfetas", "Coca", "Cristal")
 
 
 
@@ -70,7 +70,7 @@ fun MyUI() {
         Column ()
         {
             Text("Name", color = Color.Black, fontSize = 20.sp)
-            name = MyDropDownMenu(list)
+            name = MyDropDownMenu(listPills)
         }
 
         Column()

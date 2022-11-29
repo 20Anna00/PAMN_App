@@ -1,7 +1,9 @@
 package com.example.pillee.jetpackcompnavigation.ui
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -19,6 +21,15 @@ class MainActivity : ComponentActivity() {
     private val auth = Firebase.auth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                // FCM SDK (and your app) can post notifications.
+            } else {
+                // TODO: Inform user that that your app will not show notifications.
+            }
+        }
         setContent {
 
           PilleeTheme {
@@ -35,4 +46,9 @@ class MainActivity : ComponentActivity() {
         //AppNavigation()
 
     }
+
+
+
+
+
 }
