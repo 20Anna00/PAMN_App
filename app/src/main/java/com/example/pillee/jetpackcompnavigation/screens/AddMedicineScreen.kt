@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -102,7 +103,9 @@ fun MyUI() {
 
             Text("Number of Pills that were refilled", color = Color.Black, fontSize = 20.sp)
             TextField(
-                modifier = Modifier.height(60.dp).width(280.dp),
+                modifier = Modifier
+                    .height(60.dp)
+                    .width(280.dp),
                 value = textValue, onValueChange = { textValue = it },
                 colors = textFieldColors(
                     textColor = Color.White,
@@ -188,4 +191,10 @@ fun MyDropDownMenu(list : Array<String>): String {
         }
     }
     return selectedItem;
+}
+
+@Preview
+@Composable
+fun addMedicinePreview(){
+    MyUI()
 }
