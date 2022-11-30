@@ -5,7 +5,7 @@ import com.google.firebase.Timestamp
 
 data class Pills(
     val id:String = "",
-    val userId:String = "",
+    val userID:String = "",
     val name:String = "",
     val days:String = "",
     val hour:String = Timestamp.now().toString(),

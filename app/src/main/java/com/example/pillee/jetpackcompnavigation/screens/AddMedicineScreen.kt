@@ -3,6 +3,7 @@ package com.example.pillee.jetpackcompnavigation.screens
 import android.app.TimePickerDialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.ExposedDropdownMenuDefaults.textFieldColors
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -87,6 +88,8 @@ fun MyUI() {
             Text("Hour", color = Color.Black, fontSize = 20.sp)
             Button(onClick = { mTimePickerDialog.show() },
                 colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
+                shape = RoundedCornerShape(8.dp),
+
                 modifier = Modifier
                     .width(280.dp)
                     .height(60.dp)
@@ -106,6 +109,7 @@ fun MyUI() {
                 modifier = Modifier
                     .height(60.dp)
                     .width(280.dp),
+                shape = RoundedCornerShape(8.dp),
                 value = textValue, onValueChange = { textValue = it },
                 colors = textFieldColors(
                     textColor = Color.White,
@@ -147,6 +151,7 @@ fun MyDropDownMenu(list : Array<String>): String {
 
 
             TextField(
+                shape = RoundedCornerShape(8.dp),
                 value = selectedItem,
                 onValueChange = { selectedItem = it },
                 //label = { Text(text = "Name") },

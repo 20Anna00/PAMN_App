@@ -6,20 +6,21 @@ import androidx.lifecycle.ViewModel
 import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.example.pillee.jetpackcompnavigation.model.repository.PillRepository
 import com.example.pillee.jetpackcompnavigation.screens.PillDetailState
+import com.google.firebase.firestore.CollectionReference
 import java.util.UUID
 
 
 
 class PillDetailViewModel
 constructor(
-    private val pillRepository: PillRepository
+    private val pillRepository: PillRepository = PillRepository()
 ): ViewModel(){
 
 
     fun addNewPill(userId : String, name : String, days : String , hour : String, daysRefill : String , quantityPC : Int, totalAmount : Int){
         val pill = Pills(
             id=UUID.randomUUID().toString(),
-            userId = userId,
+            userID = userId,
             name = name,
             days = days,
             hour = hour,
@@ -28,5 +29,9 @@ constructor(
             totalAmount = totalAmount
         )
         pillRepository.addNewPill(pill)
+    }
+
+    fun getPills(): List<Pills> {
+        return pillRepository.getPillList();
     }
 }
