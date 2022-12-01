@@ -32,5 +32,7 @@ val schedule_green = Color(0xff149274)
 val schedule_blue = Color(0xff174560)
 val schedule_lightgreen = Color(0xff9CCBC0)
 val schedule_red = Color(0xffB10024)
-
+val background_color = Color(0xFFCFDBE1)
+val home_red = Color(0xffB10024)
+val home_grey = Color(0xff3B3B3B)
 

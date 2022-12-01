@@ -87,7 +87,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel){
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(Color(0xFFCFDBE1)),
+        .background(background_color),
         verticalArrangement = Arrangement.spacedBy(
             space = 25.dp,
             alignment = Alignment.CenterVertically ),

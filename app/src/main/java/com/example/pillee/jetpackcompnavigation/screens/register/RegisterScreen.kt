@@ -22,6 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.screens.register.RegisterUiState
 import com.example.pillee.jetpackcompnavigation.screens.register.RegisterViewModel
+import com.example.pillee.themes.background_color
 import com.google.firebase.auth.FirebaseAuth
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +44,7 @@ fun RegisterBodyContent(navController: NavController,
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(157, 193, 193)),
+            .background(background_color),
         verticalArrangement = Arrangement.spacedBy(
             space = 20.dp,
             alignment = Alignment.CenterVertically,
@@ -112,6 +113,7 @@ fun PasswordTextField(registerUiState: RegisterUiState?, registerViewModel: Regi
     OutlinedTextField(
         value = registerUiState?.password?:"",
         singleLine = true,
+        label = { Text(text = "Password") },
         onValueChange = { registerViewModel?.onPasswordChange(it) },
         visualTransformation = PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),

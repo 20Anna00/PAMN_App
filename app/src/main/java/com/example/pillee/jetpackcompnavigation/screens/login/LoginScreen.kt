@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.screens.login.LoginUiState
 import com.example.pillee.jetpackcompnavigation.screens.login.LoginViewModel
+import com.example.pillee.themes.background_color
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.ktx.Firebase
 
@@ -59,7 +60,7 @@ fun LoginBodyContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(157, 193, 193)),
+            .background(background_color),
         verticalArrangement = Arrangement.spacedBy(
             space = 20.dp,
             alignment = Alignment.CenterVertically,
@@ -108,6 +109,8 @@ fun PasswordTextField(loginUiState: LoginUiState?, loginViewModel: LoginViewMode
     OutlinedTextField(
         value = loginUiState?.password?:"",
         singleLine = true,
+        label = { Text(text = "Password") },
+
         onValueChange = { loginViewModel?.onPasswordChange(it) },
         visualTransformation = PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
