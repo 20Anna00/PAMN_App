@@ -99,8 +99,8 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel){
         for (pill in morningPills){
             showPill(pill.name, pill.days, pill.hour)
         }
-        showPill("namejfij", "days", "08:30")
-        showPill("namejfij", "days", "23:50")
+        //showPill("namejfij", "days", "08:30")
+        //showPill("namejfij", "days", "23:50")
 
 
         Text(text = "Afternoon", color = Color.Black, fontSize = 30.sp)

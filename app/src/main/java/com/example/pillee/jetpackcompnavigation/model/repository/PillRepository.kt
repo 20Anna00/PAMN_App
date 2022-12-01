@@ -10,6 +10,8 @@ import kotlinx.coroutines.tasks.await
 
 class PillRepository (){
 
+    var pills = mutableListOf<Pills>()
+
     private val pillList: CollectionReference = Firebase.firestore.collection("pills")
 
     fun addNewPill (pill: Pills){
@@ -21,12 +23,16 @@ class PillRepository (){
     }
 
     fun getPillList(): List<Pills> {
-        var pills = mutableListOf<Pills>()
+        var pill1 = Pills("ja", "nein", "omg", "", "", "", 20, 20)
+
         try {
             pillList.get()
                 .addOnSuccessListener { result ->
                     for (document in result) {
-                        pills.add(document.toObject(Pills::class.java))
+                        Log.d(TAG, "${document.id} => ${document.data}")
+                        var pill = document.toObject(Pills::class.java)
+                        Log.d(TAG, pill.name)
+                        pills.add(pill)
                     }
                 }
                 .addOnFailureListener { exception ->
