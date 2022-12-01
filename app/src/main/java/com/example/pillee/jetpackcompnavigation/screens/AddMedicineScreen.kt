@@ -1,26 +1,35 @@
 package com.example.pillee.jetpackcompnavigation.screens
 
 import android.app.TimePickerDialog
+import android.content.Context
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.ExposedDropdownMenuDefaults.textFieldColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.pillee.R
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
+import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentViewModel
 import com.example.pillee.themes.CentralAppBar
+import com.example.pillee.themes.schedule_blue
+import com.example.pillee.themes.white
 import java.util.*
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -63,7 +72,7 @@ fun MyUI() {
         .fillMaxSize()
         .background(Color(0xFFCFDBE1)),
         verticalArrangement = Arrangement.spacedBy(
-            space = 65.dp,
+            space = 55.dp,
             alignment = Alignment.CenterVertically ),
         horizontalAlignment = Alignment.CenterHorizontally
 
@@ -71,31 +80,32 @@ fun MyUI() {
     {
         Column ()
         {
-            Text("Name", color = Color.Black, fontSize = 20.sp)
+            Text("Name:", color = Color.Black, fontSize = 20.sp)
             name = MyDropDownMenu(listPills)
         }
 
         Column()
         {
 
-            Text("Day", color = Color.Black, fontSize = 20.sp)
+            Text("Day:", color = Color.Black, fontSize = 20.sp)
             day = MyDropDownMenu(list = list)
         }
 
         Column()
         {
 
-            Text("Hour", color = Color.Black, fontSize = 20.sp)
+            Text("Hour:", color = Color.Black, fontSize = 20.sp)
             Button(onClick = { mTimePickerDialog.show() },
                 colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
                 shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
 
-                modifier = Modifier
-                    .width(280.dp)
-                    .height(60.dp)
+
 
             ) {
                 Text(text = mTime.value, fontSize = 20.sp, color = Color.White)
+                ClockIcon()
+
             }
 
         }
@@ -104,26 +114,29 @@ fun MyUI() {
         Column()
         {
 
-            Text("Number of Pills that were refilled", color = Color.Black, fontSize = 20.sp)
-            TextField(
+            Text("Number of Pills that were refilled:", color = Color.Black, fontSize = 20.sp)
+            OutlinedTextField(
                 modifier = Modifier
                     .height(60.dp)
                     .width(280.dp),
                 shape = RoundedCornerShape(8.dp),
                 value = textValue, onValueChange = { textValue = it },
-                colors = textFieldColors(
-                    textColor = Color.White,
-                    trailingIconColor = Color.White,
-                    placeholderColor = Color(0xFF174560),
-                    backgroundColor = Color(0xFF174560),
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Color(46, 104, 117),
+                    unfocusedBorderColor = Color.White,
+                    unfocusedLabelColor = Color.White,
+                    focusedLabelColor = Color(46, 104, 117)
 
                     )
             )
 
         }
+        AddMedicineButton()
+
     }
     hour = mTime.value
     number = textValue.toString()
+
 
 }
 
@@ -202,4 +215,27 @@ fun MyDropDownMenu(list : Array<String>): String {
 @Composable
 fun addMedicinePreview(){
     MyUI()
+}
+
+@Composable
+fun ClockIcon() {
+    val imageModifier = Modifier.size(43.dp)
+    Image(
+        painter = painterResource(id = R.drawable.schedule_fill0_wght400_grad0_opsz48),
+        contentDescription = null,
+        colorFilter = ColorFilter.tint(color = white),
+        modifier = imageModifier
+    )
+}
+
+@Composable
+fun AddMedicineButton(){
+    androidx.compose.material3.Button(
+        onClick = {
+        }, colors = ButtonDefaults.buttonColors(schedule_blue),
+        modifier = Modifier
+            .width(280.dp)
+            .height(50.dp)
+
+    ) { androidx.compose.material3.Text("Add Pill", color = Color.White) }
 }

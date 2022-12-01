@@ -43,6 +43,8 @@ import com.example.pillee.jetpackcompnavigation.screens.addAppointmentButton
 import com.example.pillee.jetpackcompnavigation.screens.register.RegisterUiState
 import com.example.pillee.jetpackcompnavigation.screens.register.RegisterViewModel
 import com.example.pillee.themes.CentralAppBar
+import com.example.pillee.themes.background_color
+import com.example.pillee.themes.schedule_blue
 import com.example.pillee.themes.white
 import io.grpc.internal.ReadableBuffer
 import java.sql.Time
@@ -56,7 +58,7 @@ fun AppointmentScreen(navController: NavController, appointmentViewModel: Appoin
     val context = LocalContext.current
     val appointmentUiState = appointmentViewModel?.appointmentUiState
     val calendar = Calendar.getInstance()
-    Scaffold() {
+    Scaffold(topBar = { CentralAppBar(navController, "Add Appointment",  AppScreens.ConfigurationScreen.route) }) {
         AppointmentBodyContent(navController, context, appointmentUiState, appointmentViewModel, calendar)
     }
 }
@@ -73,18 +75,14 @@ fun AppointmentBodyContent(navController: NavController,
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(157, 193, 193))
+            .background(background_color)
             .padding(start = 25.dp, top = 25.dp)
         ,
-        verticalArrangement = Arrangement.spacedBy(
-            space = 20.dp,
-            alignment = Alignment.Top,
-        ),
-        horizontalAlignment = Alignment.Start
-    ) {
+        verticalArrangement = Arrangement.SpaceEvenly
+
+        ,
+        horizontalAlignment = Alignment.CenterHorizontally    ) {
         Row(
-            modifier = Modifier
-                .background(Color(157, 193, 193)),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(
                 space = 20.dp,
@@ -95,8 +93,6 @@ fun AppointmentBodyContent(navController: NavController,
             date(appointmentUiState, appointmentViewModel, calendar)
         }
         Row(
-            modifier = Modifier
-                .background(Color(157, 193, 193)),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(
                 space = 20.dp,
@@ -106,35 +102,20 @@ fun AppointmentBodyContent(navController: NavController,
             optionsText(text = "Time: ")
             time(appointmentUiState, appointmentViewModel, calendar)
         }
-        Row(
-            modifier = Modifier
-                .background(Color(157, 193, 193)),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(
-                space = 20.dp,
-                alignment = Alignment.Start
-            )
-        ){
+        Column() {
             optionsText(text = "Name of the hospital: ")
             HospitalTextField(appointmentUiState, appointmentViewModel)
 
         }
-
-        Row(
-            modifier = Modifier
-                .background(Color(157, 193, 193)),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(
-                space = 20.dp,
-                alignment = Alignment.Start
-            )
+        Column(
         ){
             optionsText(text = "Name of the doctor: ")
             DoctorTextField(appointmentUiState, appointmentViewModel )
         }
-
+    Column() {
         optionsText(text = "Concept of the appointment: ")
-        ConceptTextField(appointmentUiState, appointmentViewModel )
+        ConceptTextField(appointmentUiState, appointmentViewModel)
+    }
         AddAppointmentButton(context, appointmentViewModel)
     }
 }
@@ -193,7 +174,7 @@ fun ConceptTextField(appointmentUiState: AppointmentUiState?, appointmentViewMod
 fun AddAppointmentButton(context: Context, appointmentViewModel: AppointmentViewModel){
     Button(onClick = {
         appointmentViewModel.addNewAppointment(context = context)
-    }, colors = ButtonDefaults.buttonColors( Color(46, 104, 117)),
+    }, colors = ButtonDefaults.buttonColors( schedule_blue),
         modifier = Modifier
             .width(280.dp)
             .height(50.dp)
@@ -239,9 +220,9 @@ fun date(appointmentUiState: AppointmentUiState?, appointmentViewModel: Appointm
     Button(onClick = {
         mDatePickerDialog.show()
     }, modifier = dateButtonModifier,
-        contentPadding = PaddingValues(top = 1.dp, bottom = 1.dp, start = 15.dp, end = 15.dp)
-        , colors = ButtonDefaults.buttonColors( Color(46, 104, 117)) ) {
-        Text(text = "${ appointmentUiState?.date }", color = Color.White)
+        contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 15.dp, end = 25.dp)
+        , colors = ButtonDefaults.buttonColors( schedule_blue) ) {
+        Text(text = "${ appointmentUiState?.date }", fontSize = 20.sp,color = Color.White)
         Spacer(modifier = Modifier.width(10.dp))
         CalendarIcon()
        }
@@ -266,9 +247,9 @@ fun time(appointmentUiState: AppointmentUiState?, appointmentViewModel: Appointm
     Button(onClick = {
         mTimePickerDialog.show()
     }, modifier = timeButtonModifier,
-        contentPadding = PaddingValues(top = 1.dp, bottom = 1.dp, start = 15.dp, end = 15.dp)
-        , colors = ButtonDefaults.buttonColors( Color(46, 104, 117)) ) {
-        Text(text = "${ appointmentUiState?.time }", color = Color.White)
+        contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 15.dp, end = 25.dp)
+        , colors = ButtonDefaults.buttonColors(schedule_blue) ) {
+        Text(text = "${ appointmentUiState?.time }", fontSize = 20.sp,color = Color.White)
         Spacer(modifier = Modifier.width(10.dp))
         ClockIcon()
     }
@@ -276,7 +257,7 @@ fun time(appointmentUiState: AppointmentUiState?, appointmentViewModel: Appointm
 
 @Composable
 fun ClockIcon() {
-    val imageModifier = Modifier.size(23.dp)
+    val imageModifier = Modifier.size(43.dp)
     Image(
         painter = painterResource(id = R.drawable.schedule_fill0_wght400_grad0_opsz48),
         contentDescription = null,
@@ -287,7 +268,7 @@ fun ClockIcon() {
 
 @Composable
 fun CalendarIcon() {
-    val imageModifier = Modifier.size(23.dp)
+    val imageModifier = Modifier.size(43.dp)
     Image(
         painter = painterResource(id = R.drawable.calendar_month_fill0_wght400_grad0_opsz48),
         contentDescription = null,
