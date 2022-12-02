@@ -1,10 +1,14 @@
 package com.example.pillee.jetpackcompnavigation.screens
 
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
+import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.ExposedDropdownMenuDefaults.textFieldColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -17,9 +21,17 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
+import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentUiState
+import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentViewModel
+import com.example.pillee.jetpackcompnavigation.screens.appointment.CalendarIcon
+import com.example.pillee.jetpackcompnavigation.screens.appointment.ClockIcon
+import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailViewModel
+import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillUiState
 import com.example.pillee.themes.CentralAppBar
+import java.text.SimpleDateFormat
 import java.util.*
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -29,34 +41,27 @@ val listPills = arrayOf("Hibuprofeno", "Termagin", "Paracetamol", "Dalzy", "Anfe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMedicineScreen(navController: NavController){
+fun AddMedicineScreen(navController: NavController, pillDetailViewModel: PillDetailViewModel = viewModel()){
     Scaffold(topBar = { CentralAppBar(navController, "Add Medicine",  AppScreens.ConfigurationScreen.route) }) {
-        MyUI()
+        val pillUiState = pillDetailViewModel.pillUiState
+        AddMedicineBodyContent(navController, LocalContext.current, pillUiState, pillDetailViewModel)
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MyUI() {
+fun AddMedicineBodyContent(
+    navController: NavController,
+    context: Context,
+    pillUiState: PillUiState,
+    pillDetailViewModel: PillDetailViewModel
+) {
     var name = "";
     var day = "";
     var hour = "";
     var number = "";
 
-    val mContext = LocalContext.current
-    val mCalendar = Calendar.getInstance()
-    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
-    val mMinute = mCalendar[Calendar.MINUTE]
-    val mTime = remember {mutableStateOf("")}
-    val mTimePickerDialog = TimePickerDialog(
-        mContext,
-        {_, mHour : Int, mMinute: Int ->
-            mTime.value = "$mHour:$mMinute"
 
-        }, mHour, mMinute, false
-    )
-
-    var textValue by remember { mutableStateOf(TextFieldValue("")) }
 
     Column(modifier = Modifier
         .fillMaxSize()
@@ -85,15 +90,7 @@ fun MyUI() {
         {
 
             Text("Hour", color = Color.Black, fontSize = 20.sp)
-            Button(onClick = { mTimePickerDialog.show() },
-                colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
-                modifier = Modifier
-                    .width(280.dp)
-                    .height(60.dp)
-
-            ) {
-                Text(text = mTime.value, fontSize = 20.sp, color = Color.White)
-            }
+            time(pillUiState, pillDetailViewModel)
 
         }
 
@@ -102,11 +99,12 @@ fun MyUI() {
         {
 
             Text("Number of Pills that were refilled", color = Color.Black, fontSize = 20.sp)
-            TextField(
+
+            /*TextField(
                 modifier = Modifier
                     .height(60.dp)
                     .width(280.dp),
-                value = textValue, onValueChange = { textValue = it },
+                value = pillUiState.totalAmount, onValueChange = {  },
                 colors = textFieldColors(
                     textColor = Color.White,
                     trailingIconColor = Color.White,
@@ -114,13 +112,44 @@ fun MyUI() {
                     backgroundColor = Color(0xFF174560),
 
                     )
-            )
+            )*/
 
         }
     }
-    hour = mTime.value
-    number = textValue.toString()
 
+}
+
+
+@Composable
+fun time(pillUiState: PillUiState?, pillDetailViewModel: PillDetailViewModel){
+
+    val mContext = LocalContext.current
+    val calendar = Calendar.getInstance()
+    val sdf = SimpleDateFormat("hh:mm")
+    val mHour = calendar[Calendar.HOUR_OF_DAY]
+    val mMinute = calendar[Calendar.MINUTE]
+    val mTimePickerDialog = TimePickerDialog(
+        mContext,
+        {_, mHour : Int, mMinute: Int ->
+            pillDetailViewModel.onHourChange("$mHour:$mMinute")
+
+        }, mHour, mMinute, false
+    )
+
+    val timeButtonModifier = Modifier.padding(start = 1.dp, end = 1.dp, top = 1.dp, bottom = 1.dp)
+
+    androidx.compose.material3.Button(
+        onClick = {
+            mTimePickerDialog.show()
+        },
+        modifier = timeButtonModifier,
+        contentPadding = PaddingValues(top = 1.dp, bottom = 1.dp, start = 15.dp, end = 15.dp),
+        colors = ButtonDefaults.buttonColors(Color(46, 104, 117))
+    ) {
+        androidx.compose.material3.Text(text = "${pillUiState?.hour}", color = Color.White)
+        Spacer(modifier = Modifier.width(10.dp))
+        ClockIcon()
+    }
 }
 
 
@@ -191,10 +220,4 @@ fun MyDropDownMenu(list : Array<String>): String {
         }
     }
     return selectedItem;
-}
-
-@Preview
-@Composable
-fun addMedicinePreview(){
-    MyUI()
 }

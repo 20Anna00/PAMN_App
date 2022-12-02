@@ -8,9 +8,9 @@ class PillRepository (){
 
     private val pillList: CollectionReference = Firebase.firestore.collection("pills")
 
-    fun addNewPill (pill: Pills){
+    fun addPillToFirestore (pill: Pills){
         try {
-            pillList.document(pill.id).set(pill)
+            pillList.add(pill)
         }catch (e: Exception){
             e.printStackTrace()
         }

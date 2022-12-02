@@ -4,21 +4,19 @@ import com.google.firebase.Timestamp
 
 
 data class Pills(
-    val id:String = "",
-    val userId:String = "",
-    val name:String = "",
-    val days:String = "",
-    val hour:String = Timestamp.now().toString(),
-    val daysRefill:String = "",
-    val quantityPC: Int = 0,
-    val totalAmount: Int = 0
+    val userId:String,
+    val name:String,
+    val days:String,
+    val hour:Timestamp,
+    val daysRefill:String,
+    val quantityPC: Int,
+    val totalAmount: Int
 ){
     constructor() : this(
         "",
         "" ,
         "",
-        "",
-        "",
+        Timestamp.now(),
         "",
         0,
         0

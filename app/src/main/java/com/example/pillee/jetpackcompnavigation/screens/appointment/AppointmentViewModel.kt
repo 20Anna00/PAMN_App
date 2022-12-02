@@ -22,13 +22,13 @@ import java.util.logging.Level.parse
 
 
 class AppointmentViewModel(
-    private val repository: AuthRepository = AuthRepository(),
+    private val authRepository: AuthRepository = AuthRepository(),
     private val appointmentRepository: AppointmentRepository = AppointmentRepository(),
 ): ViewModel(){
 
-    val currentUser = repository.currentUser
+    val currentUser = authRepository.currentUser
     val hasUser: Boolean
-        get() = repository.hasUser()
+        get() = authRepository.hasUser()
 
     var appointmentUiState by mutableStateOf(AppointmentUiState())
         private set
@@ -62,7 +62,6 @@ class AppointmentViewModel(
             if (!validateAppointment()) {
                 Toast.makeText(context, "All fields should be filled", Toast.LENGTH_SHORT).show()
             } else {
-                Log.d("TAG", "${ appointmentUiState.date} ${ appointmentUiState.time}")
                 val calendar = Calendar.getInstance()
                 val dateTime = appointmentUiState.date + " " + appointmentUiState.time
                 val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)

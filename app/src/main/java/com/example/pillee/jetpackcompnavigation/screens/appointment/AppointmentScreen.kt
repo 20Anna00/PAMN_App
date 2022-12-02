@@ -198,7 +198,7 @@ fun AddAppointmentButton(context: Context, appointmentViewModel: AppointmentView
             .width(280.dp)
             .height(50.dp)
 
-    ) { Text("Register", color = Color.White) }
+    ) { Text("Add appointment reminder", color = Color.White) }
 }
 
 
