@@ -2,7 +2,12 @@ package com.example.pillee.jetpackcompnavigation.screens
 
 import android.annotation.SuppressLint
 import android.icu.text.SimpleDateFormat
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
+import androidx.activity.compose.setContent
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -31,7 +36,22 @@ import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentViewModel
 import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailViewModel
 import com.example.pillee.themes.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.*
+
+/*@AndroidEntryPoint
+@ExperimentalCoroutinesApi
+class ScheduleScreenActivity: AppCompatActivity(){
+    private val viewModel: PillDetailViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            val dataOrException = viewModel.data.value
+        }
+    }
+}*/
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -44,23 +64,26 @@ fun ScheduleScreen(navController: NavController, pillViewModel: PillDetailViewMo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel){
+    val data = pillViewModel.data.value
     val mCalendar = Calendar.getInstance()
     val sdf = SimpleDateFormat("'Today is ' dd-MM-yyyy")
     val sdf2 = SimpleDateFormat("HH:mm")
     val currentDate = sdf.format(Date())
     val currentTime = sdf2.format(Date())
     val currentDay = mCalendar.get(Calendar.DAY_OF_WEEK)
-    var listPills = pillViewModel.getPills()
+    var listPills = data.data //pillViewModel.getPills()
     var pills = mutableListOf<Pills>()
-    var list = arrayOf("nothing", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+    var list = arrayOf("nothing", "nothing", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
     var morningPills = mutableListOf<Pills>()
     var afternoonPills = mutableListOf<Pills>()
     var eveningPills = mutableListOf<Pills>()
 
 
-    for (pill in listPills){
-        if(pill.days == list[currentDay]){
-            pills.add(pill)
+   if (listPills != null) {
+        for (pill in listPills){
+            if(pill.days == list[currentDay]){
+                pills.add(pill)
+            }
         }
     }
     var splitHour = currentTime.split(":")
@@ -70,7 +93,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel){
     for (pill in pills){
         var splitHourPill = pill.hour.split(":")
         var timePill = splitHourPill[0] + splitHourPill[1]
-        var timeRealPill = time.toInt()
+        var timeRealPill = timePill.toInt()
         if(timeRealPill <= 1100){
             morningPills.add(pill)
         }
@@ -95,6 +118,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel){
         Text(text = currentDate, color = Color.Black, fontSize = 30.sp)
         Text(text = currentTime, color = Color.Black, fontSize = 50.sp)
         Text(text = "Morning", color = Color.Black, fontSize = 30.sp)
+
 
         for (pill in morningPills){
             showPill(pill.name, pill.days, pill.hour)

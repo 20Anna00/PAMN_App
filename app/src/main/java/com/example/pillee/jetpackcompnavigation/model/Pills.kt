@@ -4,14 +4,14 @@ import com.google.firebase.Timestamp
 
 
 data class Pills(
-    val id:String = "",
-    val userID:String = "",
-    val name:String = "",
-    val days:String = "",
-    val hour:String = Timestamp.now().toString(),
-    val daysRefill:String = "",
-    val quantityPC: Int = 0,
-    val totalAmount: Int = 0
+    var id:String = "",
+    var userID:String = "",
+    var name:String = "",
+    var days:String = "",
+    var hour:String = Timestamp.now().toString(),
+    var daysRefill:String = "",
+    var quantityPC: Int = 0,
+    var totalAmount: Int = 0
 ){
     constructor() : this(
         "",
@@ -23,6 +23,64 @@ data class Pills(
         0,
         0
     )
+
+   /* fun getid(): String {
+        return id
+    }
+
+    fun getname(): String {
+        return name
+    }
+
+
+    fun getuserID(): String {
+        return userID
+    }
+
+    fun getdays(): String {
+        return days
+    }
+
+    fun gethour(): String {
+        return hour
+    }
+
+    fun getdaysRefill(): String {
+        return daysRefill
+    }
+
+    fun getquantityPC(): Int {
+        return quantityPC
+    }
+
+    fun gettotalAmount(): Int {
+        return totalAmount
+    }
+
+    fun settotalAmount(totalAmount1: Int){
+        totalAmount = totalAmount1
+    }
+    fun setqauntityPC(QuantityPC: Int){
+        quantityPC = QuantityPC
+    }
+    fun setdaysRefill(DaysRefill: String){
+        daysRefill = DaysRefill
+    }
+    fun sethour(Hour: String){
+        hour = Hour
+    }
+    fun setdays(Days: String){
+        days = Days
+    }
+    fun setname(Name: String){
+        name = Name
+    }
+    fun setid(Id: String){
+        id = Id
+    }
+    fun setuserID(UserID: String){
+        userID = UserID
+    }*/
 }
 
 
