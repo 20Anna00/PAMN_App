@@ -3,15 +3,20 @@ package com.example.pillee.jetpackcompnavigation.screens.appointment
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.pillee.jetpackcompnavigation.model.Appointment
+import com.example.pillee.jetpackcompnavigation.model.DataOrException
+import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.example.pillee.jetpackcompnavigation.model.repository.AppointmentRepository
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.google.firebase.Timestamp
 import com.google.type.DateTime
+import kotlinx.coroutines.launch
 import java.sql.Date
 import java.text.SimpleDateFormat
 import java.time.LocalDate
@@ -32,6 +37,25 @@ class AppointmentViewModel(
 
     var appointmentUiState by mutableStateOf(AppointmentUiState())
         private set
+
+    var loading = mutableStateOf(false)
+    val data: MutableState<DataOrException<List<Appointment>, Exception>> = mutableStateOf(
+        DataOrException(
+            listOf(),
+            Exception("")
+        )
+    )
+    init{
+        getAppointments()
+    }
+
+    private fun getAppointments(){
+        viewModelScope.launch {
+            loading.value = true
+            data.value = appointmentRepository.getAppointmentList()
+            loading.value = false
+        }
+    }
 
     fun onDateChange(date:String) {
         appointmentUiState = appointmentUiState.copy(date = date)
