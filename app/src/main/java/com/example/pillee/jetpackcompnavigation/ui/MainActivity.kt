@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.pillee.jetpackcompnavigation.alarms.AlarmCreator
 import com.example.pillee.jetpackcompnavigation.navigation.AppNavigation
 import com.example.pillee.jetpackcompnavigation.screens.PillDetailScreen
 import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailViewModel
@@ -21,6 +22,7 @@ class MainActivity : ComponentActivity() {
     private val auth = Firebase.auth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val alarmCreator = AlarmCreator()
         val requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -34,6 +36,8 @@ class MainActivity : ComponentActivity() {
 
           PilleeTheme {
               Surface(color = MaterialTheme.colors.background) {
+
+                  alarmCreator.createAlarms(days = "tuesday", hour ="22:30" )
                   AppNavigation()
               }
           }
