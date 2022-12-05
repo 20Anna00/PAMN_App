@@ -31,8 +31,9 @@ class PillRepository (){
                     for (document in result) {
                         Log.d(TAG, "${document.id} => ${document.data}")
                         var pill = document.toObject(Pills::class.java)
-                        Log.d(TAG, pill.name)
+                        Log.d("TAG", "Pill name: ${ pill.name }")
                         pills.add(pill)
+                        Log.d("TAG", "${ pills[0].name }")
                     }
                 }
                 .addOnFailureListener { exception ->

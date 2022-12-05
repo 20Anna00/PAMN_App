@@ -1,7 +1,9 @@
 package com.example.pillee.jetpackcompnavigation.screens
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.icu.text.SimpleDateFormat
+import android.nfc.Tag
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -62,6 +64,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel){
         if(pill.days == list[currentDay]){
             pills.add(pill)
         }
+        Log.d(TAG, "Item name in listPills: ${ pill.name }")
     }
     var splitHour = currentTime.split(":")
     var time = splitHour[0] + splitHour[1]
@@ -80,6 +83,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel){
         if (timeRealPill > 1600) {
             eveningPills.add(pill)
         }
+        Log.d(TAG, "Name of pill: ${ pill.name }")
     }
 
 
@@ -97,6 +101,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel){
         Text(text = "Morning", color = Color.Black, fontSize = 30.sp)
 
         for (pill in morningPills){
+            Log.d(TAG, pill.name)
             showPill(pill.name, pill.days, pill.hour)
         }
         //showPill("namejfij", "days", "08:30")
