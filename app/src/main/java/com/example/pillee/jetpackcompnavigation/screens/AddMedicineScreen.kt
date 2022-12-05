@@ -6,6 +6,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.ExposedDropdownMenuDefaults.textFieldColors
 import androidx.compose.material3.ButtonDefaults
@@ -17,16 +19,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pillee.R
+import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentViewModel
+import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailViewModel
 import com.example.pillee.themes.CentralAppBar
 import com.example.pillee.themes.schedule_blue
 import com.example.pillee.themes.white
@@ -39,19 +47,21 @@ val listPills = arrayOf("Hibuprofeno", "Termagin", "Paracetamol", "Dalzy", "Anfe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMedicineScreen(navController: NavController){
+fun AddMedicineScreen(navController: NavController,
+                      pillDetailViewModel: PillDetailViewModel = viewModel(),
+                      authRepository: AuthRepository = AuthRepository()
+){
     Scaffold(topBar = { CentralAppBar(navController, "Add Medicine",  AppScreens.ConfigurationScreen.route) }) {
-        MyUI()
+        MyUI(pillDetailViewModel, authRepository)
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MyUI() {
+fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepository) {
     var name = "";
     var day = "";
     var hour = "";
-    var number = "";
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
@@ -62,6 +72,7 @@ fun MyUI() {
         mContext,
         {_, mHour : Int, mMinute: Int ->
             mTime.value = "$mHour:$mMinute"
+            hour = "$mHour:$mMinute"
 
         }, mHour, mMinute, false
     )
@@ -81,14 +92,14 @@ fun MyUI() {
         Column ()
         {
             Text("Name:", color = Color.Black, fontSize = 20.sp)
-            name = MyDropDownMenu(listPills)
+            name = MyDropDownMenu(listPills, false)
         }
 
         Column()
         {
 
             Text("Day:", color = Color.Black, fontSize = 20.sp)
-            day = MyDropDownMenu(list = list)
+            day = MyDropDownMenu(list = list, true)
         }
 
         Column()
@@ -131,22 +142,20 @@ fun MyUI() {
             )
 
         }
-        AddMedicineButton()
+        AddMedicineButton(pillDetailViewModel, authRepository, name, day, hour, textValue.text)
 
     }
     hour = mTime.value
-    number = textValue.toString()
-
 
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MyDropDownMenu(list : Array<String>): String {
+fun MyDropDownMenu(list : Array<String>, readOnly: Boolean): String {
 
     val listItems = list
-
+    val focusManager = LocalFocusManager.current
     var selectedItem by remember {
         mutableStateOf("")
     }
@@ -164,6 +173,7 @@ fun MyDropDownMenu(list : Array<String>): String {
 
 
             TextField(
+                readOnly = readOnly,
                 shape = RoundedCornerShape(8.dp),
                 value = selectedItem,
                 onValueChange = { selectedItem = it },
@@ -181,8 +191,11 @@ fun MyDropDownMenu(list : Array<String>): String {
                     backgroundColor = Color(0xFF174560),
 
                 ),
-                textStyle = TextStyle(fontSize = 20.sp)
-            )
+                textStyle = TextStyle(fontSize = 20.sp),
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Password),
+
+                )
 
 
         // filter options based on text field value
@@ -214,7 +227,7 @@ fun MyDropDownMenu(list : Array<String>): String {
 @Preview
 @Composable
 fun addMedicinePreview(){
-    MyUI()
+    MyUI(viewModel(), AuthRepository())
 }
 
 @Composable
@@ -229,9 +242,18 @@ fun ClockIcon() {
 }
 
 @Composable
-fun AddMedicineButton(){
+fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
+                      authRepository: AuthRepository,
+                      name: String,
+                      day: String,
+                      hour: String,
+                      numberString: String){
     androidx.compose.material3.Button(
         onClick = {
+                  pillDetailViewModel.addNewPill(authRepository.currentUser.toString(),
+                  name,
+                  day,
+                  hour, numberString)
         }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)

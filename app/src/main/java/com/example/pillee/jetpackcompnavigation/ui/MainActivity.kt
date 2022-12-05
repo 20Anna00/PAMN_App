@@ -1,6 +1,7 @@
 package com.example.pillee.jetpackcompnavigation.ui
 import android.os.Build
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -30,6 +31,8 @@ class MainActivity : ComponentActivity() {
                 // TODO: Inform user that that your app will not show notifications.
             }
         }
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         setContent {
 
           PilleeTheme {

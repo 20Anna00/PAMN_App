@@ -1,6 +1,7 @@
 package com.example.pillee.jetpackcompnavigation.model
 
 import com.google.firebase.Timestamp
+import java.sql.Time
 
 
 data class Pills(
@@ -8,10 +9,12 @@ data class Pills(
     var userID:String = "",
     var name:String = "",
     var days:String = "",
-    var hour:String = Timestamp.now().toString(),
+    var hour:String,
     var daysRefill:String = "",
+    /*
     var quantityPC: Int = 0,
     var totalAmount: Int = 0
+     */
 ){
     constructor() : this(
         "",
@@ -20,8 +23,11 @@ data class Pills(
         "",
         "",
         "",
+        /*
         0,
         0
+
+         */
     )
 
    /* fun getid(): String {
