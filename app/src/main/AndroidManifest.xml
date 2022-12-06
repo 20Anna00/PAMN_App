@@ -32,6 +32,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".jetpackcompnavigation.ui.NotifActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize"
+            >
+        </activity>
         <service
             android:name=".MyFirebaseMessagingService"
             android:exported="false">
