@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
           PilleeTheme {
               Surface(color = MaterialTheme.colors.background) {
 
-                  alarmCreator.createAlarms(days = "tuesday", hour ="22:30" )
+                  alarmCreator.createAlarms(days = "tuesday", hour ="12:50" )
                   AppNavigation()
               }
           }
