@@ -38,6 +38,9 @@ import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailVie
 import com.example.pillee.themes.CentralAppBar
 import com.example.pillee.themes.schedule_blue
 import com.example.pillee.themes.white
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
@@ -68,12 +71,15 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
     val mHour = mCalendar[Calendar.HOUR_OF_DAY]
     val mMinute = mCalendar[Calendar.MINUTE]
     val mTime = remember {mutableStateOf("")}
+    val format = SimpleDateFormat("HH:mm")
+
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
-            mTime.value = "$mHour:$mMinute"
-            hour = "$mHour:$mMinute"
-
+            val hourString = "$mHour:$mMinute"
+            val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+            val hourDate = sdf.parse(hourString)
+            mTime.value = format.format(hourDate)
         }, mHour, mMinute, false
     )
 
@@ -114,7 +120,13 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
 
 
             ) {
+                /*
+                val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+                val hourDate = sdf.parse(mTime.value)
+                val format = SimpleDateFormat("dd/MM/yyy")
+                */
                 Text(text = mTime.value, fontSize = 20.sp, color = Color.White)
+
                 ClockIcon()
 
             }
