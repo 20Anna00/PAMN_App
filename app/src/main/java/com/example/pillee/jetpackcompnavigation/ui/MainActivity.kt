@@ -32,10 +32,12 @@ class MainActivity : ComponentActivity() {
         notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        CreateNotificationChannel(
+        val channel = NotificationChannel(
             "com.ebookfrenzy.notifydemo.news",
             "NotifyDemo News",
-            "Example News Channel")
+            NotificationManager.IMPORTANCE_HIGH)
+        channel.description = "HOLAA"
+        notificationManager!!.createNotificationChannel(channel)
 
         val requestPermissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestPermission()
