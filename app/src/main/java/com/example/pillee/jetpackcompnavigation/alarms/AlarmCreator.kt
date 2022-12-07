@@ -22,11 +22,15 @@ class AlarmCreator() {
         this.alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
 
         val calendar: Calendar = Calendar.getInstance()
-        calendar[Calendar.HOUR_OF_DAY] = 19
-        calendar[Calendar.MINUTE] = 53
+
+        calendar[Calendar.HOUR_OF_DAY] = 21
+        calendar[Calendar.MINUTE] = 20
+
         val intent = Intent(context, SampleBootReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context,0, intent,0)
+
         //alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,60000, pendingIntent)
+
         alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         //val pendingIntent = PendingIntent.getBroadcast(context, Date().seconds, intent, PendingIntent.FLAG_IMMUTABLE)
     }
