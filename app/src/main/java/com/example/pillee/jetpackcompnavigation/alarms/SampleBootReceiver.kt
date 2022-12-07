@@ -9,6 +9,8 @@ import android.content.BroadcastReceiver
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -44,7 +46,6 @@ class SampleBootReceiver : BroadcastReceiver() {
         Log.d("TAG", "La alarma se esta haciendoooooooo")
         val taskInfo = intent?.getSerializableExtra("task_info") as? TaskInfo
         val tapResultIntent = Intent(context, MainActivity::class.java)
-
         val pendingIntent: PendingIntent = getActivity( context,0,tapResultIntent,FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
             val notification = NotificationCompat.Builder(context, "com.ebookfrenzy.notifydemo.news")
                 .setContentTitle("Task Reminder")

@@ -2,7 +2,8 @@ package com.example.pillee.jetpackcompnavigation.ui
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
+import android.media.AudioAttributes
+import android.media.RingtoneManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,17 +11,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pillee.jetpackcompnavigation.alarms.AlarmCreator
 import com.example.pillee.jetpackcompnavigation.navigation.AppNavigation
-import com.example.pillee.jetpackcompnavigation.screens.PillDetailScreen
-import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailViewModel
 import com.example.pillee.themes.PilleeTheme
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import dagger.hilt.android.AndroidEntryPoint
+
 
 class MainActivity : ComponentActivity() {
     private val auth = Firebase.auth
@@ -32,11 +28,18 @@ class MainActivity : ComponentActivity() {
         notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+
+        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val att = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+            .build()
         val channel = NotificationChannel(
             "com.ebookfrenzy.notifydemo.news",
             "NotifyDemo News",
             NotificationManager.IMPORTANCE_HIGH)
         channel.description = "HOLAA"
+        channel.setSound(uri, att)
         notificationManager!!.createNotificationChannel(channel)
 
         val requestPermissionLauncher = registerForActivityResult(
