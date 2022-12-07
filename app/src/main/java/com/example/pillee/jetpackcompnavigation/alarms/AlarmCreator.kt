@@ -1,3 +1,4 @@
+
 package com.example.pillee.jetpackcompnavigation.alarms
 
 import android.app.AlarmManager
@@ -13,7 +14,6 @@ import java.util.*
 
 class AlarmCreator() {
     var alarmManager: AlarmManager? = null
-
     @Composable
     fun createAlarms(days : String, hour : String){
         var delimiter = ":"
@@ -23,15 +23,12 @@ class AlarmCreator() {
 
         val calendar: Calendar = Calendar.getInstance()
         calendar[Calendar.HOUR_OF_DAY] = 19
-        calendar[Calendar.MINUTE] = 23
-
+        calendar[Calendar.MINUTE] = 53
         val intent = Intent(context, SampleBootReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context,0, intent,0)
-
-        alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,60000, pendingIntent)
-
+        //alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis,60000, pendingIntent)
+        alarmManager?.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         //val pendingIntent = PendingIntent.getBroadcast(context, Date().seconds, intent, PendingIntent.FLAG_IMMUTABLE)
-
-
     }
 }
+
