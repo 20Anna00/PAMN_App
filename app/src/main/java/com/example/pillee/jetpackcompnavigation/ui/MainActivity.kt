@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
     private var notificationManager: NotificationManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val alarmCreator = AlarmCreator()
+        val alarmCreator = AlarmCreator("Thursday", "19:58")
         //Notifications
         notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
           PilleeTheme {
               Surface(color = MaterialTheme.colors.background) {
 
-                  alarmCreator.createAlarms(days = "tuesday", hour ="12:50" )
+                  alarmCreator.createAlarms()
                   AppNavigation()
               }
           }
