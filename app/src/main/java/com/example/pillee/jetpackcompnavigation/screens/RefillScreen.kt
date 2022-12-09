@@ -29,9 +29,8 @@ import com.example.pillee.themes.schedule_blue
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RefillScreen(navController: NavController, pillViewModel: PillDetailViewModel = viewModel()){
-    val drawerState = remember { mutableStateOf(DrawerValue.Closed) }
 
-    Scaffold(topBar = { CentralAppBar(navController, "Refill", AppScreens.StartPageScreen.route, drawerState) }) {
+    Scaffold(topBar = { CentralAppBar(navController, "Refill", AppScreens.StartPageScreen.route) }) {
        RefillUI(pillViewModel)
     }
 }
