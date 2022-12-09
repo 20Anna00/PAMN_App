@@ -8,7 +8,9 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
 import androidx.compose.material.Text
@@ -27,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pillee.R
+import com.example.pillee.jetpackcompnavigation.model.Appointment
 import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentViewModel
@@ -61,7 +64,6 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
     val data = pillViewModel.data.value
     val dataAppointment = appointmentViewModel.data.value
     var appointmentList = dataAppointment.data
-
     val mCalendar = Calendar.getInstance()
     val sdf = SimpleDateFormat("'Today is ' dd-MM-yyyy")
     val sdf2 = SimpleDateFormat("HH:mm")
@@ -85,7 +87,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
     }
     var splitHour = currentTime.split(":")
     var time = splitHour[0] + splitHour[1]
-    var timeReal = time.toInt()
+
 
     for (pill in pills){
         var splitHourPill = pill.hour.split(":")
@@ -108,7 +110,9 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(background_color),
+        .background(background_color)
+        .verticalScroll(rememberScrollState())
+        .padding(top = 25.dp, bottom = 25.dp),
         verticalArrangement = Arrangement.spacedBy(
             space = 25.dp,
             alignment = Alignment.CenterVertically ),
@@ -147,9 +151,17 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun showPill(name : String, day : String, hour : String) {
-    var splitHour = hour.split(":")
-    var time = splitHour[0] + splitHour[1]
-    var timeReal = time.toInt()
+    var splitHour = mutableListOf<String>()
+    var time = ""
+    if( hour != ""){
+        splitHour = hour.split(":") as MutableList<String>
+        time = splitHour[0] + splitHour[1]
+    }
+
+    var timeReal = 0
+    if(time.toIntOrNull() != null){
+        timeReal = time.toInt()
+    }
 
     val sdf2 = SimpleDateFormat("HH:mm")
     val currentTime = sdf2.format(Date())
