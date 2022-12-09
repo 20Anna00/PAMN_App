@@ -65,4 +65,8 @@ constructor(
        pillRepository.updatePill(newNumber, pillId)
    }
 
+    fun deletePill(pillId: String){
+        pillRepository.deletePill(pillId)
+    }
+
 }

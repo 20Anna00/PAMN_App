@@ -58,6 +58,14 @@ class PillRepository (){
         }
     }
 
+    fun deletePill(pillId : String){
+        try{
+            pillList.document(pillId).delete()
+        } catch(e: Exception){
+            e.printStackTrace()
+        }
+    }
+
 
 }
 
