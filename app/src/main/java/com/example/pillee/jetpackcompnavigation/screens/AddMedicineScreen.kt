@@ -142,10 +142,10 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
             )
 
         }
+        hour = mTime.value
         AddMedicineButton(pillDetailViewModel, authRepository, name, day, hour, textValue.text)
 
     }
-    hour = mTime.value
 
 }
 
