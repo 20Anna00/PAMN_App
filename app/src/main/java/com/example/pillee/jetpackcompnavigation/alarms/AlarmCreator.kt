@@ -24,7 +24,7 @@ class AlarmCreator() {
         val calendar: Calendar = Calendar.getInstance()
 
         calendar[Calendar.HOUR_OF_DAY] = 20
-        calendar[Calendar.MINUTE] = 52
+        calendar[Calendar.MINUTE] = 57
 
         val intent = Intent(context, SampleBootReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context,0, intent,0)

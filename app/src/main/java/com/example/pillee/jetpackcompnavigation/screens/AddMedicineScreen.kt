@@ -31,10 +31,10 @@ import com.example.pillee.themes.CentralAppBar
 import com.example.pillee.themes.schedule_blue
 import com.example.pillee.themes.white
 import java.util.*
+import kotlin.collections.HashMap
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 val listPills = arrayOf("Hibuprofeno", "Termagin", "Paracetamol", "Dalzy", "Anfetas", "Coca", "Cristal")
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,6 +52,17 @@ fun MyUI() {
     var day = "";
     var hour = "";
     var number = "";
+
+    val daysMap = mutableMapOf(
+        "Monday" to false,
+        "Tuesday" to false,
+        "Wednesday" to false,
+        "Thursday" to false,
+        "Friday" to false,
+        "Saturday" to false,
+        "Sunday" to false,
+    )
+
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
@@ -89,6 +100,24 @@ fun MyUI() {
 
             Text("Day:", color = Color.Black, fontSize = 20.sp)
             day = MyDropDownMenu(list = list)
+            Row() {
+                CheckBoxDays(day = "Monday", daysMap)
+                Text(text =  "Mo", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Tuesday", daysMap)
+                Text(text =  "Tu", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Wednesday", daysMap)
+                Text(text =  "We", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Thursday", daysMap)
+                Text(text =  "Th", color = Color.Black, fontSize = 12.sp)
+            }
+            Row(){
+                CheckBoxDays(day = "Friday", daysMap)
+                Text(text =  "Fr", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Saturday", daysMap)
+                Text(text =  "Sa", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Sunday", daysMap)
+                Text(text =  "Su", color = Color.Black, fontSize = 12.sp)
+            }
         }
 
         Column()
@@ -140,6 +169,14 @@ fun MyUI() {
 
 }
 
+@Composable
+fun CheckBoxDays(day: String, daysMap: MutableMap<String, Boolean>){
+
+    Checkbox(
+        checked = daysMap.getValue(day),
+        onCheckedChange = {daysMap.put(day, it)}
+    )
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

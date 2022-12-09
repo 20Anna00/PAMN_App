@@ -46,6 +46,7 @@ class SampleBootReceiver : BroadcastReceiver() {
         Log.d("TAG", "La alarma se esta haciendoooooooo")
         val taskInfo = intent?.getSerializableExtra("task_info") as? TaskInfo
         val tapResultIntent = Intent(context, MainActivity::class.java)
+        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val pendingIntent: PendingIntent = getActivity( context,0,tapResultIntent,FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE)
             val notification = NotificationCompat.Builder(context, "com.ebookfrenzy.notifydemo.news")
                 .setContentTitle("Task Reminder")
@@ -53,6 +54,7 @@ class SampleBootReceiver : BroadcastReceiver() {
                 .setSmallIcon(R.drawable.pills_1)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
+                .setSound(uri)
                 .build()
 
         notificationManager = context?.let { NotificationManagerCompat.from(it) }
