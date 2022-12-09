@@ -45,6 +45,19 @@ class PillRepository (){
 
     }
 
+    fun updatePill(newNumber : String, pillId: String){
+
+        try{
+            val map = mapOf(
+                "daysRefill" to newNumber
+            )
+            pillList.document(pillId).update(map)
+        }
+        catch(e : Exception){
+            e.printStackTrace()
+        }
+    }
+
 
 }
 

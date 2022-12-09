@@ -61,8 +61,8 @@ constructor(
         pillRepository.addNewPill(pill)
     }
 
-   /* fun getPills(): List<Pills> {
-        return pillRepository.getPillList();
-    }*/
+   fun updatePill(pillId: String, newNumber : String){
+       pillRepository.updatePill(newNumber, pillId)
+   }
 
 }
