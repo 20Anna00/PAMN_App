@@ -117,7 +117,6 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
         {
 
             Text("Day:", color = Color.Black, fontSize = 20.sp)
-            day = MyDropDownMenu(list = list, true)
             Row() {
                 Checkbox(checked = monday.value, onCheckedChange = {monday.value = it},
                     colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
@@ -210,16 +209,6 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
 
 }
 
-@Composable
-fun CheckBoxDays(day: String, checkDay: MutableState<Boolean>){
-    val checked = remember { mutableStateOf(false) }
-    Checkbox(
-        checked = checkDay.value,
-        onCheckedChange = {
-            checked.value = it
-        }
-    )
-}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
