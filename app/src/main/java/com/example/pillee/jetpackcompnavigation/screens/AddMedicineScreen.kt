@@ -66,6 +66,16 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
     var day = "";
     var hour = "";
 
+    val daysMap = mutableMapOf(
+        "Monday" to false,
+        "Tuesday" to false,
+        "Wednesday" to false,
+        "Thursday" to false,
+        "Friday" to false,
+        "Saturday" to false,
+        "Sunday" to false,
+    )
+
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
     val mHour = mCalendar[Calendar.HOUR_OF_DAY]
@@ -106,6 +116,24 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
 
             Text("Day:", color = Color.Black, fontSize = 20.sp)
             day = MyDropDownMenu(list = list, true)
+            Row() {
+                CheckBoxDays(day = "Monday", daysMap)
+                Text(text =  "Mo", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Tuesday", daysMap)
+                Text(text =  "Tu", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Wednesday", daysMap)
+                Text(text =  "We", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Thursday", daysMap)
+                Text(text =  "Th", color = Color.Black, fontSize = 12.sp)
+            }
+            Row(){
+                CheckBoxDays(day = "Friday", daysMap)
+                Text(text =  "Fr", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Saturday", daysMap)
+                Text(text =  "Sa", color = Color.Black, fontSize = 12.sp)
+                CheckBoxDays(day = "Sunday", daysMap)
+                Text(text =  "Su", color = Color.Black, fontSize = 12.sp)
+            }
         }
 
         Column()
@@ -154,13 +182,24 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
             )
 
         }
-        AddMedicineButton(pillDetailViewModel, authRepository, name, day, hour, textValue.text)
+        AddMedicineButton(pillDetailViewModel, authRepository, name, daysMap, hour, textValue.text)
 
     }
     hour = mTime.value
 
 }
 
+@Composable
+fun CheckBoxDays(day: String, daysMap: MutableMap<String, Boolean>){
+    val checked = remember { mutableStateOf(false) }
+    Checkbox(
+        checked = checked.value,
+        onCheckedChange = {
+            checked.value = it
+            daysMap.put(day, checked.value)
+        }
+    )
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -257,14 +296,14 @@ fun ClockIcon() {
 fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
                       authRepository: AuthRepository,
                       name: String,
-                      day: String,
+                      daysMap: MutableMap<String, Boolean>,
                       hour: String,
                       numberString: String){
     androidx.compose.material3.Button(
         onClick = {
                   pillDetailViewModel.addNewPill(authRepository.currentUser.toString(),
                   name,
-                  day,
+                  takeDays(daysMap),
                   hour, numberString)
         }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
@@ -272,4 +311,16 @@ fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
             .height(50.dp)
 
     ) { androidx.compose.material3.Text("Add Pill", color = Color.White) }
+}
+
+fun takeDays(daysMap: MutableMap<String, Boolean>): String{
+    var res = ""
+    for(day in list){
+
+        if(daysMap.getValue(day)){
+            res += "$day, "
+        }
+        res = res.replace("/,\\s*/", "")
+    }
+    return res
 }
