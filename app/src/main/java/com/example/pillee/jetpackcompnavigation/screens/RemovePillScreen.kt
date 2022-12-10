@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -26,54 +25,49 @@ import com.example.pillee.themes.CentralAppBar
 import com.example.pillee.themes.background_color
 import com.example.pillee.themes.schedule_blue
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RefillScreen(navController: NavController, pillViewModel: PillDetailViewModel = viewModel()){
+fun RemovePillScreen(navController: NavController, pillViewModel: PillDetailViewModel = viewModel()){
 
-    Scaffold(topBar = { CentralAppBar(navController, "Refill", AppScreens.StartPageScreen.route) }) {
-       RefillUI(pillViewModel)
+    Scaffold(topBar = { CentralAppBar(navController, "Remove Pills", AppScreens.ConfigurationScreen.route) }) {
+        RemoveUI(pillViewModel)
     }
 }
 
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun RefillUI(pillViewModel: PillDetailViewModel){
+fun RemoveUI(pillViewModel: PillDetailViewModel){
     var textValue by remember { mutableStateOf(TextFieldValue("")) }
     val data = pillViewModel.data.value
     var listPills = data.data
 
-
-    var value = ""
     var pill = Pills()
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(background_color),
-            verticalArrangement = Arrangement.spacedBy(
-                space = 55.dp,
-                alignment = Alignment.CenterVertically
-            ),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Column() {
-                Text("Pill to refill:", fontSize = 20.sp, color = Color.Black)
-                pill = DropDownMenu(list = listPills)
-            }
-            Column {
-                Text("Number of refilled pills:", fontSize = 20.sp, color = Color.Black)
-                    value = refillNumber().text
-
-            }
-            RefillButton(value = value, pill, pillViewModel)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(background_color),
+        verticalArrangement = Arrangement.spacedBy(
+            space = 55.dp,
+            alignment = Alignment.CenterVertically
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Column() {
+            Text("Pill to remove:", fontSize = 20.sp, color = Color.Black)
+            pill = DropDownMenuRemove(list = listPills)
         }
+
+        RemoveButton(pill, pillViewModel)
+    }
 }
 
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DropDownMenu(list: List<Pills>?): Pills {
+fun DropDownMenuRemove(list: List<Pills>?): Pills {
     var pill = Pills()
 
     var myPillsList = arrayOf<String>()
@@ -158,40 +152,16 @@ fun DropDownMenu(list: List<Pills>?): Pills {
     return pill
 }
 
-@Composable
-fun refillNumber(): TextFieldValue {
-    var textValue by remember { mutableStateOf(TextFieldValue("")) }
 
-    OutlinedTextField(
-        modifier = Modifier
-            .height(60.dp)
-            .width(280.dp),
-        shape = RoundedCornerShape(8.dp),
-        value = textValue, onValueChange = { textValue = it },
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Color(46, 104, 117),
-            unfocusedBorderColor = Color.White,
-            unfocusedLabelColor = Color.White,
-            focusedLabelColor = Color(46, 104, 117)
-        )
-    )
-    return textValue
-}
 
 @Composable
-fun RefillButton(value : String, pill: Pills, pillViewModel: PillDetailViewModel){
-    var newValue = 0
+fun RemoveButton(pill: Pills, pillViewModel: PillDetailViewModel){
 
-        if(value.toIntOrNull() != null){
-        if(pill.daysRefill.toIntOrNull() != null){
-            newValue = pill.daysRefill.toInt() + value.toInt()
-        }
-    }
-    var realValue = newValue.toString()
+
     androidx.compose.material3.Button(
         onClick = {
             if (pill.id != "") {
-                pillViewModel.updatePill(pill.id, realValue)
+                pillViewModel.deletePill(pill.id)
             }
 
         },
@@ -199,5 +169,5 @@ fun RefillButton(value : String, pill: Pills, pillViewModel: PillDetailViewModel
         modifier = Modifier
             .width(280.dp)
             .height(50.dp)
-    ) { androidx.compose.material3.Text("Refill", color = Color.White) }
+    ) { androidx.compose.material3.Text("Remove", color = Color.White) }
 }

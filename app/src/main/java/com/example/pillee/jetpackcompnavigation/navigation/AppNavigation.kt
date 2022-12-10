@@ -43,5 +43,8 @@ fun AppNavigation (){
         composable(route = AppScreens.PillDetailScreen.route){
 
         }
+        composable(AppScreens.RemovePillScreen.route){
+            RemovePillScreen(navController = navController)
+        }
     }
 }

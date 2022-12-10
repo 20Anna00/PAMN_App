@@ -50,6 +50,7 @@ fun ConfigureBodyContent(navController: NavController) {
     ) {
          addMedicineButton(navController)
         addAppointmentButton(navController = navController)
+        removeMedicineButton(navController = navController)
     }
 }
 
@@ -115,5 +116,39 @@ fun addAppointmentButton(navController: NavController) {
         )
         Text("Add a Doctors Appointment", color = Color.White, fontSize = 18.sp)
     }
+    }
+}
+
+@Composable
+fun removeMedicineButton(navController: NavController) {
+
+    Button(onClick = {
+        navController.navigate(route = AppScreens.RemovePillScreen.route)
+    }, colors = ButtonDefaults.buttonColors( Color(0xFF174560)),
+        modifier = Modifier
+            .width(280.dp)
+            .height(150.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF174560)),
+            verticalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+                alignment = Alignment.CenterVertically
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally
+
+        )
+        {
+            Image(
+                painter = painterResource(id = R.drawable.pills_1),
+                contentDescription = "Remove Medicine",
+                modifier = Modifier
+                    .height(55.dp)
+                    .width(55.dp)
+            )
+            Text("Remove Medicine", color = Color.White, fontSize = 18.sp)
+        }
     }
 }

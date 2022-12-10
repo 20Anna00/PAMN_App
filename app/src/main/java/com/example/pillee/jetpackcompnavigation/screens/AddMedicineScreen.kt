@@ -2,6 +2,7 @@ package com.example.pillee.jetpackcompnavigation.screens
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -37,6 +38,7 @@ import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentV
 import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailViewModel
 import com.example.pillee.themes.CentralAppBar
 import com.example.pillee.themes.schedule_blue
+import com.example.pillee.themes.schedule_lightgreen
 import com.example.pillee.themes.white
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
@@ -66,15 +68,15 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
     var day = "";
     var hour = "";
 
-    val daysMap = mutableMapOf(
-        "Monday" to false,
-        "Tuesday" to false,
-        "Wednesday" to false,
-        "Thursday" to false,
-        "Friday" to false,
-        "Saturday" to false,
-        "Sunday" to false,
-    )
+
+    val monday = remember { mutableStateOf(false) }
+    val tuesday = remember { mutableStateOf(false) }
+    val wednesday = remember { mutableStateOf(false) }
+    val thursday = remember { mutableStateOf(false) }
+    val friday = remember { mutableStateOf(false) }
+    val saturday = remember { mutableStateOf(false) }
+    val sunday = remember { mutableStateOf(false) }
+
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
@@ -117,21 +119,40 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
             Text("Day:", color = Color.Black, fontSize = 20.sp)
             day = MyDropDownMenu(list = list, true)
             Row() {
-                CheckBoxDays(day = "Monday", daysMap)
+                Checkbox(checked = monday.value, onCheckedChange = {monday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
                 Text(text =  "Mo", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Tuesday", daysMap)
+                Checkbox(checked = tuesday.value, onCheckedChange = {tuesday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
                 Text(text =  "Tu", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Wednesday", daysMap)
+
+                Checkbox(checked = wednesday.value, onCheckedChange = {wednesday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
                 Text(text =  "We", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Thursday", daysMap)
+
+                Checkbox(checked = thursday.value, onCheckedChange = {thursday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
                 Text(text =  "Th", color = Color.Black, fontSize = 12.sp)
             }
             Row(){
-                CheckBoxDays(day = "Friday", daysMap)
+
+                Checkbox(checked = friday.value, onCheckedChange = {friday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
                 Text(text =  "Fr", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Saturday", daysMap)
+
+                Checkbox(checked = saturday.value, onCheckedChange = {saturday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
                 Text(text =  "Sa", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Sunday", daysMap)
+
+                Checkbox(checked = sunday.value, onCheckedChange = {sunday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
                 Text(text =  "Su", color = Color.Black, fontSize = 12.sp)
             }
         }
@@ -182,21 +203,20 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
             )
 
         }
-        AddMedicineButton(pillDetailViewModel, authRepository, name, daysMap, hour, textValue.text)
-
+        hour = mTime.value
+        AddMedicineButton(pillDetailViewModel, authRepository, name, hour, textValue.text,
+            monday,tuesday, wednesday, thursday, friday, saturday, sunday)
     }
-    hour = mTime.value
 
 }
 
 @Composable
-fun CheckBoxDays(day: String, daysMap: MutableMap<String, Boolean>){
+fun CheckBoxDays(day: String, checkDay: MutableState<Boolean>){
     val checked = remember { mutableStateOf(false) }
     Checkbox(
-        checked = checked.value,
+        checked = checkDay.value,
         onCheckedChange = {
             checked.value = it
-            daysMap.put(day, checked.value)
         }
     )
 }
@@ -296,14 +316,21 @@ fun ClockIcon() {
 fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
                       authRepository: AuthRepository,
                       name: String,
-                      daysMap: MutableMap<String, Boolean>,
                       hour: String,
-                      numberString: String){
+                      numberString: String,
+                      monday: MutableState<Boolean>,
+                      tuesday: MutableState<Boolean>,
+                      wednesday: MutableState<Boolean>,
+                      thursday: MutableState<Boolean>,
+                      friday: MutableState<Boolean>,
+                      saturday: MutableState<Boolean>,
+                      sunday: MutableState<Boolean>
+){
     androidx.compose.material3.Button(
         onClick = {
                   pillDetailViewModel.addNewPill(authRepository.currentUser.toString(),
                   name,
-                  takeDays(daysMap),
+                  takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
                   hour, numberString)
         }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
@@ -313,14 +340,22 @@ fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
     ) { androidx.compose.material3.Text("Add Pill", color = Color.White) }
 }
 
-fun takeDays(daysMap: MutableMap<String, Boolean>): String{
+fun takeDays(monday: MutableState<Boolean>,
+             tuesday: MutableState<Boolean>,
+             wednesday: MutableState<Boolean>,
+             thursday: MutableState<Boolean>,
+             friday: MutableState<Boolean>,
+             saturday: MutableState<Boolean>,
+             sunday: MutableState<Boolean>): String{
     var res = ""
-    for(day in list){
+    if(monday.value) res += "monday, "
+    if(tuesday.value) res += "tuesday, "
+    if(wednesday.value) res += "wednesday, "
+    if(thursday.value) res += "thursday, "
+    if(friday.value) res += "friday, "
+    if(saturday.value) res += "saturday, "
+    if(sunday.value) res += "sunday, "
 
-        if(daysMap.getValue(day)){
-            res += "$day, "
-        }
-        res = res.replace("/,\\s*/", "")
-    }
+    res = res.replace(", $", "")
     return res
 }
