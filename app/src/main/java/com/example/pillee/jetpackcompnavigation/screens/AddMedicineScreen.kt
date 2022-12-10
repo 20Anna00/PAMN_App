@@ -53,16 +53,6 @@ fun MyUI() {
     var hour = "";
     var number = "";
 
-    val daysMap = mutableMapOf(
-        "Monday" to false,
-        "Tuesday" to false,
-        "Wednesday" to false,
-        "Thursday" to false,
-        "Friday" to false,
-        "Saturday" to false,
-        "Sunday" to false,
-    )
-
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
@@ -100,24 +90,6 @@ fun MyUI() {
 
             Text("Day:", color = Color.Black, fontSize = 20.sp)
             day = MyDropDownMenu(list = list)
-            Row() {
-                CheckBoxDays(day = "Monday", daysMap)
-                Text(text =  "Mo", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Tuesday", daysMap)
-                Text(text =  "Tu", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Wednesday", daysMap)
-                Text(text =  "We", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Thursday", daysMap)
-                Text(text =  "Th", color = Color.Black, fontSize = 12.sp)
-            }
-            Row(){
-                CheckBoxDays(day = "Friday", daysMap)
-                Text(text =  "Fr", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Saturday", daysMap)
-                Text(text =  "Sa", color = Color.Black, fontSize = 12.sp)
-                CheckBoxDays(day = "Sunday", daysMap)
-                Text(text =  "Su", color = Color.Black, fontSize = 12.sp)
-            }
         }
 
         Column()
