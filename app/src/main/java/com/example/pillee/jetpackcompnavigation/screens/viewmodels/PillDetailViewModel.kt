@@ -1,4 +1,5 @@
 package com.example.pillee.jetpackcompnavigation.screens.viewmodels
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -49,7 +50,7 @@ constructor(
 
 
     fun addNewPill(userId : String, name : String, days : String , hour : String, daysRefill : String){
-
+        Log.d("TAG", "Horaaaa: $hour")
         val pill = Pills(
             id=UUID.randomUUID().toString(),
             userID = currentUser!!.uid,

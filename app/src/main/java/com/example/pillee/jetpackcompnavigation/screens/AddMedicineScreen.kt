@@ -76,13 +76,18 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
     val friday = remember { mutableStateOf(false) }
     val saturday = remember { mutableStateOf(false) }
     val sunday = remember { mutableStateOf(false) }
-
+    val mTime1 = remember {mutableStateOf("1")}
+    val mTime2 = remember {mutableStateOf("2")}
+    val mTime3 = remember {mutableStateOf("3")}
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
     val mHour = mCalendar[Calendar.HOUR_OF_DAY]
     val mMinute = mCalendar[Calendar.MINUTE]
-    val mTime = remember {mutableStateOf("")}
+    val mHour2 = mCalendar[Calendar.HOUR_OF_DAY]
+    val mMinute2 = mCalendar[Calendar.MINUTE]
+    val mHour3 = mCalendar[Calendar.HOUR_OF_DAY]
+    val mMinute3 = mCalendar[Calendar.MINUTE]
     val format = SimpleDateFormat("HH:mm")
 
     val mTimePickerDialog = TimePickerDialog(
@@ -91,8 +96,28 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
             val hourString = "$mHour:$mMinute"
             val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
             val hourDate = sdf.parse(hourString)
-            mTime.value = format.format(hourDate)
+            mTime1.value = format.format(hourDate)
         }, mHour, mMinute, false
+    )
+
+    val mTimePickerDialog2 = TimePickerDialog(
+        mContext,
+        {_, mHour2 : Int, mMinute2: Int ->
+            val hourString2 = "$mHour2:$mMinute2"
+            val sdf2 = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+            val hourDate2 = sdf2.parse(hourString2)
+            mTime2.value = format.format(hourDate2)
+        }, mHour2, mMinute2, false
+    )
+
+    val mTimePickerDialog3 = TimePickerDialog(
+        mContext,
+        {_, mHour3 : Int, mMinute3: Int ->
+            val hourString3 = "$mHour3:$mMinute3"
+            val sdf3 = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+            val hourDate3 = sdf3.parse(hourString3)
+            mTime3.value = format.format(hourDate3)
+        }, mHour3, mMinute3, false
     )
 
     var textValue by remember { mutableStateOf(TextFieldValue("")) }
@@ -160,24 +185,71 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
         {
 
             Text("Hour:", color = Color.Black, fontSize = 20.sp)
+
             Button(onClick = { mTimePickerDialog.show() },
                 colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
+                modifier = Modifier.height(40.dp).width(160.dp),
                 shape = RoundedCornerShape(8.dp),
                 contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
 
 
 
-            ) {
+                ) {
                 /*
                 val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
                 val hourDate = sdf.parse(mTime.value)
                 val format = SimpleDateFormat("dd/MM/yyy")
                 */
-                Text(text = mTime.value, fontSize = 20.sp, color = Color.White)
+                Text(text = mTime1.value, fontSize = 20.sp, color = Color.White)
 
                 ClockIcon()
 
             }
+
+            Button(onClick = { mTimePickerDialog2.show() },
+                colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
+                modifier = Modifier.height(40.dp).width(160.dp),
+                shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
+
+
+
+                ) {
+                /*
+                val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+                val hourDate = sdf.parse(mTime.value)
+                val format = SimpleDateFormat("dd/MM/yyy")
+                */
+                Text(text = mTime2.value, fontSize = 20.sp, color = Color.White)
+
+                ClockIcon()
+
+            }
+
+            Button(onClick = { mTimePickerDialog3.show() },
+                colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
+                modifier = Modifier.height(40.dp).width(160.dp),
+                shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
+
+
+
+                ) {
+                /*
+                val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+                val hourDate = sdf.parse(mTime.value)
+                val format = SimpleDateFormat("dd/MM/yyy")
+                */
+                Text(text = mTime3.value, fontSize = 20.sp, color = Color.White)
+
+                ClockIcon()
+
+            }
+
+
+
+
+
 
         }
 
@@ -202,8 +274,8 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
             )
 
         }
-        hour = mTime.value
-        AddMedicineButton(pillDetailViewModel, authRepository, name, hour, textValue.text,
+        hour = mTime1.value
+        AddMedicineButton(pillDetailViewModel, authRepository, name, mTime1, mTime2, mTime3, textValue.text,
             monday,tuesday, wednesday, thursday, friday, saturday, sunday)
     }
 
@@ -305,7 +377,9 @@ fun ClockIcon() {
 fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
                       authRepository: AuthRepository,
                       name: String,
-                      hour: String,
+                      hour1: MutableState<String>,
+                      hour2: MutableState<String>,
+                      hour3: MutableState<String>,
                       numberString: String,
                       monday: MutableState<Boolean>,
                       tuesday: MutableState<Boolean>,
@@ -317,16 +391,30 @@ fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
 ){
     androidx.compose.material3.Button(
         onClick = {
+                  Log.d("TAG", "Horaaa1: ${hour1.value}")
                   pillDetailViewModel.addNewPill(authRepository.currentUser.toString(),
                   name,
                   takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
-                  hour, numberString)
+                  takeHours(hour1.value, hour2.value, hour3.value), numberString)
         }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)
             .height(50.dp)
 
     ) { androidx.compose.material3.Text("Add Pill", color = Color.White) }
+}
+
+fun takeHours(hour1: String, hour2: String, hour3: String):String{
+    var res = ""
+
+    if(!hour1.equals("")) res += "$hour1,"
+    if(!hour2.equals("")) res += "$hour2,"
+    if(!hour3.equals("")) res += "$hour3,"
+
+    val regex = ",$".toRegex()
+    res = res.replace(regex, "")
+
+    return res
 }
 
 fun takeDays(monday: MutableState<Boolean>,
