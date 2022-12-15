@@ -76,9 +76,9 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
     val friday = remember { mutableStateOf(false) }
     val saturday = remember { mutableStateOf(false) }
     val sunday = remember { mutableStateOf(false) }
-    val mTime1 = remember {mutableStateOf("1")}
-    val mTime2 = remember {mutableStateOf("2")}
-    val mTime3 = remember {mutableStateOf("3")}
+    val mTime1 = remember {mutableStateOf("")}
+    val mTime2 = remember {mutableStateOf("")}
+    val mTime3 = remember {mutableStateOf("")}
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
