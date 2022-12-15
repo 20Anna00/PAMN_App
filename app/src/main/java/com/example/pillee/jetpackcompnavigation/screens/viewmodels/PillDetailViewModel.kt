@@ -6,18 +6,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pillee.jetpackcompnavigation.model.DataOrException
 import com.example.pillee.jetpackcompnavigation.model.Pills
+import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.model.repository.PillRepository
 import com.example.pillee.jetpackcompnavigation.screens.PillDetailState
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.ktx.Firebase
+import com.google.rpc.context.AttributeContext.Auth
 import kotlinx.coroutines.launch
-import java.util.UUID
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class PillDetailViewModel
 constructor(
-    private val pillRepository: PillRepository = PillRepository()
+    private val pillRepository: PillRepository = PillRepository(),
+    private val authRepository: AuthRepository = AuthRepository()
 ): ViewModel(){
+    val currentUser = authRepository.currentUser
+    val hasUser: Boolean
+        get() = authRepository.hasUser()
+
     var loading = mutableStateOf(false)
     val data: MutableState<DataOrException<List<Pills>, Exception>> = mutableStateOf(
         DataOrException(
@@ -38,23 +48,26 @@ constructor(
     }
 
 
-    fun addNewPill(userId : String, name : String, days : String , hour : String, daysRefill : String , quantityPC : Int, totalAmount : Int){
+    fun addNewPill(userId : String, name : String, days : String , hour : String, daysRefill : String){
+
         val pill = Pills(
             id=UUID.randomUUID().toString(),
-            userID = userId,
+            userID = currentUser!!.uid,
             name = name,
             days = days,
             hour = hour,
             daysRefill = daysRefill,
-            quantityPC = quantityPC,
-            totalAmount = totalAmount
         )
         pillRepository.addNewPill(pill)
 
     }
 
-   /* fun getPills(): List<Pills> {
-        return pillRepository.getPillList();
-    }*/
+   fun updatePill(pillId: String, newNumber : String){
+       pillRepository.updatePill(newNumber, pillId)
+   }
+
+    fun deletePill(pillId: String){
+        pillRepository.deletePill(pillId)
+    }
 
 }

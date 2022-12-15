@@ -2,10 +2,13 @@ package com.example.pillee.jetpackcompnavigation.screens
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.ExposedDropdownMenuDefaults.textFieldColors
 import androidx.compose.material3.ButtonDefaults
@@ -17,19 +20,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pillee.R
+import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentViewModel
+import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailViewModel
 import com.example.pillee.themes.CentralAppBar
 import com.example.pillee.themes.schedule_blue
+import com.example.pillee.themes.schedule_lightgreen
 import com.example.pillee.themes.white
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -39,19 +52,31 @@ val listPills = arrayOf("Hibuprofeno", "Termagin", "Paracetamol", "Dalzy", "Anfe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddMedicineScreen(navController: NavController){
+fun AddMedicineScreen(navController: NavController,
+                      pillDetailViewModel: PillDetailViewModel = viewModel(),
+                      authRepository: AuthRepository = AuthRepository()
+){
     Scaffold(topBar = { CentralAppBar(navController, "Add Medicine",  AppScreens.ConfigurationScreen.route) }) {
-        MyUI()
+        MyUI(pillDetailViewModel, authRepository)
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MyUI() {
+fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepository) {
     var name = "";
     var day = "";
     var hour = "";
-    var number = "";
+
+
+    val monday = remember { mutableStateOf(false) }
+    val tuesday = remember { mutableStateOf(false) }
+    val wednesday = remember { mutableStateOf(false) }
+    val thursday = remember { mutableStateOf(false) }
+    val friday = remember { mutableStateOf(false) }
+    val saturday = remember { mutableStateOf(false) }
+    val sunday = remember { mutableStateOf(false) }
+
 
 
     val mContext = LocalContext.current
@@ -59,11 +84,15 @@ fun MyUI() {
     val mHour = mCalendar[Calendar.HOUR_OF_DAY]
     val mMinute = mCalendar[Calendar.MINUTE]
     val mTime = remember {mutableStateOf("")}
+    val format = SimpleDateFormat("HH:mm")
+
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
-            mTime.value = "$mHour:$mMinute"
-
+            val hourString = "$mHour:$mMinute"
+            val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+            val hourDate = sdf.parse(hourString)
+            mTime.value = format.format(hourDate)
         }, mHour, mMinute, false
     )
 
@@ -82,14 +111,50 @@ fun MyUI() {
         Column ()
         {
             Text("Name:", color = Color.Black, fontSize = 20.sp)
-            name = MyDropDownMenu(listPills)
+            name = MyDropDownMenu(listPills, false)
         }
 
         Column()
         {
 
             Text("Day:", color = Color.Black, fontSize = 20.sp)
-            day = MyDropDownMenu(list = list)
+            Row() {
+                Checkbox(checked = monday.value, onCheckedChange = {monday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
+                Text(text =  "Mo", color = Color.Black, fontSize = 12.sp)
+                Checkbox(checked = tuesday.value, onCheckedChange = {tuesday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
+                Text(text =  "Tu", color = Color.Black, fontSize = 12.sp)
+
+                Checkbox(checked = wednesday.value, onCheckedChange = {wednesday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
+                Text(text =  "We", color = Color.Black, fontSize = 12.sp)
+
+                Checkbox(checked = thursday.value, onCheckedChange = {thursday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
+                Text(text =  "Th", color = Color.Black, fontSize = 12.sp)
+            }
+            Row(){
+
+                Checkbox(checked = friday.value, onCheckedChange = {friday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
+                Text(text =  "Fr", color = Color.Black, fontSize = 12.sp)
+
+                Checkbox(checked = saturday.value, onCheckedChange = {saturday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
+                Text(text =  "Sa", color = Color.Black, fontSize = 12.sp)
+
+                Checkbox(checked = sunday.value, onCheckedChange = {sunday.value = it},
+                    colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
+                )
+                Text(text =  "Su", color = Color.Black, fontSize = 12.sp)
+            }
         }
 
         Column()
@@ -104,7 +169,13 @@ fun MyUI() {
 
 
             ) {
+                /*
+                val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+                val hourDate = sdf.parse(mTime.value)
+                val format = SimpleDateFormat("dd/MM/yyy")
+                */
                 Text(text = mTime.value, fontSize = 20.sp, color = Color.White)
+
                 ClockIcon()
 
             }
@@ -132,12 +203,10 @@ fun MyUI() {
             )
 
         }
-        AddMedicineButton()
-
+        hour = mTime.value
+        AddMedicineButton(pillDetailViewModel, authRepository, name, hour, textValue.text,
+            monday,tuesday, wednesday, thursday, friday, saturday, sunday)
     }
-    hour = mTime.value
-    number = textValue.toString()
-
 
 }
 
@@ -152,10 +221,10 @@ fun CheckBoxDays(day: String, daysMap: MutableMap<String, Boolean>){
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MyDropDownMenu(list : Array<String>): String {
+fun MyDropDownMenu(list : Array<String>, readOnly: Boolean): String {
 
     val listItems = list
-
+    val focusManager = LocalFocusManager.current
     var selectedItem by remember {
         mutableStateOf("")
     }
@@ -173,6 +242,7 @@ fun MyDropDownMenu(list : Array<String>): String {
 
 
             TextField(
+                readOnly = readOnly,
                 shape = RoundedCornerShape(8.dp),
                 value = selectedItem,
                 onValueChange = { selectedItem = it },
@@ -190,8 +260,11 @@ fun MyDropDownMenu(list : Array<String>): String {
                     backgroundColor = Color(0xFF174560),
 
                 ),
-                textStyle = TextStyle(fontSize = 20.sp)
-            )
+                textStyle = TextStyle(fontSize = 20.sp),
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Password),
+
+                )
 
 
         // filter options based on text field value
@@ -223,7 +296,7 @@ fun MyDropDownMenu(list : Array<String>): String {
 @Preview
 @Composable
 fun addMedicinePreview(){
-    MyUI()
+    MyUI(viewModel(), AuthRepository())
 }
 
 @Composable
@@ -238,13 +311,49 @@ fun ClockIcon() {
 }
 
 @Composable
-fun AddMedicineButton(){
+fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
+                      authRepository: AuthRepository,
+                      name: String,
+                      hour: String,
+                      numberString: String,
+                      monday: MutableState<Boolean>,
+                      tuesday: MutableState<Boolean>,
+                      wednesday: MutableState<Boolean>,
+                      thursday: MutableState<Boolean>,
+                      friday: MutableState<Boolean>,
+                      saturday: MutableState<Boolean>,
+                      sunday: MutableState<Boolean>
+){
     androidx.compose.material3.Button(
         onClick = {
+                  pillDetailViewModel.addNewPill(authRepository.currentUser.toString(),
+                  name,
+                  takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
+                  hour, numberString)
         }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)
             .height(50.dp)
 
     ) { androidx.compose.material3.Text("Add Pill", color = Color.White) }
+}
+
+fun takeDays(monday: MutableState<Boolean>,
+             tuesday: MutableState<Boolean>,
+             wednesday: MutableState<Boolean>,
+             thursday: MutableState<Boolean>,
+             friday: MutableState<Boolean>,
+             saturday: MutableState<Boolean>,
+             sunday: MutableState<Boolean>): String{
+    var res = ""
+    if(monday.value) res += "monday, "
+    if(tuesday.value) res += "tuesday, "
+    if(wednesday.value) res += "wednesday, "
+    if(thursday.value) res += "thursday, "
+    if(friday.value) res += "friday, "
+    if(saturday.value) res += "saturday, "
+    if(sunday.value) res += "sunday, "
+
+    res = res.replace(", $", "")
+    return res
 }
