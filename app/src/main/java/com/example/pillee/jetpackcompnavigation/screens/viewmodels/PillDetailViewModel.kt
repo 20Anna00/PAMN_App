@@ -1,8 +1,11 @@
 package com.example.pillee.jetpackcompnavigation.screens.viewmodels
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pillee.jetpackcompnavigation.model.DataOrException
@@ -49,7 +52,7 @@ constructor(
     }
 
 
-    fun addNewPill(userId : String, name : String, days : String , hour : String, daysRefill : String){
+    fun addNewPill(userId : String, name : String, days : String , hour : String, daysRefill : String, context: Context){
         Log.d("TAG", "Horaaaa: $hour")
         val pill = Pills(
             id=UUID.randomUUID().toString(),
@@ -59,8 +62,8 @@ constructor(
             hour = hour,
             daysRefill = daysRefill,
         )
-        pillRepository.addNewPill(pill)
-    }
+        pillRepository.addNewPill(pill, context)
+}
 
    fun updatePill(pillId: String, newNumber : String){
        pillRepository.updatePill(newNumber, pillId)

@@ -3,9 +3,11 @@ package com.example.pillee.jetpackcompnavigation.screens
 import android.app.TimePickerDialog
 import android.content.Context
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -26,11 +28,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.pillee.R
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
@@ -56,17 +60,16 @@ fun AddMedicineScreen(navController: NavController,
                       pillDetailViewModel: PillDetailViewModel = viewModel(),
                       authRepository: AuthRepository = AuthRepository()
 ){
+    val context = LocalContext.current
     Scaffold(topBar = { CentralAppBar(navController, "Add Medicine",  AppScreens.ConfigurationScreen.route) }) {
-        MyUI(pillDetailViewModel, authRepository)
+        MyUI(pillDetailViewModel, authRepository, context)
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepository) {
+fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepository, context: Context) {
     var name = "";
-    var day = "";
-    var hour = "";
 
 
     val monday = remember { mutableStateOf(false) }
@@ -125,24 +128,22 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
     Column(modifier = Modifier
         .fillMaxSize()
         .background(Color(0xFFCFDBE1)),
-        verticalArrangement = Arrangement.spacedBy(
-            space = 55.dp,
-            alignment = Alignment.CenterVertically ),
+
         horizontalAlignment = Alignment.CenterHorizontally
 
     )
     {
         Column ()
         {
-            Text("Name:", color = Color.Black, fontSize = 20.sp)
+            Text("Name:", color = Color.Black, fontSize = 20.sp,
+                modifier = Modifier
+                    .padding(1.dp, 16.dp, 1.dp, 1.dp))
             name = MyDropDownMenu(listPills, false)
-        }
 
-        Column()
-        {
-
-            Text("Day:", color = Color.Black, fontSize = 20.sp)
-            Row() {
+            Text("Day:", color = Color.Black, fontSize = 20.sp,
+                modifier = Modifier
+                .padding(1.dp, 16.dp, 1.dp, 1.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(checked = monday.value, onCheckedChange = {monday.value = it},
                     colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
                 )
@@ -162,7 +163,7 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
                 )
                 Text(text =  "Th", color = Color.Black, fontSize = 12.sp)
             }
-            Row(){
+            Row(verticalAlignment = Alignment.CenterVertically){
 
                 Checkbox(checked = friday.value, onCheckedChange = {friday.value = it},
                     colors = CheckboxDefaults.colors(checkedColor = Color.Blue, checkmarkColor = schedule_lightgreen)
@@ -179,108 +180,92 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
                 )
                 Text(text =  "Su", color = Color.Black, fontSize = 12.sp)
             }
-        }
 
-        Column()
-        {
-
-            Text("Hour:", color = Color.Black, fontSize = 20.sp)
-
-            Button(onClick = { mTimePickerDialog.show() },
-                colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
-                modifier = Modifier.height(40.dp).width(160.dp),
-                shape = RoundedCornerShape(8.dp),
-                contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
-
-
-
-                ) {
-                /*
-                val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
-                val hourDate = sdf.parse(mTime.value)
-                val format = SimpleDateFormat("dd/MM/yyy")
-                */
-                Text(text = mTime1.value, fontSize = 20.sp, color = Color.White)
-
-                ClockIcon()
-
-            }
-
-            Button(onClick = { mTimePickerDialog2.show() },
-                colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
-                modifier = Modifier.height(40.dp).width(160.dp),
-                shape = RoundedCornerShape(8.dp),
-                contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
-
-
-
-                ) {
-                /*
-                val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
-                val hourDate = sdf.parse(mTime.value)
-                val format = SimpleDateFormat("dd/MM/yyy")
-                */
-                Text(text = mTime2.value, fontSize = 20.sp, color = Color.White)
-
-                ClockIcon()
-
-            }
-
-            Button(onClick = { mTimePickerDialog3.show() },
-                colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
-                modifier = Modifier.height(40.dp).width(160.dp),
-                shape = RoundedCornerShape(8.dp),
-                contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 25.dp, end = 25.dp),
-
-
-
-                ) {
-                /*
-                val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
-                val hourDate = sdf.parse(mTime.value)
-                val format = SimpleDateFormat("dd/MM/yyy")
-                */
-                Text(text = mTime3.value, fontSize = 20.sp, color = Color.White)
-
-                ClockIcon()
-
-            }
-
-
-
-
-
-
-        }
-
-
-        Column()
-        {
-
-            Text("Number of Pills that were refilled:", color = Color.Black, fontSize = 20.sp)
-            OutlinedTextField(
+            Text("Hour:", color = Color.Black, fontSize = 20.sp,
                 modifier = Modifier
-                    .height(60.dp)
-                    .width(280.dp),
-                shape = RoundedCornerShape(8.dp),
-                value = textValue, onValueChange = { textValue = it },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = Color(46, 104, 117),
-                    unfocusedBorderColor = Color.White,
-                    unfocusedLabelColor = Color.White,
-                    focusedLabelColor = Color(46, 104, 117)
+                    .padding(1.dp, 16.dp, 1.dp, 1.dp))
+            Column(modifier = Modifier
+                .padding(1.dp, 1.dp, 1.dp, 1.dp)
+                .padding(1.dp, 1.dp, 1.dp, 1.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(40.dp),
+                modifier = Modifier.width(300.dp)){
+                    clockButton(mTimePickerDialog, mTime1)
+                    clearHourButton(mTime = mTime1)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(40.dp)){
+                    clockButton(mTimePickerDialog2, mTime2)
+                    clearHourButton(mTime = mTime2)
+                }
+                Row(verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(40.dp)){
+                    clockButton(mTimePickerDialog3, mTime3)
+                    clearHourButton(mTime = mTime3)
+                }
+            }
 
-                    )
-            )
+            Text("Amount of pills in container:", color = Color.Black, fontSize = 20.sp,
+            modifier = Modifier.padding(1.dp, 16.dp, 1.dp, 1.dp))
 
         }
-        hour = mTime1.value
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(1.dp, 1.dp, 1.dp, 16.dp)
+                .height(60.dp)
+                .width(280.dp)
+                .padding(1.dp, 1.dp, 1.dp, 1.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            shape = RoundedCornerShape(8.dp),
+            value = textValue, onValueChange = { textValue = it },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color(46, 104, 117),
+                unfocusedBorderColor = Color.White,
+                unfocusedLabelColor = Color.White,
+                focusedLabelColor = Color(46, 104, 117)
+
+            )
+        )
         AddMedicineButton(pillDetailViewModel, authRepository, name, mTime1, mTime2, mTime3, textValue.text,
-            monday,tuesday, wednesday, thursday, friday, saturday, sunday)
+            monday,tuesday, wednesday, thursday, friday, saturday, sunday, context)
+
     }
 
 }
 
+
+
+@Composable
+fun clearHourButton(mTime: MutableState<String>){
+    Button(onClick = { mTime.value = "" },
+        shape = CircleShape,
+        contentPadding = PaddingValues(0.dp),
+        modifier= Modifier.size(50.dp),
+        colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF7A7A7A))
+        ){
+        ClearHourIcon()
+    }
+}
+
+@Composable
+fun clockButton(mTimePickerDialog: TimePickerDialog, mTime1: MutableState<String>){
+    Button(onClick = { mTimePickerDialog.show() },
+        colors = androidx.compose.material.ButtonDefaults.buttonColors(Color(0xFF174560)),
+        modifier = Modifier
+            .padding(10.dp, 1.dp, 1.dp, 1.dp)
+            .height(50.dp)
+            .width(145.dp),
+        shape = RoundedCornerShape(8.dp),
+        contentPadding = PaddingValues(top = 10.dp, bottom = 10.dp, start = 15.dp, end = 15.dp),
+        ) {
+        Box(contentAlignment = Alignment.CenterEnd) {
+            Text(text = mTime1.value, fontSize = 20.sp, color = Color.White,
+                modifier = Modifier.fillMaxWidth())
+            ClockIcon()
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -356,12 +341,6 @@ fun MyDropDownMenu(list : Array<String>, readOnly: Boolean): String {
     return selectedItem;
 }
 
-@Preview
-@Composable
-fun addMedicinePreview(){
-    MyUI(viewModel(), AuthRepository())
-}
-
 @Composable
 fun ClockIcon() {
     val imageModifier = Modifier.size(43.dp)
@@ -369,6 +348,17 @@ fun ClockIcon() {
         painter = painterResource(id = R.drawable.schedule_fill0_wght400_grad0_opsz48),
         contentDescription = null,
         colorFilter = ColorFilter.tint(color = white),
+        modifier = imageModifier
+    )
+}
+
+@Composable
+fun ClearHourIcon(){
+    val imageModifier = Modifier.size(23.dp)
+    Image(
+        painter = painterResource(id = R.drawable.delete_fill0_wght400_grad0_opsz48),
+        contentDescription = null,
+        colorFilter = ColorFilter.tint(color = Color.White),
         modifier = imageModifier
     )
 }
@@ -387,15 +377,17 @@ fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
                       thursday: MutableState<Boolean>,
                       friday: MutableState<Boolean>,
                       saturday: MutableState<Boolean>,
-                      sunday: MutableState<Boolean>
+                      sunday: MutableState<Boolean>,
+                      context: Context
 ){
     androidx.compose.material3.Button(
         onClick = {
+
                   Log.d("TAG", "Horaaa1: ${hour1.value}")
                   pillDetailViewModel.addNewPill(authRepository.currentUser.toString(),
                   name,
                   takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
-                  takeHours(hour1.value, hour2.value, hour3.value), numberString)
+                  takeHours(hour1.value, hour2.value, hour3.value), numberString, context)
         }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)
@@ -425,14 +417,17 @@ fun takeDays(monday: MutableState<Boolean>,
              saturday: MutableState<Boolean>,
              sunday: MutableState<Boolean>): String{
     var res = ""
-    if(monday.value) res += "monday, "
-    if(tuesday.value) res += "tuesday, "
-    if(wednesday.value) res += "wednesday, "
-    if(thursday.value) res += "thursday, "
-    if(friday.value) res += "friday, "
-    if(saturday.value) res += "saturday, "
-    if(sunday.value) res += "sunday, "
+    if(monday.value) res += "monday,"
+    if(tuesday.value) res += "tuesday,"
+    if(wednesday.value) res += "wednesday,"
+    if(thursday.value) res += "thursday,"
+    if(friday.value) res += "friday,"
+    if(saturday.value) res += "saturday,"
+    if(sunday.value) res += "sunday,"
 
-    res = res.replace(", $", "")
+    val regex = ",$".toRegex()
+    res = res.replace(regex, "")
     return res
 }
+
+
