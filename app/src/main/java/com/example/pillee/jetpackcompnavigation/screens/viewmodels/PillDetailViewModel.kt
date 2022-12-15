@@ -50,6 +50,7 @@ constructor(
             totalAmount = totalAmount
         )
         pillRepository.addNewPill(pill)
+
     }
 
    /* fun getPills(): List<Pills> {

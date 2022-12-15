@@ -30,8 +30,7 @@ class AlarmCreator(days: String, hours: String) {
         calendar.set(Calendar.DAY_OF_WEEK, this.daysMap.getValue(day))
 
 
-        calendar[Calendar.HOUR_OF_DAY] = 20
-        calendar[Calendar.MINUTE] = 57
+
 
         /** This checks if it is necessary to add one day
         * Link reference :  https://stackoverflow.com/questions/62900266/android-studio-set-alarm-at-specific-hour-and-minute-with-sound

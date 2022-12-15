@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
     private var notificationManager: NotificationManager? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val alarmCreator = AlarmCreator("Thursday", "19:58")
+        val alarmCreator = AlarmCreator("Thursday", "14:02")
         //Notifications
         notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -71,19 +71,7 @@ class MainActivity : ComponentActivity() {
 
     }
 
-    private fun CreateNotificationChannel(id: String, name: String,
-                                          description: String) {
 
-        val importance = NotificationManager.IMPORTANCE_LOW
-        val channel = NotificationChannel(id, name, importance)
-
-        channel.description = description
-        channel.enableLights(true)
-        channel.enableVibration(true)
-        channel.vibrationPattern =
-            longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
-        notificationManager?.createNotificationChannel(channel)
-    }
 
 
 
