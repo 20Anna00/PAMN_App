@@ -13,7 +13,6 @@ import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.model.repository.PillRepository
 import com.example.pillee.jetpackcompnavigation.screens.PillDetailState
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.ktx.Firebase

@@ -123,7 +123,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
 
         if (appointmentList != null) {
             for (app in appointmentList){
-                showAppointment(datetime = app.dateTime, hospital = app.hospital)
+                //showAppointment(datetime = app.dateTime, hospital = app.hospital)
             }
         }
         for (pill in morningPills){
@@ -269,5 +269,6 @@ fun showAppointment(datetime: com.google.firebase.Timestamp, hospital: String, )
 
     }
 }
+    
 
 

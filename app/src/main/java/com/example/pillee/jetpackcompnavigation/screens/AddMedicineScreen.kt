@@ -45,8 +45,6 @@ import com.example.pillee.themes.schedule_blue
 import com.example.pillee.themes.schedule_lightgreen
 import com.example.pillee.themes.white
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
