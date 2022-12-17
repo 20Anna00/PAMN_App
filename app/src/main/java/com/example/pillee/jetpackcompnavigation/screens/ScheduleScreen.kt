@@ -41,6 +41,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+
 var pillList = mutableListOf<CheckedPills>()
 var appList = mutableListOf<CheckedApp>()
 
@@ -57,7 +58,7 @@ fun ScheduleScreen(navController: NavController, pillViewModel: PillDetailViewMo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appointmentViewModel: AppointmentViewModel){
-   
+
     val data = pillViewModel.data.value
     val dataAppointment = appointmentViewModel.data.value
     var appointmentList = dataAppointment.data
@@ -124,7 +125,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
             if (timeReal < 1100){
                 todaysMorningAppointments.add(appcheck)
             }
-             else if (timeReal > 1100 && timeReal < 1600){
+            else if (timeReal > 1100 && timeReal < 1600){
                 todaysAfternoonAppointments.add(appcheck)
             } else {
                 todaysEveningAppointments.add(appcheck)
@@ -153,45 +154,45 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
             }
         }
     }
-            for (checkpill in pillList){
-                var pill = checkpill.pill
-                counter = -1
-                var splitDays = pill.days.split(", ")
-                for (day in splitDays) {
-                    counter++
-                    if (day == list[currentDay]) {
-                        var neededHourSplit = pill.hour.split(",")
+    for (checkpill in pillList){
+        var pill = checkpill.pill
+        counter = -1
+        var splitDays = pill.days.split(", ")
+        for (day in splitDays) {
+            counter++
+            if (day == list[currentDay]) {
+                var neededHourSplit = pill.hour.split(",")
 
-                        if (counter == 0){
-                            neededHour = neededHourSplit[0]
-                        }
-                        if (counter == 1){
-                            neededHour = neededHourSplit[1]
-                        }
-                        if (counter == 2){
-                            neededHour = neededHourSplit[2]
-                        }
+                if (counter == 0){
+                    neededHour = neededHourSplit[0]
+                }
+                if (counter == 1){
+                    neededHour = neededHourSplit[1]
+                }
+                if (counter == 2){
+                    neededHour = neededHourSplit[2]
+                }
 
-                        var splitHourPill = neededHour.split(":")
-                        var timePill = splitHourPill[0] + splitHourPill[1]
-                        var timeRealPill = timePill.toInt()
+                var splitHourPill = neededHour.split(":")
+                var timePill = splitHourPill[0] + splitHourPill[1]
+                var timeRealPill = timePill.toInt()
 
 
-                        if(timeRealPill <= 1100){
-                            morningPills.add(checkpill)
-                            morningString.add(neededHour)
-                        }
-                        if(timeRealPill > 1100 && timeRealPill <= 1600) {
-                            afternoonPills.add(checkpill)
-                            afternoonString.add(neededHour)
-                        }
-                        if (timeRealPill > 1600) {
-                            eveningPills.add(checkpill)
-                            eveningString.add(neededHour)
-                        }
-                    }
+                if(timeRealPill <= 1100){
+                    morningPills.add(checkpill)
+                    morningString.add(neededHour)
+                }
+                if(timeRealPill > 1100 && timeRealPill <= 1600) {
+                    afternoonPills.add(checkpill)
+                    afternoonString.add(neededHour)
+                }
+                if (timeRealPill > 1600) {
+                    eveningPills.add(checkpill)
+                    eveningString.add(neededHour)
                 }
             }
+        }
+    }
 
 
     sort(morningPills, morningString)
@@ -292,28 +293,28 @@ fun showPill(checkedpill : CheckedPills, hour : String, pillViewModel: PillDetai
     var newNumberInt = refillPillsInt - 1
     var newNumber = newNumberInt.toString()
 
-        Row(modifier = Modifier
-            .clip(shape = RoundedCornerShape(20.dp))
-            .height(75.dp)
-            .width(350.dp)
-            .background(colorUn),
+    Row(modifier = Modifier
+        .clip(shape = RoundedCornerShape(20.dp))
+        .height(75.dp)
+        .width(350.dp)
+        .background(colorUn),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly,
 
-    ) {
+        ) {
         Checkbox(checked = checkedpill.checked.value, onCheckedChange = { checkedpill.checked.value = it
-                                                                        pillViewModel.updatePill(checkedpill.pill.id, newNumber)},
+            pillViewModel.updatePill(checkedpill.pill.id, newNumber)},
             colors = CheckboxDefaults.colors(checkedColor = if(!checkedpill.checked.value) schedule_blue else schedule_green, checkmarkColor = schedule_lightgreen)
         )
-            Column(
-                verticalArrangement = Arrangement.spacedBy(
-                    space = 0.dp,
-                    alignment = Alignment.CenterVertically ),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(hour, fontSize = 25.sp, color = Color.White)
-                Text(hourId, fontSize = 25.sp, color = Color.White)
-            }
+        Column(
+            verticalArrangement = Arrangement.spacedBy(
+                space = 0.dp,
+                alignment = Alignment.CenterVertically ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(hour, fontSize = 25.sp, color = Color.White)
+            Text(hourId, fontSize = 25.sp, color = Color.White)
+        }
         Text(name, fontSize = 30.sp, color = Color.White)
         Image(
             painter = painterResource(id = R.drawable.pills_1),
@@ -384,7 +385,7 @@ fun showAppointment(checkedapp: CheckedApp) {
 
     }
 }
-    
+
 
 fun sort(pills: MutableList<CheckedPills>, hours: MutableList<String>){
     var n = pills.size
