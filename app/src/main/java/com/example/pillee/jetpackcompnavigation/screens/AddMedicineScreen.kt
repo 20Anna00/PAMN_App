@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -32,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.pillee.R
+import com.example.pillee.jetpackcompnavigation.alarms.AlarmCreator
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentViewModel
@@ -40,6 +43,9 @@ import com.example.pillee.themes.CentralAppBar
 import com.example.pillee.themes.schedule_blue
 import com.example.pillee.themes.schedule_lightgreen
 import com.example.pillee.themes.white
+import com.google.android.gms.tasks.Tasks.await
+import kotlinx.coroutines.awaitAll
+import okhttp3.internal.wait
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -324,19 +330,37 @@ fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
                       saturday: MutableState<Boolean>,
                       sunday: MutableState<Boolean>
 ){
+    val addedPill = remember { mutableStateOf(false) }
     androidx.compose.material3.Button(
         onClick = {
                   pillDetailViewModel.addNewPill(authRepository.currentUser.toString(),
                   name,
                   takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
                   hour, numberString)
+                  addedPill.value=true
+
+
+
+
         }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)
             .height(50.dp)
 
-    ) { androidx.compose.material3.Text("Add Pill", color = Color.White) }
+    ) {
+
+    if(addedPill.value) {
+        var alarmCreator = AlarmCreator(takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),hour,name)
+        alarmCreator.createAlarms()
+    }
+        androidx.compose.material3.Text("Add Pill", color = Color.White) }
+
+
+
+
 }
+
+
 
 fun takeDays(monday: MutableState<Boolean>,
              tuesday: MutableState<Boolean>,
@@ -346,14 +370,14 @@ fun takeDays(monday: MutableState<Boolean>,
              saturday: MutableState<Boolean>,
              sunday: MutableState<Boolean>): String{
     var res = ""
-    if(monday.value) res += "monday, "
-    if(tuesday.value) res += "tuesday, "
-    if(wednesday.value) res += "wednesday, "
-    if(thursday.value) res += "thursday, "
-    if(friday.value) res += "friday, "
-    if(saturday.value) res += "saturday, "
-    if(sunday.value) res += "sunday, "
-
-    res = res.replace(", $", "")
+    if(monday.value) res += "Monday,"
+    if(tuesday.value) res += "Tuesday,"
+    if(wednesday.value) res += "Wednesday,"
+    if(thursday.value) res += "Thursday,"
+    if(friday.value) res += "Friday,"
+    if(saturday.value) res += "Saturday,"
+    if(sunday.value) res += "Sunday,"
+    Log.d("DIAAAAAAAAAAAAA! ",res)
+    res = res.dropLast(1)
     return res
 }
