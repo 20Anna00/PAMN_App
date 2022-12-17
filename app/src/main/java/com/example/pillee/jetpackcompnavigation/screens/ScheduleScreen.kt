@@ -158,41 +158,35 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
         var pill = checkpill.pill
         counter = -1
         var splitDays = pill.days.split(", ")
-        for (day in splitDays) {
-            counter++
-            if (day == list[currentDay]) {
-                var neededHourSplit = pill.hour.split(",")
+        var neededHourSplit = pill.hour.split(",")
+        for(day in splitDays){
+            if (day == list[currentDay]){
+                for (i in 0..neededHourSplit.size-1) {
 
-                if (counter == 0){
-                    neededHour = neededHourSplit[0]
-                }
-                if (counter == 1){
-                    neededHour = neededHourSplit[1]
-                }
-                if (counter == 2){
-                    neededHour = neededHourSplit[2]
-                }
+                        neededHour = neededHourSplit[i]
 
-                var splitHourPill = neededHour.split(":")
-                var timePill = splitHourPill[0] + splitHourPill[1]
-                var timeRealPill = timePill.toInt()
+                        var splitHourPill = neededHour.split(":")
+                        var timePill = splitHourPill[0] + splitHourPill[1]
+                        var timeRealPill = timePill.toInt()
 
 
-                if(timeRealPill <= 1100){
-                    morningPills.add(checkpill)
-                    morningString.add(neededHour)
-                }
-                if(timeRealPill > 1100 && timeRealPill <= 1600) {
-                    afternoonPills.add(checkpill)
-                    afternoonString.add(neededHour)
-                }
-                if (timeRealPill > 1600) {
-                    eveningPills.add(checkpill)
-                    eveningString.add(neededHour)
+                        if(timeRealPill <= 1100){
+                            morningPills.add(checkpill)
+                            morningString.add(neededHour)
+                        }
+                        if(timeRealPill > 1100 && timeRealPill <= 1600) {
+                            afternoonPills.add(checkpill)
+                            afternoonString.add(neededHour)
+                        }
+                        if (timeRealPill > 1600) {
+                            eveningPills.add(checkpill)
+                            eveningString.add(neededHour)
+                        }
+                    }
                 }
             }
         }
-    }
+
 
 
     sort(morningPills, morningString)
