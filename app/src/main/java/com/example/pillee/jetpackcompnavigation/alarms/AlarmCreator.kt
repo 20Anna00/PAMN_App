@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.model.repository.NotificationRepository
+import com.example.pillee.jetpackcompnavigation.roomDB.NotificationDB
+import com.example.pillee.jetpackcompnavigation.roomDB.NotificationRoomDatabase
 import java.util.*
 
 
@@ -63,6 +65,9 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
                 Log.d("CALENDAR",calendar.toString())
                 alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar, 24 * 7 * 60 * 60 * 1000, pendingIntent)
                 //notificationRepository.addNotificationToFirestore(Notification(repository.currentUser!!.uid,calendar,pillName))
+                var roomdb = NotificationRoomDatabase.getDatabase(context)
+                roomdb.accessDao().insert(NotificationDB(calendar,pillName,AuthRepository().getUser()))
+
 
             }
     }

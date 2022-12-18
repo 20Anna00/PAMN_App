@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase
 @Database(entities = arrayOf(NotificationDB::class), version = 1, exportSchema = false)
 abstract class NotificationRoomDatabase : RoomDatabase() {
 
-    abstract fun wordDao(): NotificationDao
+    abstract fun accessDao(): NotificationDao
 
     companion object {
         // Singleton prevents multiple instances of database opening at the
