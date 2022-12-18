@@ -69,7 +69,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
     val currentTime = sdf2.format(Date())
     val currentDay = mCalendar.get(Calendar.DAY_OF_WEEK)
     var listPills = data.data
-    var list = arrayOf( "nothing", "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday")
+    var list = arrayOf("nothing","sunday","monday","tuesday","wednesday","thursday","friday","saturday")
     var morningPills = mutableListOf<CheckedPills>()
     var morningString = mutableListOf<String>()
     var afternoonPills = mutableListOf<CheckedPills>()

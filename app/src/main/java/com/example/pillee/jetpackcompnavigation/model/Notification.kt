@@ -15,7 +15,7 @@ data class Notification (
 
 @Entity(tableName = "notification_table")
 data class NotificationDB(
-    @PrimaryKey val dateMillis: Int,
+    @PrimaryKey val dateMillis: Long,
     val pill: String,
     val userId: String
 )
