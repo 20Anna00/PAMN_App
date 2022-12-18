@@ -30,7 +30,7 @@ import com.example.pillee.themes.schedule_blue
 @Composable
 fun RefillScreen(navController: NavController, pillViewModel: PillDetailViewModel = viewModel()){
 
-    Scaffold(topBar = { CentralAppBar(navController, "Refill", AppScreens.StartPageScreen.route) }) {
+    Scaffold(topBar = { CentralAppBar(navController, "   Refill Pills    ", AppScreens.StartPageScreen.route) }) {
        RefillUI(pillViewModel)
     }
 }

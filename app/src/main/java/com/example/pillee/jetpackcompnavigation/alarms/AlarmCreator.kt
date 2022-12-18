@@ -3,6 +3,7 @@ package com.example.pillee.jetpackcompnavigation.alarms
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -51,7 +52,7 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
 
         this.alarmManager = context.getSystemService(Context.ALARM_SERVICE) as? AlarmManager
         val intent = Intent(context, SampleBootReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(context,0, intent,0)
+        val pendingIntent = PendingIntent.getBroadcast(context,0, intent,FLAG_IMMUTABLE)
 
         for (day in dayList)
             for (time in hourList){

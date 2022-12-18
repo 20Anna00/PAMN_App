@@ -1,6 +1,7 @@
 package com.example.pillee.themes
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
@@ -30,11 +31,12 @@ import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
             title = {
                 Text(
                     text = text,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = 70.dp)
                 )
             },
             backgroundColor = Color(0xFF174560),

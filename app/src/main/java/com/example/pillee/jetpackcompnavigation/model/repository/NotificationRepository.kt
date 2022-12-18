@@ -1,7 +1,7 @@
 package com.example.pillee.jetpackcompnavigation.model.repository
 
 import android.util.Log
-import com.example.pillee.jetpackcompnavigation.model.Notification
+import com.example.pillee.jetpackcompnavigation.roomDB.Notification
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.ktx.firestore

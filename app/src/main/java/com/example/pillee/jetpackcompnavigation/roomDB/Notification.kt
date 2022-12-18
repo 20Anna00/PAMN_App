@@ -1,4 +1,4 @@
-package com.example.pillee.jetpackcompnavigation.model
+package com.example.pillee.jetpackcompnavigation.roomDB
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
