@@ -1,6 +1,9 @@
 package com.example.pillee.jetpackcompnavigation.model.repository
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import com.example.pillee.jetpackcompnavigation.model.DataOrException
 import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.google.firebase.auth.FirebaseUser
@@ -20,9 +23,10 @@ class PillRepository (){
 
     private val pillList: CollectionReference = Firebase.firestore.collection("pills")
 
-    fun addNewPill (pill: Pills){
+    fun addNewPill (pill: Pills, context: Context){
         try {
             pillList.document(pill.id).set(pill)
+            Toast.makeText(context, "Added pill successfully", Toast.LENGTH_SHORT).show()
         }catch (e: Exception){
             e.printStackTrace()
         }

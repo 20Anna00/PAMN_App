@@ -11,14 +11,18 @@ import com.example.pillee.jetpackcompnavigation.model.repository.NotificationRep
 
 
 class SampleBootReceiver : BroadcastReceiver() {
+
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onReceive(context: Context, intent: Intent) {
         val vibrator = context!!.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         vibrator.vibrate(500)
+        /*
         val time = System.currentTimeMillis()
         val notificationRepository: NotificationRepository = NotificationRepository()
         var listNotification = notificationRepository.getNotificationList()
         Log.d("Lista de notificaciones",listNotification.toString())
+        */
+        Log.d("HOLAAAAA","Holaaaaa")
 
 
 

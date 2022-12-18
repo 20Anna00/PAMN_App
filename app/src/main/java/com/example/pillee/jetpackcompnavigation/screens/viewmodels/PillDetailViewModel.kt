@@ -1,23 +1,16 @@
 package com.example.pillee.jetpackcompnavigation.screens.viewmodels
-import androidx.compose.runtime.Composable
+import android.content.Context
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pillee.jetpackcompnavigation.alarms.AlarmCreator
 import com.example.pillee.jetpackcompnavigation.model.DataOrException
 import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.model.repository.PillRepository
-import com.example.pillee.jetpackcompnavigation.screens.PillDetailState
-import com.google.firebase.Timestamp
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.ktx.Firebase
-import com.google.rpc.context.AttributeContext.Auth
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -50,8 +43,8 @@ constructor(
     }
 
 
-    fun addNewPill(userId : String, name : String, days : String , hour : String, daysRefill : String){
-
+    fun addNewPill(userId : String, name : String, days : String , hour : String, daysRefill : String, context: Context){
+        Log.d("TAG", "Horaaaa: $hour")
         val pill = Pills(
             id=UUID.randomUUID().toString(),
             userID = currentUser!!.uid,
@@ -60,8 +53,9 @@ constructor(
             hour = hour,
             daysRefill = daysRefill,
         )
-        pillRepository.addNewPill(pill)
-    }
+        pillRepository.addNewPill(pill, context)
+        Toast.makeText(context, "Pill added correctly", Toast.LENGTH_SHORT).show()
+}
 
    fun updatePill(pillId: String, newNumber : String){
        pillRepository.updatePill(newNumber, pillId)

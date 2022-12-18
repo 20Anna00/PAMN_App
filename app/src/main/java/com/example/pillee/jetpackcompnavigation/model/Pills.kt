@@ -1,8 +1,5 @@
 package com.example.pillee.jetpackcompnavigation.model
 
-import com.google.firebase.Timestamp
-import java.sql.Time
-
 
 data class Pills(
     var id:String = "",

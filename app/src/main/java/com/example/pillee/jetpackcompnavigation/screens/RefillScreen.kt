@@ -178,6 +178,7 @@ fun refillNumber(): TextFieldValue {
     return textValue
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun RefillButton(value : String, pill: Pills, pillViewModel: PillDetailViewModel){
     var newValue = 0

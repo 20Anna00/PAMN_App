@@ -14,14 +14,10 @@ import com.example.pillee.jetpackcompnavigation.model.DataOrException
 import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.example.pillee.jetpackcompnavigation.model.repository.AppointmentRepository
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
-import com.google.firebase.Timestamp
-import com.google.type.DateTime
 import kotlinx.coroutines.launch
 import java.sql.Date
 import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 import java.util.logging.Level.parse
 
@@ -86,15 +82,12 @@ class AppointmentViewModel(
             if (!validateAppointment()) {
                 Toast.makeText(context, "All fields should be filled", Toast.LENGTH_SHORT).show()
             } else {
-                Log.d("TAG", "${ appointmentUiState.date} ${ appointmentUiState.time}")
-                val calendar = Calendar.getInstance()
-                val dateTime = appointmentUiState.date + " " + appointmentUiState.time
-                val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
-                calendar.setTime(sdf.parse(dateTime))
+
+                val dateAndTime = appointmentUiState.date + " " + appointmentUiState.time
 
                 val appointment = Appointment(
                     currentUser!!.uid,
-                    Timestamp(calendar.time),
+                    dateAndTime,
                     appointmentUiState.hospital,
                     appointmentUiState.doctorName,
                     appointmentUiState.concept

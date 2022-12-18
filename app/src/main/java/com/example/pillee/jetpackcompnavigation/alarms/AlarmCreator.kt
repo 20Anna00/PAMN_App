@@ -36,6 +36,7 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
         */
 
         if( now > calendar.timeInMillis ) calendar.add( Calendar.DAY_OF_MONTH, 1 )
+        Log.d("Hola", calendar.timeInMillis.toString())
         return calendar.timeInMillis
     }
 
@@ -51,9 +52,12 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
 
         for (day in dayList)
             for (time in hourList){
+
+                Log.d("HORAAA",time)
+                Log.d("DIIIA",day)
                 val calendar = createCalendar(splitHourMinutes(time)[0],splitHourMinutes(time)[1],day)
                 alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar, 24 * 7 * 60 * 60 * 1000, pendingIntent)
-                notificationRepository.addNotificationToFirestore(Notification(repository.currentUser!!.uid,calendar,pillName))
+                //notificationRepository.addNotificationToFirestore(Notification(repository.currentUser!!.uid,calendar,pillName))
 
             }
     }
