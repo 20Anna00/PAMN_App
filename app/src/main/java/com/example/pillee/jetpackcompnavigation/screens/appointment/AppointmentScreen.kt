@@ -236,6 +236,7 @@ fun time(appointmentUiState: AppointmentUiState?, appointmentViewModel: Appointm
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
+
             appointmentViewModel.onTimeChange("$mHour:$mMinute")
 
         }, mHour, mMinute, false

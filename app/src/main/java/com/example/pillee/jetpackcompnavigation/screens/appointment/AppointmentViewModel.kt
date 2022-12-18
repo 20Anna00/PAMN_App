@@ -83,8 +83,10 @@ class AppointmentViewModel(
                 Toast.makeText(context, "All fields should be filled", Toast.LENGTH_SHORT).show()
             } else {
 
-                val sdf3 = SimpleDateFormat("HH:mm", Locale.ENGLISH)
-                val timeFormatted = sdf3.parse(appointmentUiState.time)
+                val sdf2 = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+                val format = SimpleDateFormat("HH:mm")
+                val hourDate2 = sdf2.parse(appointmentUiState.time)
+                val timeFormatted = format.format(hourDate2)
                 val dateAndTime = appointmentUiState.date + " " + timeFormatted
 
                 val appointment = Appointment(
