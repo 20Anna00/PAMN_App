@@ -46,6 +46,10 @@ var pillList = mutableListOf<CheckedPills>()
 var appList = mutableListOf<CheckedApp>()
 
 
+
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScheduleScreen(navController: NavController, pillViewModel: PillDetailViewModel = viewModel(), appointmentViewModel: AppointmentViewModel = viewModel()){
@@ -70,12 +74,13 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
     val currentDay = mCalendar.get(Calendar.DAY_OF_WEEK)
     var listPills = data.data
     var list = arrayOf("nothing","Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday")
-    var morningPills = mutableListOf<CheckedPills>()
     var morningString = mutableListOf<String>()
-    var afternoonPills = mutableListOf<CheckedPills>()
     var afternoonString = mutableListOf<String>()
-    var eveningPills = mutableListOf<CheckedPills>()
     var eveningString = mutableListOf<String>()
+    var morningPills = mutableListOf<CheckedPills>()
+    var afternoonPills = mutableListOf<CheckedPills>()
+    var eveningPills = mutableListOf<CheckedPills>()
+    var savePills = mutableListOf<CheckedPills>()
 
 
 
@@ -141,65 +146,51 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
     if (listPills != null) {
         for (pill in listPills) {
             var i = 0
-            var checkedpill = CheckedPills(pill, remember{ mutableStateOf(false)})
-            var bool = false
-            for (pill in pillList) {
-                if (pillsEqual(pill, checkedpill)) {
-                    bool = true
-                    break
+            var neededHourSplit = pill.hour.split(",")
+            for (i in 0..neededHourSplit.size-1) {
+
+                neededHour = neededHourSplit[i]
+
+
+                var checkedpill = CheckedPills(pill, remember { mutableStateOf(false) }, neededHour)
+                var bool = false
+                for (pill in pillList) {
+                    if (pillsEqual(pill, checkedpill)) {
+                        bool = true
+                        break
+                    }
                 }
-            }
-            if(!bool){
-                pillList.add(checkedpill)
+                if (!bool) {
+                    pillList.add(checkedpill)
+                }
             }
         }
     }
     for (checkpill in pillList){
         var pill = checkpill.pill
-        counter = -1
         var splitDays = pill.days.split(",")
-        var neededHourSplit = pill.hour.split(",")
         for(day in splitDays){
             if (day == list[currentDay]){
-                for (i in 0..neededHourSplit.size-1) {
 
-                        neededHour = neededHourSplit[i]
-
-                        var splitHourPill = neededHour.split(":")
+                        var splitHourPill = checkpill.hour.split(":")
                         var timePill = splitHourPill[0] + splitHourPill[1]
                         var timeRealPill = timePill.toInt()
-                        if(i == 0){
                             if(timeRealPill <= 1100){
                                 morningPills.add(checkpill)
-                                morningString.add(neededHour)
+                                morningString.add(checkpill.hour)
                             }
                             if(timeRealPill > 1100 && timeRealPill <= 1600) {
                                 afternoonPills.add(checkpill)
-                                afternoonString.add(neededHour)
+                                afternoonString.add(checkpill.hour)
                             }
                             if (timeRealPill > 1600) {
                                 eveningPills.add(checkpill)
-                                eveningString.add(neededHour)
+                                eveningString.add(checkpill.hour)
                             }
-                    } else {
-                        var newcheckpill = CheckedPills(checkpill.pill, remember{ mutableStateOf(false)})
-                            if(timeRealPill <= 1100){
-                                morningPills.add(newcheckpill)
-                                morningString.add(neededHour)
-                            }
-                            else if(timeRealPill > 1100 && timeRealPill <= 1600) {
-                                afternoonPills.add(newcheckpill)
-                                afternoonString.add(neededHour)
-                            }
-                            else if (timeRealPill > 1600) {
-                                eveningPills.add(newcheckpill)
-                                eveningString.add(neededHour)
-                            }
-                        }
-                }
                 }
             }
         }
+
 
 
     sortApps(todaysMorningAppointments)
@@ -223,14 +214,6 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
         Text(text = currentTime, color = Color.Black, fontSize = 50.sp)
         Text(text = "Morning", color = Color.Black, fontSize = 30.sp)
 
-
-        if (appointmentList != null) {
-            for (app in appointmentList) {
-                //showAppointment(datetime = app.dateTime, hospital = app.hospital)
-            }
-        }
-
-
         for (app in todaysMorningAppointments){
             showAppointment(app)
         }
@@ -241,13 +224,11 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
             i++
         }
 
-
         Text(text = "Afternoon", color = Color.Black, fontSize = 30.sp)
         for (app in todaysAfternoonAppointments){
             showAppointment(app)
         }
         var j = 0
-
         while (j < afternoonPills.size-1){
             showPill(afternoonPills[j], afternoonString[j], pillViewModel)
         }
@@ -469,7 +450,7 @@ fun sortApps(apps: MutableList<CheckedApp>){
 
 
 fun pillsEqual(pill1 : CheckedPills, pill2: CheckedPills): Boolean {
-    if(pill1.pill.id == pill2.pill.id){
+    if(pill1.pill.id == pill2.pill.id && pill1.hour == pill2.hour){
         return true
     }
     return false

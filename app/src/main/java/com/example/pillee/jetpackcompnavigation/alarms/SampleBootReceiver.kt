@@ -20,19 +20,22 @@ class SampleBootReceiver : BroadcastReceiver() {
         val vibrator = context!!.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         vibrator.vibrate(500)
 
-        val time = System.currentTimeMillis()
-
-        Log.d("HOLAAAAA","Holaaaaa")
-
         var roomdb = NotificationRoomDatabase.getDatabase(context)
-        var notificationList = roomdb.accessDao().getAlphabetizedNotifications()
-        Log.d("notificaciones",notificationList.toString())
-        var notification = NotificationCreator()
-        notification.createNotification(context,intent,"Hi, it is time to take a pill","Here it goes the name of the pill")
+        val time = System.currentTimeMillis()
+        var title = ""
+        val thread = Thread{
+            var notificationList = roomdb.accessDao().getAlphabetizedNotifications()
+            for(notification in notificationList){
+                if(notification.dateMillis >= time-120000 && notification.dateMillis <= time+120000) {
+                    title = notification.pill
+                }
+            }
+            var notification = NotificationCreator()
+            notification.createNotification(context,intent,"Hi, it is time to take a pill","The pill you need to take is: $title")
 
-
-
-    }
+        }
+        thread.start()
+        }
 
 
 

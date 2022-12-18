@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData
 
 data class CheckedPills (
     var pill: Pills = Pills(),
-    var checked: MutableState<Boolean>
+    var checked: MutableState<Boolean>,
+    var hour : String
     ){
 
 }

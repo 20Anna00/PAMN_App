@@ -1,6 +1,7 @@
 package com.example.pillee.jetpackcompnavigation.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -182,8 +184,9 @@ fun refillNumber(): TextFieldValue {
 @Composable
 fun RefillButton(value : String, pill: Pills, pillViewModel: PillDetailViewModel){
     var newValue = 0
+    val context = LocalContext.current
 
-        if(value.toIntOrNull() != null){
+    if(value.toIntOrNull() != null){
         if(pill.daysRefill.toIntOrNull() != null){
             newValue = pill.daysRefill.toInt() + value.toInt()
         }
@@ -193,6 +196,7 @@ fun RefillButton(value : String, pill: Pills, pillViewModel: PillDetailViewModel
         onClick = {
             if (pill.id != "") {
                 pillViewModel.updatePill(pill.id, realValue)
+                Toast.makeText(context, "Refilled succesfully", Toast.LENGTH_SHORT).show()
             }
 
         },
