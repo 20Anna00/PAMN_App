@@ -403,7 +403,8 @@ fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
 
     ) {
 
-    if(addedPill.value) {
+    if(addedPill.value == true) {
+        addedPill.value=false
         var alarmCreator = AlarmCreator(takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
             takeHours(hour1.value,hour2.value,hour3.value),name)
         alarmCreator.createAlarms()

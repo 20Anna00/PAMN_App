@@ -35,8 +35,8 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
         * Link reference :  https://stackoverflow.com/questions/62900266/android-studio-set-alarm-at-specific-hour-and-minute-with-sound
         */
 
-        if( now > calendar.timeInMillis ) calendar.add( Calendar.DAY_OF_MONTH, 1 )
-        Log.d("Hola", calendar.timeInMillis.toString())
+        //if( now > calendar.timeInMillis ) calendar.add( Calendar.DAY_OF_MONTH, 1 )
+
         return calendar.timeInMillis
     }
 
@@ -56,6 +56,7 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
                 Log.d("HORAAA",time)
                 Log.d("DIIIA",day)
                 val calendar = createCalendar(splitHourMinutes(time)[0],splitHourMinutes(time)[1],day)
+                Log.d("CALENDAR",calendar.toString())
                 alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar, 24 * 7 * 60 * 60 * 1000, pendingIntent)
                 //notificationRepository.addNotificationToFirestore(Notification(repository.currentUser!!.uid,calendar,pillName))
 
