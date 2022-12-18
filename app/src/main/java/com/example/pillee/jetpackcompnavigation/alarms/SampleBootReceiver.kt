@@ -30,7 +30,7 @@ class SampleBootReceiver : BroadcastReceiver() {
             var notificationList = roomdb.accessDao().getAlphabetizedNotifications()
             for(notification in notificationList){
                 val time = System.currentTimeMillis()
-                if(notification.dateMillis >= time-60000 && notification.dateMillis <= time+60000) {
+                if(notification.dateMillis >= time-120000 && notification.dateMillis <= time+120000) {
                     title = notification.pill
                 }
             }
