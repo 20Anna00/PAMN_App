@@ -55,7 +55,7 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
         val intent = Intent(context, SampleBootReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context,0, intent,FLAG_IMMUTABLE)
 
-        for (day in dayList)
+        for (day in dayList){
             for (time in hourList){
 
                 Log.d("HORAAA",time)
@@ -66,10 +66,11 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
                 alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar, 24 * 7 * 60 * 60 * 1000, pendingIntent)
                 //notificationRepository.addNotificationToFirestore(Notification(repository.currentUser!!.uid,calendar,pillName))
                 var roomdb = NotificationRoomDatabase.getDatabase(context)
-                roomdb.accessDao().insert(NotificationDB(calendar,pillName,AuthRepository().getUser()))
-
-
+                val thread = Thread {
+                    roomdb.accessDao().insert(NotificationDB(calendar,pillName,AuthRepository().getUser()))
+                }
+                thread.start()
             }
+        }
     }
 }
-

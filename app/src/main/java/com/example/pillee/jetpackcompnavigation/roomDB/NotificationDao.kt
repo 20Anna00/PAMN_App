@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface NotificationDao {
     @Query("SELECT * from notification_table ORDER BY dateMillis ASC")
-    fun getAlphabetizedNotifications(): LiveData<List<NotificationDB>>
+    fun getAlphabetizedNotifications(): List<NotificationDB>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(vararg notification: NotificationDB)
