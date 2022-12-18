@@ -9,7 +9,6 @@ import android.content.Intent
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
-import com.example.pillee.jetpackcompnavigation.model.Notification
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.model.repository.NotificationRepository
 import java.util.*
