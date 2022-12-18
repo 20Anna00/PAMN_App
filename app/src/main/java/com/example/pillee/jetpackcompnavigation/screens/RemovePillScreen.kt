@@ -1,6 +1,7 @@
 package com.example.pillee.jetpackcompnavigation.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
@@ -156,18 +158,26 @@ fun DropDownMenuRemove(list: List<Pills>?): Pills {
 
 @Composable
 fun RemoveButton(pill: Pills, pillViewModel: PillDetailViewModel){
-
-
+    val context = LocalContext.current
     androidx.compose.material3.Button(
         onClick = {
             if (pill.id != "") {
                 pillViewModel.deletePill(pill.id)
+                deletePillsFromList(pill.id)
+                Toast.makeText(context, "Removed succesfully", Toast.LENGTH_SHORT).show()
             }
-
         },
         colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)
             .height(50.dp)
     ) { androidx.compose.material3.Text("Remove", color = Color.White) }
+}
+
+fun deletePillsFromList(id : String){
+    for(pill in pillList){
+        if(pill.pill.id == id){
+            pillList.remove(pill)
+        }
+    }
 }
