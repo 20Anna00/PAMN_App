@@ -95,10 +95,10 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
 
 
     if (appointmentList != null){
-        for (app in appointmentList){
-            var checkedapp = CheckedApp(app, remember{ mutableStateOf(false)})
+        for (capp in appointmentList){
+            var checkedapp = CheckedApp(capp, remember{ mutableStateOf(false)})
             var bool = false
-            for (pill in pillList) {
+            for (app in appList) {
                 if (appsEqual(app, checkedapp)) {
                     bool = true
                     break
@@ -475,8 +475,9 @@ fun pillsEqual(pill1 : CheckedPills, pill2: CheckedPills): Boolean {
     return false
 }
 
-fun appsEqual(app1: Appointment, appcheck: CheckedApp): Boolean{
+fun appsEqual(appcheck2: CheckedApp, appcheck: CheckedApp): Boolean{
     var app2 = appcheck.app
+    var app1 = appcheck2.app
     if(app1.dateAndTime == app2.dateAndTime && app1.hospital == app2.hospital
         && app1.concept == app2.concept && app1.userId == app2.userId && app1.doctorName == app2.doctorName){
         return true
