@@ -19,3 +19,11 @@ data class NotificationDB(
     val pill: String,
     val userId: String
 )
+
+fun NotificationDB.toNotification(): Notification {
+    return Notification(userId, dateMillis, pill)
+}
+
+fun Notification.toNotificationDB(): NotificationDB {
+    return NotificationDB(dateTime, pill, userId)
+}
