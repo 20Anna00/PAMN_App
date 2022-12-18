@@ -26,7 +26,7 @@ class SampleBootReceiver : BroadcastReceiver() {
 
         var roomdb = NotificationRoomDatabase.getDatabase(context)
         var notificationList = roomdb.accessDao().getAlphabetizedNotifications()
-        Log.d("notificaciones",notificationList.value.toString())
+        Log.d("notificaciones",notificationList.toString())
         var notification = NotificationCreator()
         notification.createNotification(context,intent,"Hi, it is time to take a pill","Here it goes the name of the pill")
 
