@@ -188,7 +188,9 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
         }
 
 
-
+    sortApps(todaysMorningAppointments)
+    sortApps(todaysAfternoonAppointments)
+    sortApps(todaysEveningAppointments)
     sort(morningPills, morningString)
     sort(afternoonPills, afternoonString)
     sort(eveningPills, eveningString)
@@ -415,6 +417,40 @@ fun sort(pills: MutableList<CheckedPills>, hours: MutableList<String>){
         }
     }
 }
+
+fun sortApps(apps: MutableList<CheckedApp>){
+    var n = apps.size
+    if ( n >= 2){
+        for (j in 0..n){
+            var swapped = false
+            for (i in 0..n-2){
+                var leftP = apps[i]
+                var leftHwhole = apps[i].app.dateAndTime
+                var leftHSplit = leftHwhole.split(":")
+                var leftHTog = leftHSplit[0] + leftHSplit[1]
+                var leftH = 0
+                if (leftHTog.toIntOrNull() != null) {
+                    leftH = leftHTog.toInt()
+                }
+                var rightP = apps[i+1]
+                var rightHwhole = apps[i+1].app.dateAndTime
+                var rightHSplit = rightHwhole.split(":")
+                var rightHTog = rightHSplit[0] + rightHSplit[1]
+                var rightH = 0
+                if (rightHTog.toIntOrNull() != null) {
+                    rightH = rightHTog.toInt()
+                }
+                if (leftH > rightH) {
+                    apps.set(i+1, leftP)
+                    apps.set(i, rightP)
+                    swapped = true
+                }
+            }
+
+        }
+    }
+}
+
 
 fun pillsEqual(pill1 : CheckedPills, pill2: CheckedPills): Boolean {
     if(pill1.pill.id == pill2.pill.id){
