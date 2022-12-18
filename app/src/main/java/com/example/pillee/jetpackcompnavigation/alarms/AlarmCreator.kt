@@ -19,7 +19,7 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
     private var dayList = splitDays(days)
     private var hourList = splitHours(hours)
     private val pillName = pillName
-    private val daysMap = mapOf("Monday" to 1 ,"Tuesday" to 2 ,"Wednesday" to 3 ,"Thursday" to 4 ,"Friday" to 5 ,"Saturday" to 6 ,"Sunday" to  7)
+    private val daysMap = mapOf("Monday" to 2 ,"Tuesday" to 3 ,"Wednesday" to 4 ,"Thursday" to 5 ,"Friday" to 6 ,"Saturday" to 7 ,"Sunday" to  1)
     private fun splitDays (days:String) : List<String> = days.split(",")
     private fun splitHours (hours:String) : List<String> = hours.split(",")
     private fun splitHourMinutes (time:String) : List<String> = time.split(":")
@@ -27,15 +27,18 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
     private fun createCalendar (hour : String, minutes : String, day : String) : Long {
         val calendar: Calendar = Calendar.getInstance()
         val now = System.currentTimeMillis()
+        calendar.set(Calendar.DAY_OF_WEEK, this.daysMap.getValue(day))
         calendar.set(Calendar.HOUR_OF_DAY, hour.toInt())
         calendar.set(Calendar.MINUTE,minutes.toInt())
-        calendar.set(Calendar.DAY_OF_WEEK, this.daysMap.getValue(day))
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+        Log.d("DIA DEL MES",Calendar.DAY_OF_MONTH.toString())
 
        /** This checks if it is necessary to add one day
         * Link reference :  https://stackoverflow.com/questions/62900266/android-studio-set-alarm-at-specific-hour-and-minute-with-sound
         */
 
-        //if( now > calendar.timeInMillis ) calendar.add( Calendar.DAY_OF_MONTH, 1 )
+        if( now > calendar.timeInMillis ) calendar.add( Calendar.DAY_OF_MONTH, 7 )
 
         return calendar.timeInMillis
     }
