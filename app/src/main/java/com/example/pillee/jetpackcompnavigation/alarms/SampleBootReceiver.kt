@@ -18,23 +18,30 @@ class SampleBootReceiver : BroadcastReceiver() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onReceive(context: Context, intent: Intent) {
         val vibrator = context!!.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        vibrator.vibrate(500)
+
 
         var roomdb = NotificationRoomDatabase.getDatabase(context)
         val time = System.currentTimeMillis()
         var title = ""
+        vibrator.vibrate(500)
         val thread = Thread{
             var notificationList = roomdb.accessDao().getAlphabetizedNotifications()
+            Log.d("PILLL",notificationList.toString())
             for(notification in notificationList){
                 if(notification.dateMillis >= time-120000 && notification.dateMillis <= time+120000) {
                     title = notification.pill
+                    Log.d("PILLL",title)
+                    var notification = NotificationCreator()
+                    notification.createNotification(context,intent,"Hi, it is time to take a pill","The pill you need to take is: $title")
+
                 }
             }
-            var notification = NotificationCreator()
-            notification.createNotification(context,intent,"Hi, it is time to take a pill","The pill you need to take is: $title")
+
+
 
         }
         thread.start()
+
         }
 
 
