@@ -3,22 +3,14 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pillee.jetpackcompnavigation.model.DataOrException
 import com.example.pillee.jetpackcompnavigation.model.Pills
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.model.repository.PillRepository
-import com.example.pillee.jetpackcompnavigation.screens.PillDetailState
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.ktx.Firebase
-import com.google.rpc.context.AttributeContext.Auth
 import kotlinx.coroutines.launch
-import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -62,6 +54,7 @@ constructor(
             daysRefill = daysRefill,
         )
         pillRepository.addNewPill(pill, context)
+        Toast.makeText(context, "Pill added correctly", Toast.LENGTH_SHORT).show()
 }
 
    fun updatePill(pillId: String, newNumber : String){

@@ -3,7 +3,6 @@ package com.example.pillee.jetpackcompnavigation.screens
 import android.app.TimePickerDialog
 import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,17 +27,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.pillee.R
+import com.example.pillee.jetpackcompnavigation.alarms.AlarmCreator
 import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
 import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
-import com.example.pillee.jetpackcompnavigation.screens.appointment.AppointmentViewModel
 import com.example.pillee.jetpackcompnavigation.screens.viewmodels.PillDetailViewModel
 import com.example.pillee.themes.CentralAppBar
 import com.example.pillee.themes.schedule_blue
@@ -49,7 +45,6 @@ import java.util.*
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 val listPills = arrayOf("Hibuprofeno", "Termagin", "Paracetamol", "Dalzy", "Anfetas", "Coca", "Cristal")
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -80,6 +75,7 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
     val mTime1 = remember {mutableStateOf("")}
     val mTime2 = remember {mutableStateOf("")}
     val mTime3 = remember {mutableStateOf("")}
+
 
     val mContext = LocalContext.current
     val mCalendar = Calendar.getInstance()
@@ -232,6 +228,14 @@ fun MyUI(pillDetailViewModel: PillDetailViewModel, authRepository: AuthRepositor
 
 }
 
+@Composable
+fun CheckBoxDays(day: String, daysMap: MutableMap<String, Boolean>){
+
+    Checkbox(
+        checked = daysMap.getValue(day),
+        onCheckedChange = {daysMap.put(day, it)}
+    )
+}
 
 
 @Composable
@@ -378,21 +382,40 @@ fun AddMedicineButton(pillDetailViewModel: PillDetailViewModel,
                       sunday: MutableState<Boolean>,
                       context: Context
 ){
+    val addedPill = remember { mutableStateOf(false) }
     androidx.compose.material3.Button(
         onClick = {
 
                   Log.d("TAG", "Horaaa1: ${hour1.value}")
                   pillDetailViewModel.addNewPill(authRepository.currentUser.toString(),
-                  name,
-                  takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
-                  takeHours(hour1.value, hour2.value, hour3.value), numberString, context)
+                      name,
+                      takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
+                      takeHours(hour1.value, hour2.value, hour3.value),
+                      numberString,
+                      context
+                  )
+                  addedPill.value=true
+
         }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)
             .height(50.dp)
 
-    ) { androidx.compose.material3.Text("Add Pill", color = Color.White) }
+    ) {
+
+    if(addedPill.value == true) {
+        addedPill.value=false
+        var alarmCreator = AlarmCreator(takeDays(monday,tuesday, wednesday, thursday, friday, saturday, sunday),
+            takeHours(hour1.value,hour2.value,hour3.value),name)
+        alarmCreator.createAlarms()
+    }
+        androidx.compose.material3.Text("Add Pill", color = Color.White) }
+
+
+
+
 }
+
 
 fun takeHours(hour1: String, hour2: String, hour3: String):String{
     var res = ""
@@ -415,16 +438,15 @@ fun takeDays(monday: MutableState<Boolean>,
              saturday: MutableState<Boolean>,
              sunday: MutableState<Boolean>): String{
     var res = ""
-    if(monday.value) res += "monday,"
-    if(tuesday.value) res += "tuesday,"
-    if(wednesday.value) res += "wednesday,"
-    if(thursday.value) res += "thursday,"
-    if(friday.value) res += "friday,"
-    if(saturday.value) res += "saturday,"
-    if(sunday.value) res += "sunday,"
-
-    val regex = ",$".toRegex()
-    res = res.replace(regex, "")
+    if(monday.value) res += "Monday,"
+    if(tuesday.value) res += "Tuesday,"
+    if(wednesday.value) res += "Wednesday,"
+    if(thursday.value) res += "Thursday,"
+    if(friday.value) res += "Friday,"
+    if(saturday.value) res += "Saturday,"
+    if(sunday.value) res += "Sunday,"
+    Log.d("DIAAAAAAAAAAAAA! ",res)
+    res = res.dropLast(1)
     return res
 }
 
