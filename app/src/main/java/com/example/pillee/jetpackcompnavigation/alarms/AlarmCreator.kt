@@ -19,7 +19,7 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
     private var dayList = splitDays(days)
     private var hourList = splitHours(hours)
     private val pillName = pillName
-    private val daysMap = mapOf("Monday" to 1 ,"Tuesday" to 2 ,"Wednesday" to 3 ,"Thursday" to 4 ,"Friday" to 5 ,"Saturday" to 6 ,"Sunday" to  7)
+    private val daysMap = mapOf("Monday" to 2 ,"Tuesday" to 3 ,"Wednesday" to 4 ,"Thursday" to 5 ,"Friday" to 6 ,"Saturday" to 7 ,"Sunday" to  1)
     private fun splitDays (days:String) : List<String> = days.split(",")
     private fun splitHours (hours:String) : List<String> = hours.split(",")
     private fun splitHourMinutes (time:String) : List<String> = time.split(":")
@@ -55,6 +55,7 @@ class AlarmCreator(days: String, hours: String, pillName: String) {
 
                 Log.d("HORAAA",time)
                 Log.d("DIIIA",day)
+                Log.d("TAG", "")
                 val calendar = createCalendar(splitHourMinutes(time)[0],splitHourMinutes(time)[1],day)
                 Log.d("CALENDAR",calendar.toString())
                 alarmManager?.setRepeating(AlarmManager.RTC_WAKEUP, calendar, 24 * 7 * 60 * 60 * 1000, pendingIntent)
