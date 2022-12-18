@@ -38,11 +38,7 @@ import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
                 )
             },
             backgroundColor = Color(0xFF174560),
-            actions = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Filled.Menu, contentDescription = "Abrir menú")
-                }
-            },
+
             elevation = 24.dp
         )
     }
