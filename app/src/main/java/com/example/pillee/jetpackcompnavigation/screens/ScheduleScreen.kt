@@ -284,8 +284,10 @@ fun showPill(checkedpill : CheckedPills, hour : String, pillViewModel: PillDetai
     var color = if(!checkedpill.checked.value) schedule_blue else schedule_green
     var colorUn = if(currenttimeReal < timeReal && !checkedpill.checked.value) schedule_blue else if (checkedpill.checked.value) schedule_green else schedule_red
     var hourId = if(timeReal < 1200) "a.m." else "p.m."
-
-    var refillPillsInt = checkedpill.pill.daysRefill.toInt()
+    var refillPillsInt = 0
+    if (checkedpill.pill.daysRefill.toIntOrNull() != null){
+        refillPillsInt = checkedpill.pill.daysRefill.toInt()
+    }
     var newNumberInt = refillPillsInt - 1
     var newNumber = newNumberInt.toString()
 
