@@ -156,18 +156,24 @@ fun DropDownMenuRemove(list: List<Pills>?): Pills {
 
 @Composable
 fun RemoveButton(pill: Pills, pillViewModel: PillDetailViewModel){
-
-
     androidx.compose.material3.Button(
         onClick = {
             if (pill.id != "") {
                 pillViewModel.deletePill(pill.id)
+                deletePillsFromList(pill.id)
             }
-
         },
         colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)
             .height(50.dp)
     ) { androidx.compose.material3.Text("Remove", color = Color.White) }
+}
+
+fun deletePillsFromList(id : String){
+    for(pill in pillList){
+        if(pill.pill.id == id){
+            pillList.remove(pill)
+        }
+    }
 }

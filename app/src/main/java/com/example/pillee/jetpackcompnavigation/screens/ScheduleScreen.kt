@@ -214,14 +214,6 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
         Text(text = currentTime, color = Color.Black, fontSize = 50.sp)
         Text(text = "Morning", color = Color.Black, fontSize = 30.sp)
 
-
-        if (appointmentList != null) {
-            for (app in appointmentList) {
-                //showAppointment(datetime = app.dateTime, hospital = app.hospital)
-            }
-        }
-
-
         for (app in todaysMorningAppointments){
             showAppointment(app)
         }
@@ -232,13 +224,11 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
             i++
         }
 
-
         Text(text = "Afternoon", color = Color.Black, fontSize = 30.sp)
         for (app in todaysAfternoonAppointments){
             showAppointment(app)
         }
         var j = 0
-
         while (j < afternoonPills.size-1){
             showPill(afternoonPills[j], afternoonString[j], pillViewModel)
         }
