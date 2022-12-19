@@ -44,7 +44,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 val list = arrayOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
-val listPills = arrayOf("Hibuprofeno", "Termagin", "Paracetamol", "Dalzy", "Anfetas", "Coca", "Cristal")
+val listPills = arrayOf("Ibuprofen", "Thermalgin", "Paracetamol", "Dalsy","Tylenol","Vicodin","MS Contin","Atenolol","Oxycodone","Hydrocodone","Cetirizine","Tizanidine","Tramadol","Naproxen","Clonazapem","Amoxicillin","Loratadine","Alprazolam","Bactrim","Pravastatin","Acyclovir","Gabapentin","Famotidine","Simvastatin","Lisinopril","Levothyroxine","Omeprazole","Azithromycin","Metformin")
 
 
 @OptIn(ExperimentalMaterial3Api::class)

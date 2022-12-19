@@ -57,8 +57,8 @@ constructor(
         Toast.makeText(context, "Pill added correctly", Toast.LENGTH_SHORT).show()
 }
 
-   fun updatePill(pillId: String, newNumber : String){
-       pillRepository.updatePill(newNumber, pillId)
+   fun updatePill(pillId: String, newNumber : String, pillName: String, currentDays: String){
+       pillRepository.updatePill(newNumber, pillId, pillName, currentDays)
    }
 
     fun deletePill(pillId: String){

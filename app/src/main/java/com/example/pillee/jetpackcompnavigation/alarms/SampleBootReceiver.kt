@@ -7,8 +7,6 @@ import android.os.Build
 import android.os.Vibrator
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.pillee.jetpackcompnavigation.model.repository.AuthRepository
-import com.example.pillee.jetpackcompnavigation.roomDB.NotificationDB
 
 import com.example.pillee.jetpackcompnavigation.roomDB.NotificationRoomDatabase
 
