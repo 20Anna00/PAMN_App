@@ -231,6 +231,7 @@ fun MyUi(navController: NavController, pillViewModel: PillDetailViewModel, appoi
         var j = 0
         while (j < afternoonPills.size-1){
             showPill(afternoonPills[j], afternoonString[j], pillViewModel)
+            j++
         }
 
         Text(text = "Evening", color = Color.Black, fontSize = 30.sp)
