@@ -296,7 +296,7 @@ fun showPill(checkedpill : CheckedPills, hour : String, pillViewModel: PillDetai
 
         ) {
         Checkbox(checked = checkedpill.checked.value, onCheckedChange = { checkedpill.checked.value = it
-            pillViewModel.updatePill(checkedpill.pill.id, newNumber,checkedpill.pill.name,checkedpill.pill.daysRefill)},
+            pillViewModel.updatePill(checkedpill.pill.id, newNumber)},
             colors = CheckboxDefaults.colors(checkedColor = if(!checkedpill.checked.value) schedule_blue else schedule_green, checkmarkColor = schedule_lightgreen)
         )
         Column(

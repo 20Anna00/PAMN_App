@@ -195,7 +195,7 @@ fun RefillButton(value : String, pill: Pills, pillViewModel: PillDetailViewModel
     androidx.compose.material3.Button(
         onClick = {
             if (pill.id != "") {
-                pillViewModel.updatePill(pill.id, realValue, pill.name, pill.daysRefill)
+                pillViewModel.updatePill(pill.id, realValue)
                 Toast.makeText(context, "Refilled succesfully", Toast.LENGTH_SHORT).show()
             }
 
