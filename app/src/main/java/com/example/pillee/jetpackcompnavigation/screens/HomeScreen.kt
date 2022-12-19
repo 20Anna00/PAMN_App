@@ -30,6 +30,7 @@ import com.example.pillee.jetpackcompnavigation.navigation.AppScreens
 import com.example.pillee.themes.background_color
 import com.example.pillee.themes.home_grey
 import com.example.pillee.themes.home_red
+import com.example.pillee.themes.schedule_blue
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -59,7 +60,7 @@ fun BodyContent(navController: NavController){
 
         ) {
             Image(
-                painter = painterResource(id = R.drawable.pillelogo),
+                painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Pill",
                 modifier = Modifier
                     .height(250.dp)
@@ -140,7 +141,7 @@ fun RegisterButtonNew(navController: NavController){
     Button(
         onClick = {
             navController.navigate(route = AppScreens.RegisterScreen.route)
-        }, colors = ButtonDefaults.buttonColors(home_red),
+        }, colors = ButtonDefaults.buttonColors(schedule_blue),
         modifier = Modifier
             .width(280.dp)
             .height(100.dp)
