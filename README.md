@@ -90,6 +90,7 @@ These are some tutorials we used to learn some features about kotlin:
 
 
 ## License
+Distributed under the MIT License.
 
 MIT
 
