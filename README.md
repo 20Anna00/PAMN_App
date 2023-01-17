@@ -26,11 +26,15 @@
 ## Key Features 
 
 * Programmed Schedule 
-  - See the pills you have to take and recieve notifications about it
+  - See the pills you have to take during the day and recieve notifications in the hour specified
 * Events configuration
   - Add events with date and time that will be notified
+* Control events
+  - Pills and appointments in your schedule can be checked as done
 * Refill needs
   - Check what pills needs to be refilled
+* Remove pills
+  - Pills can be removed manually whenever you want
 * Login with Google
 * Register with Google
 * Platform
