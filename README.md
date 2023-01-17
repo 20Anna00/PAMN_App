@@ -67,16 +67,21 @@ This software uses the following packages and technologies:
 
 ## Acknowledgments
 
-This are resources that helped us to create the app:
+These are resources that helped us to create the app:
                     
 * [RoomDatabase | Android Developers](https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase?hl=en)
 * [AlarmManager | Android Developers](https://developer.android.com/reference/android/app/AlarmManager)
 * [Create a Notification | Android Developers](https://developer.android.com/develop/ui/views/notifications/build-notification)
-* [Get started with Kotlin]([https://firebase.google.com/docs/auth](https://kotlinlang.org/docs/getting-started.html))
+* [Get started with Kotlin](https://kotlinlang.org/docs/getting-started.html)
 * [Firebase Authentication](https://firebase.google.com/docs/auth)
 * [Cloud Firestore](https://firebase.google.com/docs/firestore)
 * [How to start using Jetpack Compose | Android Developers](https://developer.android.com/jetpack/compose/documentation?hl=es-419)
-* [How to navigate with Compose - Jetpack](https://developer.android.com/jetpack/compose/navigation?hl=es-419)                    
+* [How to navigate with Compose - Jetpack](https://developer.android.com/jetpack/compose/navigation?hl=es-419)         
+         
+These are some tutorials we used to learn some features about kotlin:
+* [Curso de Mouredev de Auth con Firebase](https://www.youtube.com/watch?v=dpURgJ4HkMk&ab_channel=MoureDevbyBraisMoure)
+* [Curso de Leonardo Morales de CRUD con Jetpack Compose](https://www.youtube.com/watch?v=A4-FghLyYuo&list=PLlJHK1KOdR6G5dt4z-9gngae9VmCcqgoG&ab_channel=LeonardoMorales-DesarrolloM%C3%B3vil)
+* [Curso de Aplicación de Alarmas](https://www.youtube.com/watch?v=2ykRrMU1LPM&t=663s&ab_channel=Dr.ParagShukla)                    
                     
 ## Related
 
