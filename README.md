@@ -26,6 +26,7 @@
 ## Key Features 
 
 * Programmed Schedule 
+  - Pills and appointments can be added manually specifying name, days, hours and more features
   - See the pills you have to take during the day and recieve notifications in the hour specified
 * Events configuration
   - Add events with date and time that will be notified
