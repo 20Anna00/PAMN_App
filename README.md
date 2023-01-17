@@ -63,6 +63,8 @@ This software uses the following packages and technologies:
 
 - [Android Studio](https://developer.android.com/)
 - [Firebase](https://firebase.google.com/)
+- [Alarm Manager](https://developer.android.com/reference/android/app/AlarmManager)
+- [Notification Compat](https://developer.android.com/reference/kotlin/androidx/core/app/NotificationCompat.Builder)
 
 
 ## Related
