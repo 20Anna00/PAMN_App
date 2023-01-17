@@ -67,9 +67,16 @@ This software uses the following packages and technologies:
 
 ## Acknowledgments
 
-This are resources that helped us to create the app
+This are resources that helped us to create the app:
                     
 * [RoomDatabase | Android Developers](https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase?hl=en)
+* [AlarmManager | Android Developers](https://developer.android.com/reference/android/app/AlarmManager)
+* [Create a Notification | Android Developers](https://developer.android.com/develop/ui/views/notifications/build-notification)
+* [Get started with Kotlin]([https://firebase.google.com/docs/auth](https://kotlinlang.org/docs/getting-started.html))
+* [Firebase Authentication](https://firebase.google.com/docs/auth)
+* [Cloud Firestore](https://firebase.google.com/docs/firestore)
+* [How to start using Jetpack Compose | Android Developers](https://developer.android.com/jetpack/compose/documentation?hl=es-419)
+* [How to navigate with Compose - Jetpack](https://developer.android.com/jetpack/compose/navigation?hl=es-419)                    
                     
 ## Related
 
