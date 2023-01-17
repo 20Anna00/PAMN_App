@@ -83,7 +83,8 @@ These are some tutorials we used to learn some features about kotlin:
 * [Curso de Leonardo Morales de CRUD con Jetpack Compose](https://www.youtube.com/watch?v=A4-FghLyYuo&list=PLlJHK1KOdR6G5dt4z-9gngae9VmCcqgoG&ab_channel=LeonardoMorales-DesarrolloM%C3%B3vil)
 * [Curso de Aplicación de Alarmas](https://www.youtube.com/watch?v=2ykRrMU1LPM&t=663s&ab_channel=Dr.ParagShukla)                    
                     
-## Related
+## Documentation
+Here is the [memory of the project](https://github.com/20Anna00/PAMN_App/files/10438808/Memoria.trabajo.PAMN.pdf) describing the functionalities of the app and explaining all the working process of the team.
 
 
 ## Support
@@ -92,7 +93,6 @@ These are some tutorials we used to learn some features about kotlin:
 ## License
 Distributed under the MIT License.
 
-MIT
 
 
 
